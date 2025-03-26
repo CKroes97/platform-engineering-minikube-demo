@@ -36,7 +36,7 @@ tar xzf ./actions-runner-linux-x64-2.323.0.tar.gz
 
 ./config.sh --url https://github.com/CKroes97/platform-engineering-minikube-demo --token $GITHUB_RUNNER_TOKEN
 
-./run.sh
+./run.sh &
 
 cd ~
 
@@ -68,7 +68,7 @@ echo \
   sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
 sudo apt update
 
-sudo apt install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+sudo apt install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin -y
 
 
 # install kubectl
