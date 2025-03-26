@@ -1,0 +1,2 @@
+- name: configure docker
+  ansible.builtin.include_tasks: docker.yaml
