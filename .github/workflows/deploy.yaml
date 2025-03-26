@@ -1,0 +1,21 @@
+name: Deploy to Minikube
+
+on:
+  push:
+    branches:
+      - main
+      - initial-commit
+
+jobs:
+  terraform:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Initialize Terraform
+        run: terraform init
+
+      - name: Apply Terraform
+        run: terraform apply -auto-approve
