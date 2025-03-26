@@ -18,9 +18,9 @@ jobs:
         uses: hashicorp/setup-terraform@v3
         with:
           terraform_version: latest
-          
+
       - name: Initialize Terraform
         run: terraform init
 
       - name: Apply Terraform
-        run: terraform apply -auto-approve
+        run: terraform apply -chdir terraform -auto-approve
