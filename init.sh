@@ -23,16 +23,22 @@ if [[ -z "$GITHUB_RUNNER_TOKEN" ]]; then
     usage
 fi
 
+cd ~
+
 # install github runner
-mkdir actions-runner; cd actions-runner
+mkdir actions-runner && cd actions-runner
 
-Invoke-WebRequest -Uri https://github.com/actions/runner/releases/download/v2.323.0/actions-runner-win-x64-2.323.0.zip -OutFile actions-runner-win-x64-2.323.0.zip
+curl -o actions-runner-linux-x64-2.323.0.tar.gz -L https://github.com/actions/runner/releases/download/v2.323.0/actions-runner-linux-x64-2.323.0.tar.gz
 
-if((Get-FileHash -Path actions-runner-win-x64-2.323.0.zip -Algorithm SHA256).Hash.ToUpper() -ne 'e8ca92e3b1b907cdcc0c94640f4c5b23f377743993a4a5c859cb74f3e6eb33ef'.ToUpper()){ throw 'Computed checksum did not match' }
+echo "0dbc9bf5a58620fc52cb6cc0448abcca964a8d74b5f39773b7afcad9ab691e19  actions-runner-linux-x64-2.323.0.tar.gz" | shasum -a 256 -c
 
-Add-Type -AssemblyName System.IO.Compression.FileSystem ; [System.IO.Compression.ZipFile]::ExtractToDirectory("$PWD/actions-runner-win-x64-2.323.0.zip", "$PWD")
+tar xzf ./actions-runner-linux-x64-2.323.0.tar.gz
 
-./config.cmd --url https://github.com/CKroes97/platform-engineering-minikube-demo --token $GITHUB_RUNNER_TOKEN
+./config.sh --url https://github.com/CKroes97/platform-engineering-minikube-demo --token $GITHUB_RUNNER_TOKEN
+
+./run.sh
+
+cd ~
 
 # install terraform
 sudo apt install -y gnupg software-properties-common
@@ -49,6 +55,8 @@ sudo apt update
 
 sudo apt install terraform
 
+cd ~
+
 # install kubectl
 
 sudo apt install -y apt-transport-https ca-certificates curl gnupg
@@ -58,6 +66,8 @@ echo 'deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.
 sudo chmod 644 /etc/apt/sources.list.d/kubernetes.list
 sudo apt update
 sudo apt install -y kubectl
+
+cd ~
 
 # install minikube
 curl -LO https://github.com/kubernetes/minikube/releases/latest/download/minikube-linux-amd64
