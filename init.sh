@@ -36,6 +36,8 @@ tar xzf ./actions-runner-linux-x64-2.323.0.tar.gz
 
 ./config.sh --url https://github.com/CKroes97/platform-engineering-minikube-demo --token $GITHUB_RUNNER_TOKEN
 
+sudo ./svc.sh install
+
 sudo ./svc.sh start
 
 cd ~
