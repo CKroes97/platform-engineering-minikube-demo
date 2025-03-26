@@ -20,7 +20,7 @@ jobs:
           terraform_version: latest
 
       - name: Initialize Terraform
-        run: terraform init
+        run: terraform -chdir=terraform init
 
       - name: Apply Terraform
-        run: terraform apply -chdir=terraform -auto-approve
+        run: terraform -chdir=terraform apply -auto-approve
