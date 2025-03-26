@@ -9,6 +9,8 @@ on:
       - 'ansible/**'
 
 jobs:
+  runs-on: self-hosted
+  
   ansible-lint:
     uses: ansible/ansible-content-actions/.github/workflows/ansible_lint.yaml@main
     with:
