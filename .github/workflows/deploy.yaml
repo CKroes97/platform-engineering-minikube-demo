@@ -23,4 +23,4 @@ jobs:
         run: terraform init
 
       - name: Apply Terraform
-        run: terraform apply -chdir terraform -auto-approve
+        run: terraform apply -chdir=terraform -auto-approve
