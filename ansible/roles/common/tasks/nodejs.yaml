@@ -1,0 +1,4 @@
+- name: Install Node.js
+  ansible.builtin.apt:
+    name: nodejs
+    state: present

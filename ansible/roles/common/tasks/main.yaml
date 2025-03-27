@@ -9,3 +9,6 @@
 
 - name: configure minikube
   ansible.builtin.include_tasks: minikube.yaml
+
+- name: configure nodejs
+  ansible.builtin.include_tasks: nodejs.yaml
