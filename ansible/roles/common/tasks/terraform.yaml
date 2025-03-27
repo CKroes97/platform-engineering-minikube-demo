@@ -1,0 +1,30 @@
+- name: Add Terraform GPG key
+  ansible.builtin.get_url:
+    url: "https://apt.releases.hashicorp.com/gpg"
+    dest: "/usr/share/keyrings/hashicorp-archive-keyring.gpg"
+    mode: '0644'
+
+- name: Add Kubectl repository
+  ansible.builtin.apt_repository:
+    repo: >- 
+      deb [signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] \
+        https://apt.releases.hashicorp.com $(lsb_release -cs) main
+    state: present
+    filename: hashicorp
+
+- name: Install Kubectl
+  ansible.builtin.apt:
+    name:
+      - terraform
+    state: present
+
+
+
+
+
+
+
+
+echo "deb [signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] \
+https://apt.releases.hashicorp.com $(lsb_release -cs) main" | \
+sudo tee /etc/apt/sources.list.d/hashicorp.list
