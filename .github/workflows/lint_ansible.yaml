@@ -7,6 +7,10 @@ on:
   pull_request:
     paths:
       - 'ansible/**'
+  push:
+    branches:
+      - main
+      - initial-commit
 
 jobs:
   ansible:
