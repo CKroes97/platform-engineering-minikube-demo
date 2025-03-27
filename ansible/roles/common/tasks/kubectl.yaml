@@ -6,7 +6,7 @@
 
 - name: Add Kubectl repository
   ansible.builtin.apt_repository:
-    repo: >- 
+    repo: >-
       deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg]
        https://pkgs.k8s.io/core:/stable:/v1.32/deb/
        /

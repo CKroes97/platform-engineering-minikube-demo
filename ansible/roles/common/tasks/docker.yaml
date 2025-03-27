@@ -28,4 +28,3 @@
     name: "{{ ansible_env.SUDO_USER }}"
     groups: docker
     append: true
-    
