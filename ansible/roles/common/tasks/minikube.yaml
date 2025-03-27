@@ -9,17 +9,17 @@
     dest: /etc/systemd/system/minikube.service
     content: |
       [Unit]
-      Description=Minikube Kubernetes Cluster
-      After=network.target
+      Description=Kickoff Minikube Cluster
+      After=docker.service
 
       [Service]
+      Type=oneshot
       ExecStart=/usr/local/bin/minikube start
+      RemainAfterExit=true
       ExecStop=/usr/local/bin/minikube stop
-      Restart=always
-      User={{ ansible_user_id }}
-      Group={{ ansible_user_gid }}
-      Environment="HOME=/home/{{ ansible_user_id }}"
-      WorkingDirectory=/home/{{ ansible_user_id }}
+      StandardOutput=journal
+      User=jon
+      Group=jon
 
       [Install]
       WantedBy=multi-user.target

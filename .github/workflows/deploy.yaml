@@ -13,11 +13,6 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-
-      - name: To be or not to be
-        shell: bash
-        run: |
-          whoami
     
       - name: Install Ansible
         shell: bash
