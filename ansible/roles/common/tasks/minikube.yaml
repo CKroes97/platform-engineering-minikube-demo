@@ -18,8 +18,8 @@
       RemainAfterExit=true
       ExecStop=/usr/local/bin/minikube stop
       StandardOutput=journal
-      User=jon
-      Group=jon
+      User={{ ansible_user_id }}
+      Group={{ ansible_user_id }}
 
       [Install]
       WantedBy=multi-user.target
