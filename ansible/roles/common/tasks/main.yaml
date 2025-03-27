@@ -6,3 +6,6 @@
 
 - name: configure kubectl
   ansible.builtin.include_tasks: kubectl.yaml
+
+- name: configure minikube
+  ansible.builtin.include_tasks: minikube.yaml

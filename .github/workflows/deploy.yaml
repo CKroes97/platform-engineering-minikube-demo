@@ -1,4 +1,4 @@
-name: Deploy to Minikube
+name: Deploy
 
 on:
   push:
@@ -28,10 +28,6 @@ jobs:
       - name: Run Ansible Playbook
         run: |
           sudo ansible-playbook -i ansible/inventory ansible/host.yaml
-
-      - name: Ensure minikube runs
-        run: |
-          minikube start --kubernetes-version=v1.32.0
 
       - name: Set up Terraform
         uses: hashicorp/setup-terraform@v3
