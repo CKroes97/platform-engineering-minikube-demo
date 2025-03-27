@@ -9,8 +9,10 @@ on:
       - 'ansible/**'
 
 jobs:
-  ansible-lint:
-    runs-on: self-hosted
-    uses: ansible/ansible-content-actions/.github/workflows/ansible_lint.yaml@main
-    with:
-      args: '-p ansible'
+    runs-on: self-hosted 
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Run Ansible Lint
+        run: ansible-lint ansible/
