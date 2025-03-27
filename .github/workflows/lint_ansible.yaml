@@ -30,4 +30,4 @@ jobs:
         run: sudo pipx install ansible-dev-tools
 
       - name: Run Ansible Lint
-        run: pipx ansible-lint ansible/
+        run: pipx run ansible-lint ansible/
