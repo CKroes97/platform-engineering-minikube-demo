@@ -1,2 +1,5 @@
 - name: configure docker
   ansible.builtin.include_tasks: docker.yaml
+
+- name: configure unzip
+  ansible.builtin.include_tasks: unzip.yaml
