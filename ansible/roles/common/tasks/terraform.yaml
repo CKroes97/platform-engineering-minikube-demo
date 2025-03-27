@@ -17,3 +17,11 @@
     name:
       - terraform
     state: present
+
+- name: Create tfstate directory
+  ansible.builtin.file:
+    path: /var/lib/plateng
+    state: directory
+    owner: "{{ ansible_env.SUDO_USER }}"
+    group: "{{ ansible_env.SUDO_USER }}"
+    mode: "0755"
