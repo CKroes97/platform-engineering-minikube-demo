@@ -22,3 +22,9 @@
       - docker-buildx-plugin
       - docker-compose-plugin
     state: present
+
+- name: Add user to Docker group
+  ansible.builtin.user:
+    name: "{{ ansible_env.SUDO_USER }}"
+    groups: docker
+    append: true
