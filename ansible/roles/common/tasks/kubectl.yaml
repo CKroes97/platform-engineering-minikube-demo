@@ -1,13 +1,13 @@
 - name: Add Kubectl GPG key
   ansible.builtin.get_url:
     url: "https://pkgs.k8s.io/core:/stable:/v1.32/deb/Release.key"
-    dest: "/etc/apt/keyrings/kubernetes-apt-keyring.asc"
+    dest: "/etc/apt/keyrings/kubernetes-apt-keyring.gpg"
     mode: '0644'
 
 - name: Add Kubectl repository
   ansible.builtin.apt_repository:
     repo: >- 
-      deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.asc]
+      deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg]
        https://pkgs.k8s.io/core:/stable:/v1.32/deb/
        /
     state: present
