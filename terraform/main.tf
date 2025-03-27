@@ -16,8 +16,8 @@ provider "kubernetes" {
   config_context = "minikube"
 }
 
-resource "kubernetes_namespace" "example" {
+resource "kubernetes_namespace" "registry_namespace" {
   metadata {
-    name = "my-app"
+    name = "registry"
   }
 }
