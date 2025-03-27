@@ -18,7 +18,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Ensure python is intalled
-        run: sudo apt install python3-ansible-lint -y
+        run: sudo apt install ansible-dev-tools -y
 
       - name: Run Ansible Lint
         run: ansible-lint ansible/
