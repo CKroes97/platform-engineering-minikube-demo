@@ -20,7 +20,7 @@ jobs:
       - name: Ensure python is intalled
         run: sudo apt install python3-pip -y
 
-      - name: Ensure python is intalled
+      - name: Ensure ansible is intalled
         run: sudo pip3 install ansible-dev-tools
 
       - name: Run Ansible Lint
