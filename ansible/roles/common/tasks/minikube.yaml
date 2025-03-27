@@ -4,41 +4,37 @@
     dest: "/usr/local/bin/minikube"
     mode: "0755"
 
-- name: Register and Start Minikube as a Systemd Service
-  hosts: localhost
-  become: true
-  tasks:
-    - name: Create systemd service file for Minikube
-      ansible.builtin.copy:
-        dest: /etc/systemd/system/minikube.service
-        content: |
-          [Unit]
-          Description=Minikube Kubernetes Cluster
-          After=network.target
+- name: Create systemd service file for Minikube
+  ansible.builtin.copy:
+    dest: /etc/systemd/system/minikube.service
+    content: |
+      [Unit]
+      Description=Minikube Kubernetes Cluster
+      After=network.target
 
-          [Service]
-          ExecStart=/usr/local/bin/minikube start
-          ExecStop=/usr/local/bin/minikube stop
-          Restart=always
-          User={{ ansible_user_id }}
-          Group={{ ansible_user_gid }}
-          Environment="HOME=/home/{{ ansible_user_id }}"
-          WorkingDirectory=/home/{{ ansible_user_id }}
+      [Service]
+      ExecStart=/usr/local/bin/minikube start
+      ExecStop=/usr/local/bin/minikube stop
+      Restart=always
+      User={{ ansible_user_id }}
+      Group={{ ansible_user_gid }}
+      Environment="HOME=/home/{{ ansible_user_id }}"
+      WorkingDirectory=/home/{{ ansible_user_id }}
 
-          [Install]
-          WantedBy=multi-user.target
-        mode: "0644"
+      [Install]
+      WantedBy=multi-user.target
+    mode: "0644"
 
-    - name: Reload systemd to read new service
-      ansible.builtin.systemd:
-        daemon_reload: true
+- name: Reload systemd to read new service
+  ansible.builtin.systemd:
+    daemon_reload: true
 
-    - name: Enable Minikube service to start on boot
-      ansible.builtin.systemd:
-        name: minikube
-        enabled: true
+- name: Enable Minikube service to start on boot
+  ansible.builtin.systemd:
+    name: minikube
+    enabled: true
 
-    - name: Start Minikube service
-      ansible.builtin.systemd:
-        name: minikube
-        state: started
+- name: Start Minikube service
+  ansible.builtin.systemd:
+    name: minikube
+    state: started
