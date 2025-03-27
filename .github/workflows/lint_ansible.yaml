@@ -21,7 +21,7 @@ jobs:
         run: sudo apt install python3 -y
 
       - name: Ensure ansible-lint is intalled
-        run: pip install ansible-lint
+        run: pip3 install ansible-lint
 
       - name: Run Ansible Lint
         run: ansible-lint ansible/
