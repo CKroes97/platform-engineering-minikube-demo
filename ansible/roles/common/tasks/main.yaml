@@ -5,4 +5,4 @@
   ansible.builtin.include_tasks: unzip.yaml
 
 - name: configure kubectl
-  ansible.builtin.include_tassks: kubectl.yaml
+  ansible.builtin.include_tasks: kubectl.yaml
