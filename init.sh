@@ -43,4 +43,5 @@ sudo ./svc.sh start
 
 # create terraform dir
 sudo mkdir /var/lib/terraform
+sudo chown $USER:$USER /var/lib/terraform
 sudo chmod 755 /var/lib/terraform

@@ -19,6 +19,6 @@ provider "kubernetes" {
 
 resource "kubernetes_namespace" "registry_namespace" {
   metadata {
-    name = "registry"
+    name = "docker-registry"
   }
 }
