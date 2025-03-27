@@ -3,11 +3,8 @@ name: Ansible lint
 on:
   push:
     workflow_dispatch:
-    # paths:
-    #   - 'ansible/**'
-    branches:
-      - main
-      - initial-commit
+    paths:
+      - 'ansible/**'
   pull_request:
     paths:
       - 'ansible/**'
