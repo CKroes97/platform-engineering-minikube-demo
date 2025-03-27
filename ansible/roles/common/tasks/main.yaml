@@ -1,17 +1,17 @@
-- name: configure docker
+- name: Configure docker
   ansible.builtin.include_tasks: docker.yaml
 
-- name: configure unzip
+- name: Configure unzip
   ansible.builtin.include_tasks: unzip.yaml
 
-- name: configure kubectl
+- name: Configure kubectl
   ansible.builtin.include_tasks: kubectl.yaml
 
-- name: configure minikube
+- name: Configure minikube
   ansible.builtin.include_tasks: minikube.yaml
 
-- name: configure nodejs
+- name: Configure nodejs
   ansible.builtin.include_tasks: nodejs.yaml
 
-- name: configure terraform
+- name: Configure terraform
   ansible.builtin.include_tasks: terraform.yaml
