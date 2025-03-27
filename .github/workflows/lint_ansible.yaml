@@ -1,4 +1,4 @@
-name: Ansible files & Deployment 
+name: Ansible lint
 
 on:
   push:
@@ -12,7 +12,7 @@ jobs:
   ansible:
 
     runs-on: self-hosted 
-    
+
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
