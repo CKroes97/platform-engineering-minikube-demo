@@ -9,7 +9,10 @@ on:
       - 'ansible/**'
 
 jobs:
+  ansible:
+
     runs-on: self-hosted 
+    
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
