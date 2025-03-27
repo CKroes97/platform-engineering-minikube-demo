@@ -27,8 +27,8 @@ fi
 echo "$RUNNER_USER ALL=(ALL) NOPASSWD:ALL" | sudo tee /etc/sudoers.d/$RUNNER_USER
 
 # Change ownership & permissions
-sudo chown "$RUNNER_USER:$RUNNER_USER" "./setup_runner.sh"
-sudo chmod +x "./setup_runner.sh"
+sudo chown "$RUNNER_USER:$RUNNER_USER" "setup_runner.sh"
+sudo chmod +x "setup_runner.sh"
 
 # Execute the script as the new user
 sudo runuser -l "$RUNNER_USER" -c "bash ./setup_runner.sh '$GITHUB_RUNNER_TOKEN'"
