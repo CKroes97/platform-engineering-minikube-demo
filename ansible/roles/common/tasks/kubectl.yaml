@@ -9,7 +9,7 @@
     repo: >- 
       deb [arch={{ ansible_architecture }} signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.asc]
        https://pkgs.k8s.io/core:/stable:/v1.32/deb/
-      {{ ansible_distribution_release }} stable
+       /
     state: present
     filename: kubernetes
 
