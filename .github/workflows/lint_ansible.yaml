@@ -1,0 +1,28 @@
+name: Ansible lint
+
+on:
+  push:
+    workflow_dispatch:
+    paths:
+      - 'ansible/**'
+  pull_request:
+    paths:
+      - 'ansible/**'
+
+jobs:
+  ansible:
+
+    runs-on: self-hosted 
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Ensure python is intalled
+        run: sudo apt install python3-pip pipx -y
+
+      - name: Ensure ansible is intalled
+        run: sudo pipx install ansible-dev-tools
+
+      - name: Run Ansible Lint
+        run: pipx run ansible-lint ansible/

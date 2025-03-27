@@ -1,0 +1,40 @@
+- name: Download and install Minikube
+  ansible.builtin.get_url:
+    url: "https://github.com/kubernetes/minikube/releases/latest/download/minikube-linux-amd64"
+    dest: "/usr/local/bin/minikube"
+    mode: "0755"
+
+- name: Create systemd service file for Minikube
+  ansible.builtin.copy:
+    dest: /etc/systemd/system/minikube.service
+    content: |
+      [Unit]
+      Description=Kickoff Minikube Cluster
+      After=docker.service
+
+      [Service]
+      Type=oneshot
+      ExecStart=/usr/local/bin/minikube start
+      RemainAfterExit=true
+      ExecStop=/usr/local/bin/minikube stop
+      StandardOutput=journal
+      User={{ ansible_env.SUDO_USER }}
+      Group={{ ansible_env.SUDO_USER }}
+
+      [Install]
+      WantedBy=multi-user.target
+    mode: "0644"
+
+- name: Reload systemd to read new service
+  ansible.builtin.systemd:
+    daemon_reload: true
+
+- name: Enable Minikube service to start on boot
+  ansible.builtin.systemd:
+    name: minikube
+    enabled: true
+
+- name: Start Minikube service
+  ansible.builtin.systemd:
+    name: minikube
+    state: started

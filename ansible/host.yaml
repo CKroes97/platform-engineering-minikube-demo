@@ -1,0 +1,5 @@
+- name: Setup DevOps Environment
+  hosts: local
+  become: true
+  roles:
+    - common
