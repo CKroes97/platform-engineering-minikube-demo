@@ -17,5 +17,8 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
+      - name: Ensure ansible-lint is intalled
+        run: pip install ansible-lint
+
       - name: Run Ansible Lint
         run: ansible-lint ansible/
