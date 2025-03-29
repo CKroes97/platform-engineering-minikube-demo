@@ -13,7 +13,7 @@ jobs:
 
     steps:
       - name: force clean Repository
-        run: sudo git clean --fdx
+        run: cd ${{ github.workspace }} && sudo git clean --fdx
 
       - name: Checkout repository
         uses: actions/checkout@v4
