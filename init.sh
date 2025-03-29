@@ -3,40 +3,32 @@
 set -e
 
 usage() {
-    echo "Usage: setup.sh --github-runner-token <token> [options]"
-    echo "Required:"
-    echo "  --github-runner-token <token>    GitHub Actions runner token"
-    exit 1
+    echo "Usage: setup.sh"
 }
 
-# Parse command-line arguments
-while [[ "$#" -gt 0 ]]; do
-    case $1 in
-        --github-runner-token) GITHUB_RUNNER_TOKEN="$2"; shift ;;
-        -h|--help) usage ;;
-        *) echo "Unknown parameter: $1"; usage ;;
-    esac
-    shift
-done
+# Prompt user for inputs
+read -p "Enter GitHub Runner Token: " GITHUB_RUNNER_TOKEN
+read -p "Enter Unix username for GitHub Runner: " RUNNER_USER
+read -s -p "Enter password for $RUNNER_USER: " RUNNER_PASS
 
-if [[ -z "$GITHUB_RUNNER_TOKEN" ]]; then
-    echo "Error: --github-runner-token is required."
-    usage
+# Validate inputs
+if [[ -z "$GITHUB_RUNNER_TOKEN" || -z "$RUNNER_USER" || -z "$RUNNER_PASS" ]]; then
+    echo "Error: All inputs are required."
+    exit 1
 fi
 
-cd ~
+if ! id "$RUNNER_USER" &>/dev/null; then
+    echo "Creating user $RUNNER_USER..."
+    sudo useradd -m -s /bin/bash "$RUNNER_USER"
+    echo "$RUNNER_USER:$RUNNER_PASS" | sudo chpasswd
+fi
 
-# install github runner
-mkdir actions-runner && cd actions-runner
+# Grant passwordless sudo access
+echo "$RUNNER_USER ALL=(ALL) NOPASSWD:ALL" | sudo tee /etc/sudoers.d/$RUNNER_USER
 
-curl -o actions-runner-linux-x64-2.323.0.tar.gz -L https://github.com/actions/runner/releases/download/v2.323.0/actions-runner-linux-x64-2.323.0.tar.gz
+# Change ownership & permissions
+sudo chown "$RUNNER_USER:$RUNNER_USER" "setup_runner.sh"
+sudo chmod +x "setup_runner.sh"
 
-echo "0dbc9bf5a58620fc52cb6cc0448abcca964a8d74b5f39773b7afcad9ab691e19  actions-runner-linux-x64-2.323.0.tar.gz" | shasum -a 256 -c
-
-tar xzf ./actions-runner-linux-x64-2.323.0.tar.gz
-
-./config.sh --url https://github.com/CKroes97/platform-engineering-minikube-demo --token $GITHUB_RUNNER_TOKEN
-
-sudo ./svc.sh install
-
-sudo ./svc.sh start
+# Execute the script as the new user
+sudo runuser -p "$RUNNER_USER" -c "bash $(dirname $0)/setup_runner.sh '$GITHUB_RUNNER_TOKEN' '$RUNNER_USER'"

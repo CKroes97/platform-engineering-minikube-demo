@@ -1,13 +1,11 @@
 name: Ansible lint
 
 on:
+  workflow_dispatch:
   push:
-    workflow_dispatch:
     paths:
       - 'ansible/**'
   pull_request:
-    paths:
-      - 'ansible/**'
 
 jobs:
   ansible:
