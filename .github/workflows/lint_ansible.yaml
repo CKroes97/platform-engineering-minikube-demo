@@ -24,3 +24,7 @@ jobs:
 
       - name: Run Ansible Lint
         run: pipx run ansible-lint ansible/
+
+      - name: force clean Repository
+        run: sudo rm -rf ${{ github.workspace }}/terafform
+ 
