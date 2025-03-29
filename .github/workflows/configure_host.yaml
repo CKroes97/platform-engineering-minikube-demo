@@ -1,0 +1,26 @@
+name: Configure host
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'ansible/**'
+  pull_request:
+
+jobs:
+  ansible:
+    runs-on: self-hosted
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install Ansible
+        shell: bash
+        run: |
+          sudo apt update
+          sudo apt install -y ansible
+
+      - name: Run Ansible Playbook
+        run: |
+          sudo ansible-playbook -i ansible/inventory ansible/host.yaml
