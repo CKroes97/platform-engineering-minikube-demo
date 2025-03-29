@@ -47,7 +47,7 @@
   loop:
     - ".kube"
     - ".minikube"
-  creates: 
+  creates:
     - "/home/root/.kube"
 
 - name: Delete kube and minikube files from user
