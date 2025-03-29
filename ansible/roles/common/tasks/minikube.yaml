@@ -55,7 +55,7 @@
   loop: "{{ file_stat.results | selectattr('stat.exists', 'equalto', true) | map(attribute='item') | list }}"
 
 - name: Delete kube and minikube files from user
-  ansible.builtin.copy:
+  ansible.builtin.file:
     path: "/home/{{ ansible_env.SUDO_USER }}/{{ item }}"
     state: "absent"
   loop:
