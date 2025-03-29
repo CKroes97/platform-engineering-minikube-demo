@@ -10,7 +10,7 @@
 - name: Configure cri-dockerd
   ansible.builtin.include_tasks: crictl.yaml
 
-- Name: Configure CNI 
+- name: Configure CNI plugin
   ansible.builtin.include_tasks: cni-plugins.yaml
 
 - name: Configure minikube

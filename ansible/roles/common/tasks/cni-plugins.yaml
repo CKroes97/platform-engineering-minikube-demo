@@ -3,7 +3,6 @@
     url: "https://github.com/containernetworking/plugins/releases/download/v1.6.2/cni-plugins-linux-amd64-v1.6.2.tgz"
     dest: "/tmp/cni-plugins-linux-amd64-v1.6.2.tgz"
     mode: '0644'
-  when: not cni_plugin_installed.stat.exists
 
 - name: Create CNI installation directory
   ansible.builtin.file:
@@ -15,7 +14,6 @@
   ansible.builtin.unarchive:
     src: "/tmp/cni-plugins-linux-amd64-v1.6.2.tgz"
     dest: "/opt/cni/bin"
-  when: not cni_plugin_installed.stat.exists
 
 - name: Remove CNI tarball
   ansible.builtin.file:
