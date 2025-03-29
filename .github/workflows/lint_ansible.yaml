@@ -13,6 +13,9 @@ jobs:
     runs-on: self-hosted 
 
     steps:
+      - name: force clean Repository
+        run: sudo rm -rf ${{ github.workspace }}/terraform
+
       - name: Checkout Repository
         uses: actions/checkout@v4
 
@@ -26,5 +29,5 @@ jobs:
         run: pipx run ansible-lint ansible/
 
       - name: force clean Repository
-        run: sudo rm -rf ${{ github.workspace }}/terafform
+        run: sudo rm -rf ${{ github.workspace }}/terraform
  
