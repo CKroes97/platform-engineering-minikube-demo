@@ -26,11 +26,27 @@
     dest: "/tmp/cri-dockerd.tgz"
     mode: '0644'
 
-- name: Extract cri-dockerd binaries
+- name: Create temporary extraction directory
+  ansible.builtin.file:
+    path: "/tmp/cri-dockerd"
+    state: directory
+    mode: '0755'
+
+- name: Extract cri-dockerd tarball
   ansible.builtin.unarchive:
     src: "/tmp/cri-dockerd.tgz"
-    dest: "/usr/local/bin"
+    dest: "/tmp/cri-dockerd"
     remote_src: yes
+
+- name: Move cri-dockerd binary to /usr/local/bin
+  ansible.builtin.command:
+    cmd: mv /tmp/cri-dockerd/cri-dockerd /usr/local/bin/cri-dockerd
+    creates: /usr/local/bin/cri-dockerd
+
+- name: Remove temporary files
+  ansible.builtin.file:
+    path: "/tmp/cri-dockerd"
+    state: absent
 
 - name: Remove cri-dockerd tarball
   ansible.builtin.file:
