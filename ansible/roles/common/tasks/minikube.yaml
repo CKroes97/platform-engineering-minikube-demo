@@ -45,6 +45,6 @@
     dest: "/home/{{ ansible_user }}/{{ item }}"
     state: link
     owner: "{{ ansible_user }}"
-    loop:
-     - ".kube"
-     - ".minikube"
+  loop:
+    - ".kube"
+    - ".minikube"
