@@ -40,7 +40,7 @@
 
 - name: Move cri-dockerd binary to /usr/local/bin
   ansible.builtin.command:
-    cmd: mv /tmp/cri-dockerd/cri-dockerd /usr/local/bin/
+    cmd: mv /tmp/cri-dockerd/cri-dockerd/cri-dockerd /usr/local/bin/
     creates: /usr/local/bin/cri-dockerd
 
 - name: Remove temporary files
