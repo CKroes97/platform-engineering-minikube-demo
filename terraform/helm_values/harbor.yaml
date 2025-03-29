@@ -4,10 +4,10 @@ expose:
     name: harbor
     ports:
       http:
-        port: 80
+        port: 8080
         nodePort: 32291
       https:
-        port: 8080
+        port: 443
         nodePort: 32292
   tls:
     enabled: false
