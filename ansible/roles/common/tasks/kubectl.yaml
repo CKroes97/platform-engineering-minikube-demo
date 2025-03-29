@@ -6,7 +6,7 @@
 
 - name: Convert Kubectl GPG key to dearmored format
   ansible.builtin.command:
-    cmd: gpg --dearmor --output /etc/apt/keyrings/kubernetes-apt-keyring.gpg /tmp/kubernetes-apt-keyring.gpg
+    cmd: gpg --dearmor --output --yes /etc/apt/keyrings/kubernetes-apt-keyring.gpg /tmp/kubernetes-apt-keyring.gpg
     creates: /etc/apt/keyrings/kubernetes-apt-keyring.gpg
 
 - name: Remove temporary key file
