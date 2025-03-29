@@ -21,7 +21,7 @@ jobs:
           terraform_version: latest
 
       - name: Initialize Terraform
-        run: terraform -chdir=terraform init
+        run: sudo terraform -chdir=terraform init
 
       - name: Apply Terraform
-        run: terraform -chdir=terraform apply -auto-approve
+        run: sudo terraform -chdir=terraform apply -auto-approve
