@@ -49,3 +49,11 @@
     - ".minikube"
   creates: 
     - "/home/root/.kube"
+
+- name: Delete kube and minikube files from user
+  ansible.builtin.copy:
+    path: "/home/{{ ansible_env.SUDO_USER }}/{{ item }}"
+    state: "absent"
+  loop:
+    - ".kube"
+    - ".minikube"
