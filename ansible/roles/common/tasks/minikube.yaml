@@ -14,7 +14,7 @@
 
       [Service]
       Type=oneshot
-      ExecStart=/usr/local/bin/minikube start --driver-none
+      ExecStart=/usr/local/bin/minikube start --driver=none
       RemainAfterExit=true
       ExecStop=/usr/local/bin/minikube stop
       StandardOutput=journal
