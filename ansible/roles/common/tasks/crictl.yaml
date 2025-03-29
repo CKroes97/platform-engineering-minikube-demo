@@ -1,0 +1,24 @@
+- name: Install Node.js
+  ansible.builtin.apt:
+    name:
+      - conntrack
+    state: present
+
+- name: Download crictl tarball
+  ansible.builtin.get_url:
+    url: "https://github.com/kubernetes-sigs/cri-tools/releases/download/{{ version }}/crictl-{{ version }}-linux-amd64.tar.gz"
+    dest: "/tmp/crictl-{{ version }}-linux-amd64.tar.gz"
+    mode: '0644'
+
+- name: Extract crictl tarball to /usr/local/bin
+  ansible.builtin.unarchive:
+    src: "/tmp/crictl-{{ version }}-linux-amd64.tar.gz"
+    dest: "/usr/local/bin"
+    remote_src: yes
+    extra_opts:
+      - zxvf
+
+- name: Remove crictl tarball
+  ansible.builtin.file:
+    path: "/tmp/crictl-{{ version }}-linux-amd64.tar.gz"
+    state: absent

@@ -1,5 +1,0 @@
-- name: Install Node.js
-  ansible.builtin.apt:
-    name:
-      - cri-dockerd
-    state: present
