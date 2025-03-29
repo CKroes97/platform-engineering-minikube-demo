@@ -7,8 +7,8 @@
 - name: Configure kubectl
   ansible.builtin.include_tasks: kubectl.yaml
 
-- name: Configure conntrack
-  ansible.builtin.include_tasks: conntrack.yaml
+- name: Configure driverless minikube dependencies
+  ansible.builtin.include_tasks: crictl.yaml
 
 - name: Configure minikube
   ansible.builtin.include_tasks: minikube.yaml
