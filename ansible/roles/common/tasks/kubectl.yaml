@@ -1,5 +1,5 @@
--  name: Download GPG key
-   ansible.builtin.get_url:
+- name: Download GPG key
+  ansible.builtin.get_url:
     url: "https://pkgs.k8s.io/core:/stable:/v1.32/deb/Release.key"
     dest: "/tmp/kubernetes-apt-keyring.gpg"
     mode: '0644'
@@ -18,7 +18,7 @@
   ansible.builtin.file:
     path: /etc/apt/keyrings/kubernetes-apt-keyring.gpg
     mode: '0644'
-  
+
 - name: Add Kubectl repository
   ansible.builtin.apt_repository:
     repo: >-
@@ -31,5 +31,5 @@
 - name: Install Kubectl
   ansible.builtin.apt:
     name:
-      - kubectl
+    - kubectl
     state: present
