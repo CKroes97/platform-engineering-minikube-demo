@@ -42,9 +42,9 @@
 - name: Move .kube and .minikube to root
   ansible.builtin.file:
     src: "/home/{{ ansible_env.SUDO_USER }}/{{ item }}"
-    dest: "/home/{{ ansible_user }}/{{ item }}"
+    dest: "/home/{{ ansible_env.USER }}/{{ item }}"
     state: link
-    owner: "{{ ansible_user }}"
+    owner: "{{ ansible_env.USER }}"
   loop:
    - ".kube"
    - ".minikube"
