@@ -18,8 +18,8 @@
       RemainAfterExit=true
       ExecStop=/usr/local/bin/minikube stop
       StandardOutput=journal
-      User={{ ansible_env.SUDO_USER }}
-      Group={{ ansible_env.SUDO_USER }}
+      User=root
+      Group=root
 
       [Install]
       WantedBy=multi-user.target
@@ -39,26 +39,3 @@
     name: minikube
     state: started
 
-- name: Check if .kube and .minikube exist for non-root
-  ansible.builtin.stat:
-    path: "/home/{{ ansible_env.SUDO_USER }}/{{ item }}"
-  loop:
-    - ".kube"
-    - ".minikube"
-  register: file_stat
-
-- name: Move .kube and .minikube to root
-  ansible.builtin.copy:
-    src: "/home/{{ ansible_env.SUDO_USER }}/{{ item }}"
-    dest: "/home/{{ ansible_env.USER }}/{{ item }}"
-    owner: "root"
-    mode: 0755
-  loop: "{{ file_stat.results | selectattr('stat.exists', 'equalto', true) | map(attribute='item') | list }}"
-
-- name: Delete kube and minikube files from user
-  ansible.builtin.file:
-    path: "/home/{{ ansible_env.SUDO_USER }}/{{ item }}"
-    state: "absent"
-  loop:
-    - ".kube"
-    - ".minikube"
