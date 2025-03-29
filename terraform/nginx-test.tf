@@ -26,7 +26,7 @@ resource "kubernetes_deployment" "nginx" {
         container {
           name  = "nginx"
           image = "nginx:latest"  # Default NGINX image
-          ports {
+          port {
             container_port = 80
           }
         }
@@ -45,7 +45,7 @@ resource "kubernetes_service" "nginx" {
       app = "nginx"
     }
 
-    ports {
+    port {
       port        = 80        # Port inside the cluster
       target_port = 80        # Port in the container
       node_port   = 30080     # External port for NodePort
