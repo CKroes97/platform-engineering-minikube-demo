@@ -21,7 +21,7 @@ jobs:
           terraform_version: latest
 
       - name: Initialize Terraform
-        run: sudo terraform -chdir=terraform init -plugin-dir ~/tfproviders/
+        run: sudo terraform -chdir=terraform init
 
       - name: Apply Terraform
         run: sudo terraform -chdir=terraform apply -auto-approve
