@@ -2,5 +2,5 @@
   ansible.builtin.apt:
     name:
       - conntrack
-      - crictl
+      - cri-tool
     state: present
