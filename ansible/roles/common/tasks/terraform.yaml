@@ -1,7 +1,22 @@
-- name: Add Terraform GPG key
+- name: Download Terraform GPG key
   ansible.builtin.get_url:
     url: "https://apt.releases.hashicorp.com/gpg"
-    dest: "/usr/share/keyrings/hashicorp-archive-keyring.gpg"
+    dest: "/tmp/hashicorp-apt-keyring.gpg"
+    mode: '0644'
+
+- name: Convert Terraform GPG key to dearmored format
+  ansible.builtin.command:
+    cmd: gpg --dearmor --output /usr/share/keyrings/hashicorp-archive-keyring.gpg /tmp/hashicorp-apt-keyring.gpg
+    creates: /etc/apt/keyrings/hashicorp-archive-keyring.gpg
+
+- name: Remove temporary key file
+  ansible.builtin.file:
+    path: "/tmp/hashicorp-apt-keyring.gpg"
+    state: absent
+
+- name: Set correct permissions on the Terraform GPG key
+  ansible.builtin.file:
+    path: /usr/share/keyrings/hashicorp-archive-keyring.gpg
     mode: '0644'
 
 - name: Add Terraform repository
