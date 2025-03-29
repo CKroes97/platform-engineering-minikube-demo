@@ -38,3 +38,13 @@
   ansible.builtin.systemd:
     name: minikube
     state: started
+
+- name: Move .kube and .minikube to root
+  ansible.builtin.file:
+    src: "/home/{{ ansible_env.SUDO_USER }}/{{ item }}"
+    dest: "/home/{{ ansible_user }}/{{ item }}"
+    state: link
+    owner: "{{ ansible_user }}"
+    loop:
+     - ".kube"
+     - ".minikube"
