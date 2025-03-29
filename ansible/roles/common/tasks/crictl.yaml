@@ -14,8 +14,6 @@
   ansible.builtin.unarchive:
     src: "/tmp/crictl-v1.32.0-linux-amd64.tar.gz"
     dest: "/usr/local/bin"
-    extra_opts:
-      - zxvf
 
 - name: Remove crictl tarball
   ansible.builtin.file:
