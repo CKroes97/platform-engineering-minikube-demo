@@ -14,7 +14,6 @@
   ansible.builtin.unarchive:
     src: "/tmp/crictl-v1.32.0-linux-amd64.tar.gz"
     dest: "/usr/local/bin"
-    remote_src: true
     extra_opts:
       - zxvf
 
