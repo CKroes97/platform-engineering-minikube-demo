@@ -1,0 +1,6 @@
+- name: Install Node.js
+  ansible.builtin.apt:
+    name:
+      - conntrack
+      - crictl
+    state: present
