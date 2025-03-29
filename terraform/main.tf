@@ -5,7 +5,7 @@ resource "kubernetes_namespace" "registry_namespace" {
 }
 
 resource "helm_release" "harbor" {
-  name       = "my-harbor"
+  name       = "harbor"
   namespace  = registry_namespace.name
   repository = "https://helm.goharbor.io"
   chart      = "harbor"
