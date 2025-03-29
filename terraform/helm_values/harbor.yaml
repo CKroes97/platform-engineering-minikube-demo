@@ -9,3 +9,6 @@ expose:
       https:
         port: 443
         nodePort: 29292
+  tls:
+    auto:
+      commonName: harbor.local
