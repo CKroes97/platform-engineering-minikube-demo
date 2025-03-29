@@ -1,6 +1,5 @@
 - name: Install Node.js
   ansible.builtin.apt:
     name:
-      - conntrack
-      - cri-tool
+      - cri-dockerd
     state: present
