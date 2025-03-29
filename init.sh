@@ -31,4 +31,4 @@ sudo chown "$RUNNER_USER:$RUNNER_USER" "setup_runner.sh"
 sudo chmod +x "setup_runner.sh"
 
 # Execute the script as the new user
-sudo runuser -p -l "$RUNNER_USER" -c "bash $(dirname $0)/setup_runner.sh '$GITHUB_RUNNER_TOKEN'"
+sudo runuser -p "$RUNNER_USER" -c "bash $(dirname $0)/setup_runner.sh '$GITHUB_RUNNER_TOKEN'"
