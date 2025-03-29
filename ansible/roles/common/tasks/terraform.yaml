@@ -40,3 +40,13 @@
     owner: "{{ ansible_env.SUDO_USER }}"
     group: "{{ ansible_env.SUDO_USER }}"
     mode: "0755"
+
+- name: Create .terraformrc file with plugin_cache_dir
+  ansible.builtin.copy:
+    dest: "/home/{{ ansible_env.USER }}/.terraformrc"
+    content: |
+      plugin_cache_dir = "~/"
+    owner: "{{ ansible_env.USER }}"
+    group: "{{ ansible_env.USER }}"
+    mode: '0644'
+  when: ansible_env.USER is defined

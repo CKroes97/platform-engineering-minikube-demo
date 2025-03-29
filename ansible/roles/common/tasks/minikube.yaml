@@ -14,12 +14,12 @@
 
       [Service]
       Type=oneshot
-      ExecStart=/usr/local/bin/minikube start
+      ExecStart=/usr/local/bin/minikube start --driver=none
       RemainAfterExit=true
       ExecStop=/usr/local/bin/minikube stop
       StandardOutput=journal
-      User={{ ansible_env.SUDO_USER }}
-      Group={{ ansible_env.SUDO_USER }}
+      User=root
+      Group=root
 
       [Install]
       WantedBy=multi-user.target
@@ -38,3 +38,10 @@
   ansible.builtin.systemd:
     name: minikube
     state: started
+
+- name: Ensure filesystem access (did I tell that you that this should run on a dedicated machine?)
+  ansible.builtin.sysctl:
+    name: fs.protected_regular
+    value: '0'
+    state: present
+    reload: true

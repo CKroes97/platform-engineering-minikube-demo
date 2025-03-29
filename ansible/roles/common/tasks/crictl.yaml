@@ -1,0 +1,75 @@
+- name: Install Conntrack
+  ansible.builtin.apt:
+    name:
+      - conntrack
+    state: present
+
+- name: Download crictl tarball
+  ansible.builtin.get_url:
+    url: "https://github.com/kubernetes-sigs/cri-tools/releases/download/v1.32.0/crictl-v1.32.0-linux-amd64.tar.gz"
+    dest: "/tmp/crictl-v1.32.0-linux-amd64.tar.gz"
+    mode: '0644'
+
+- name: Extract crictl tarball to /usr/local/bin
+  ansible.builtin.unarchive:
+    src: "/tmp/crictl-v1.32.0-linux-amd64.tar.gz"
+    dest: "/usr/local/bin"
+
+- name: Remove crictl tarball
+  ansible.builtin.file:
+    path: "/tmp/crictl-v1.32.0-linux-amd64.tar.gz"
+    state: absent
+
+- name: Download cri-dockerd tarball
+  ansible.builtin.get_url:
+    url: "https://github.com/Mirantis/cri-dockerd/releases/download/v0.3.11/cri-dockerd-0.3.11.amd64.tgz"
+    dest: "/tmp/cri-dockerd.tgz"
+    mode: '0644'
+
+- name: Create temporary extraction directory
+  ansible.builtin.file:
+    path: "/tmp/cri-dockerd"
+    state: directory
+    mode: '0755'
+
+- name: Extract cri-dockerd tarball
+  ansible.builtin.unarchive:
+    src: "/tmp/cri-dockerd.tgz"
+    dest: "/tmp/cri-dockerd"
+
+- name: Move cri-dockerd binary to /usr/local/bin
+  ansible.builtin.command:
+    cmd: mv /tmp/cri-dockerd/cri-dockerd/cri-dockerd /usr/bin/
+    creates: /usr/bin/cri-dockerd
+
+- name: Remove temporary files
+  ansible.builtin.file:
+    path: "/tmp/cri-dockerd"
+    state: absent
+
+- name: Remove cri-dockerd tarball
+  ansible.builtin.file:
+    path: "/tmp/cri-dockerd.tgz"
+    state: absent
+
+- name: Download cri-dockerd systemd service file
+  ansible.builtin.get_url:
+    url: "https://raw.githubusercontent.com/Mirantis/cri-dockerd/master/packaging/systemd/cri-docker.service"
+    dest: "/etc/systemd/system/cri-docker.service"
+    mode: '0644'
+
+- name: Download cri-dockerd systemd socket file
+  ansible.builtin.get_url:
+    url: "https://raw.githubusercontent.com/Mirantis/cri-dockerd/master/packaging/systemd/cri-docker.socket"
+    dest: "/etc/systemd/system/cri-docker.socket"
+    mode: '0644'
+
+- name: Reload systemd daemon
+  ansible.builtin.systemd:
+    daemon_reload: true
+
+- name: Enable and start cri-dockerd service
+  ansible.builtin.systemd:
+    name: cri-docker
+    enabled: true
+    state: started

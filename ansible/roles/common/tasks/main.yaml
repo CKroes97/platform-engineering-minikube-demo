@@ -7,6 +7,12 @@
 - name: Configure kubectl
   ansible.builtin.include_tasks: kubectl.yaml
 
+- name: Configure cri-dockerd
+  ansible.builtin.include_tasks: crictl.yaml
+
+- name: Configure CNI plugin
+  ansible.builtin.include_tasks: cni-plugins.yaml
+
 - name: Configure minikube
   ansible.builtin.include_tasks: minikube.yaml
 

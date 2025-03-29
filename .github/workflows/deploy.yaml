@@ -3,6 +3,8 @@ name: Deploy
 on:
   workflow_dispatch:
   push:
+    paths:
+      - 'terraform/**'
   pull_request:
 
 jobs:
@@ -10,18 +12,11 @@ jobs:
     runs-on: self-hosted
 
     steps:
+      - name: force clean Repository
+        run: sudo rm -rf ${{ github.workspace }}/terraform
+
       - name: Checkout repository
         uses: actions/checkout@v4
-    
-      - name: Install Ansible
-        shell: bash
-        run: |
-          sudo apt update
-          sudo apt install -y ansible
-
-      - name: Run Ansible Playbook
-        run: |
-          sudo ansible-playbook -i ansible/inventory ansible/host.yaml
 
       - name: Set up Terraform
         uses: hashicorp/setup-terraform@v3
@@ -29,7 +24,10 @@ jobs:
           terraform_version: latest
 
       - name: Initialize Terraform
-        run: terraform -chdir=terraform init
+        run: sudo terraform -chdir=terraform init
 
       - name: Apply Terraform
-        run: terraform -chdir=terraform apply -auto-approve
+        run: sudo terraform -chdir=terraform apply -auto-approve
+
+      - name: force clean Repository
+        run: sudo rm -rf ${{ github.workspace }}/terraform
