@@ -22,16 +22,39 @@
 
 - name: Download cri-dockerd tarball
   ansible.builtin.get_url:
-    url: "https://github.com/Mirantis/cri-dockerd/releases/download/v0.3.16/cri-dockerd-0.3.16.amd64.tgz"
-    dest: "/tmp/cri-dockerd-0.3.16.amd64.tgz"
+    url: "https://github.com/Mirantis/cri-dockerd/releases/download/v0.3.11/cri-dockerd-0.3.11.amd64.tgz"
+    dest: "/tmp/cri-dockerd.tgz"
     mode: '0644'
 
-- name: Extract cri-dockerd tarball to /usr/local/bin
+- name: Extract cri-dockerd binaries
   ansible.builtin.unarchive:
-    src: "/tmp/cri-dockerd-0.3.16.amd64.tgz"
+    src: "/tmp/cri-dockerd.tgz"
     dest: "/usr/local/bin"
+    remote_src: yes
 
 - name: Remove cri-dockerd tarball
   ansible.builtin.file:
-    path: "/tmp/cri-dockerd-0.3.16.amd64.tgz"
+    path: "/tmp/cri-dockerd.tgz"
     state: absent
+
+- name: Download cri-dockerd systemd service file
+  ansible.builtin.get_url:
+    url: "https://raw.githubusercontent.com/Mirantis/cri-dockerd/main/packaging/systemd/cri-docker.service"
+    dest: "/etc/systemd/system/cri-docker.service"
+    mode: '0644'
+
+- name: Download cri-dockerd systemd socket file
+  ansible.builtin.get_url:
+    url: "https://raw.githubusercontent.com/Mirantis/cri-dockerd/main/packaging/systemd/cri-docker.socket"
+    dest: "/etc/systemd/system/cri-docker.socket"
+    mode: '0644'
+
+- name: Reload systemd daemon
+  ansible.builtin.systemd:
+    daemon_reload: yes
+
+- name: Enable and start cri-dockerd service
+  ansible.builtin.systemd:
+    name: cri-docker
+    enabled: yes
+    state: started
