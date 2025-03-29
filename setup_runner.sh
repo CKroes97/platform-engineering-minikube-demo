@@ -3,13 +3,18 @@
 set -e
 
 GITHUB_RUNNER_TOKEN=$1
+RUNNER_USER=$2
 
 if [[ -z "$GITHUB_RUNNER_TOKEN" ]]; then
     echo "Error: GitHub Runner Token is required."
     exit 1
 fi
 
-user_home=$(getent passwd "$USER" | cut -d: -f6)
+if [[ -z "$RUNNER_USER" ]]; then
+    echo "Error: Runner Username is required."
+    exit 1
+fi
+user_home=$(getent passwd "$RUNNER_USER" | cut -d: -f6)
 
 if [ -n "$user_home" ]; then
     export HOME="$user_home"
