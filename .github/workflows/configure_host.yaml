@@ -12,9 +12,6 @@ jobs:
     runs-on: self-hosted
 
     steps:
-      - name: force clean Repository
-        run: sudo rm -rf ${{ github.workspace }}
-
       - name: Checkout repository
         uses: actions/checkout@v4
 
@@ -27,3 +24,6 @@ jobs:
       - name: Run Ansible Playbook
         run: |
           sudo ansible-playbook -i ansible/inventory ansible/host.yaml
+
+      - name: force clean Repository
+        run: sudo rm -rf ${{ github.workspace }}
