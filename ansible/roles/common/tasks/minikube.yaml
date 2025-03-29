@@ -39,16 +39,20 @@
     name: minikube
     state: started
 
+- name: Check if .kube and .minikube exist for non-root
+  ansible.builtin.stat:
+    path: "/home/{{ ansible_env.SUDO_USER }}/{{ item }}"
+  loop:
+    - ".kube"
+    - ".minikube"
+  register: file_stat
+
 - name: Move .kube and .minikube to root
   ansible.builtin.copy:
     src: "/home/{{ ansible_env.SUDO_USER }}/{{ item }}"
     dest: "/home/{{ ansible_env.USER }}/{{ item }}"
     owner: "root"
-  loop:
-    - ".kube"
-    - ".minikube"
-  creates:
-    - "/home/root/.kube"
+  loop: "{{ file_stat.results | selectattr('stat.exists', 'equalto', true) | map(attribute='item') | list }}"
 
 - name: Delete kube and minikube files from user
   ansible.builtin.copy:
