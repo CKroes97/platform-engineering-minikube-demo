@@ -39,3 +39,8 @@
     name: minikube
     state: started
 
+- ansible.builtin.sysctl:
+    name: fs.protected_regular
+    value: '0'
+    state: present
+    reload: yes
