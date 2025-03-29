@@ -27,4 +27,4 @@ jobs:
         run: sudo terraform -chdir=terraform apply -auto-approve
 
       - name: force clean Repository
-        run: sudo rm ${{ github.workspace }}/*
+        run: sudo rm -rf ${{ github.workspace }}/terafform
