@@ -31,5 +31,5 @@
 - name: Install Kubectl
   ansible.builtin.apt:
     name:
-    - kubectl
+      - kubectl
     state: present
