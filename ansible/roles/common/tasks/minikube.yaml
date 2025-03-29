@@ -47,3 +47,5 @@
   loop:
     - ".kube"
     - ".minikube"
+  creates: 
+    - "/home/root/.kube"
