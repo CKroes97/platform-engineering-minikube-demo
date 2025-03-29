@@ -36,7 +36,6 @@
   ansible.builtin.unarchive:
     src: "/tmp/cri-dockerd.tgz"
     dest: "/tmp/cri-dockerd"
-    remote_src: yes
 
 - name: Move cri-dockerd binary to /usr/local/bin
   ansible.builtin.command:
@@ -67,10 +66,10 @@
 
 - name: Reload systemd daemon
   ansible.builtin.systemd:
-    daemon_reload: yes
+    daemon_reload: true
 
 - name: Enable and start cri-dockerd service
   ansible.builtin.systemd:
     name: cri-docker
-    enabled: yes
+    enabled: true
     state: started
