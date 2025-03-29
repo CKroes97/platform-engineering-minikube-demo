@@ -13,9 +13,6 @@ jobs:
     runs-on: self-hosted 
 
     steps:
-      - name: force clean Repository
-        run: sudo rm -rf {{ github.workspace }}
-
       - name: Checkout Repository
         uses: actions/checkout@v4
 
@@ -27,3 +24,7 @@ jobs:
 
       - name: Run Ansible Lint
         run: pipx run ansible-lint ansible/
+
+      - name: force clean Repository
+        run: sudo rm -rf ${{ github.workspace }}
+ 
