@@ -10,5 +10,4 @@ expose:
         port: 8080
         nodePort: 32292
   tls:
-    auto:
-      commonName: harbor.local
+    enabled: false
