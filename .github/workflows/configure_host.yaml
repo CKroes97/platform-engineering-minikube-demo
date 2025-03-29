@@ -26,4 +26,4 @@ jobs:
           sudo ansible-playbook -i ansible/inventory ansible/host.yaml
 
       - name: force clean Repository
-        run: sudo rm -rf ${{ github.workspace }}
+        run: sudo rm ${{ github.workspace }}/*
