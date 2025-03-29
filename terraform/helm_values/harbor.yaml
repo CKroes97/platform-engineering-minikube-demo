@@ -4,7 +4,7 @@ expose:
     name: harbor
     ports:
       http:
-        port: 8080
+        port: 80
         nodePort: 32291
       https:
         port: 443
