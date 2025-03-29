@@ -39,8 +39,9 @@
     name: minikube
     state: started
 
-- ansible.builtin.sysctl:
+- name: Ensure filesystem access (did I tell that you that this should run on a dedicated machine?)
+  ansible.builtin.sysctl:
     name: fs.protected_regular
     value: '0'
     state: present
-    reload: yes
+    reload: true
