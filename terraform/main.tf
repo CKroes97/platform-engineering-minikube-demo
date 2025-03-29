@@ -1,22 +1,14 @@
-terraform {
-  required_providers {
-    kubernetes = {
-      source  = "hashicorp/kubernetes"
-      version = "~> 2.0"
-    }
-  }
-  backend "local" {
-   path = "/var/lib/plateng/terraform.tfstate"
-  }
-}
-
-provider "kubernetes" {
-  config_path    = "~/.kube/config"
-  config_context = "minikube"
-}
-
 resource "kubernetes_namespace" "registry_namespace" {
   metadata {
     name = "docker-registry"
   }
 }
+
+resource "helm_release" "harbor" {
+  name       = "my-harbor"
+  namespace  = registry_namespace.name
+  repository = "https://helm.goharbor.io"
+  chart      = "harbor"
+  version    = "2.9.0"  # Specify the desired version
+}
+
