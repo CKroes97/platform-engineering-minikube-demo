@@ -43,7 +43,7 @@
   ansible.builtin.copy:
     src: "/home/{{ ansible_env.SUDO_USER }}/{{ item }}"
     dest: "/home/{{ ansible_env.USER }}/{{ item }}"
-    owner: "{{ ansible_env.USER }}"
+    owner: "root"
   loop:
     - ".kube"
     - ".minikube"
