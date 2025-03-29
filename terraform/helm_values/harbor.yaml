@@ -1,0 +1,11 @@
+expose:
+  type: nodePort
+  nodePort:
+    name: harbor
+    ports:
+      http:
+        port: 80
+        nodePort: 29291
+      https:
+        port: 443
+        nodePort: 29292
