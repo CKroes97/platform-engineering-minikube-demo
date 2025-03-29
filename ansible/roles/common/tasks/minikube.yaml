@@ -52,6 +52,7 @@
     src: "/home/{{ ansible_env.SUDO_USER }}/{{ item }}"
     dest: "/home/{{ ansible_env.USER }}/{{ item }}"
     owner: "root"
+    mode: 0755
   loop: "{{ file_stat.results | selectattr('stat.exists', 'equalto', true) | map(attribute='item') | list }}"
 
 - name: Delete kube and minikube files from user
