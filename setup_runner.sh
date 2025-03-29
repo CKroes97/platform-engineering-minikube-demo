@@ -9,6 +9,16 @@ if [[ -z "$GITHUB_RUNNER_TOKEN" ]]; then
     exit 1
 fi
 
+user_home=$(getent passwd "$USER" | cut -d: -f6)
+
+if [ -n "$user_home" ]; then
+    export HOME="$user_home"
+    echo "\$HOME has been set to: $HOME"
+else
+    echo "Could not determine the home directory!"
+    exit 1
+fi
+
 cd ~
 
 # install github runner
