@@ -5,10 +5,7 @@ expose:
     ports:
       http:
         port: 80
-        nodePort: 32291
-      https:
-        port: 443
-        nodePort: 32292
+        nodePort: 30001
   tls:
     enabled: false
 
