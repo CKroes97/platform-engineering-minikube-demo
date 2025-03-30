@@ -11,3 +11,12 @@ expose:
         nodePort: 32292
   tls:
     enabled: false
+
+harborAdminPassword: "${HARBOR_PASSWORD}"
+
+externalURL: "${HARBOR_URL}"
+
+registry:
+  credentials:
+    username: "${HARBOR_USERNAME}"
+    password: "${HARBOR_PASSWORD}"
