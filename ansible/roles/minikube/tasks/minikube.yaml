@@ -1,7 +1,7 @@
 - name: Check if minikube is already installed
   ansible.builtin.command:
-    cmd: "minikube --version"
-  register: cri_dockerd_installed
+    cmd: "minikube version"
+  register: minikube_installed
   changed_when: false
   ignore_errors: true
 
