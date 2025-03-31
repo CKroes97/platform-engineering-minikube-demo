@@ -25,15 +25,12 @@ jobs:
           sudo apt install -y ansible
 
       - name: Run Ansible Playbook
-        env:
-          REGISTRY_USER: ${{ secrets.REGISTRY_USER }}
-          REGISTRY_PASSWORD: ${{ secrets.REGISTRY_PASSWORD }}        
         run: >-
           sudo ansible-playbook -i ansible/inventory ansible/host.yaml 
             --extra-vars "
-              registry_user=$REGISTRY_USER
-              registry_password=$REGISTRY_PASSWORD
-              "
+            registry_user=${{ secrets.REGISTRY_USER }}
+            registry_password=${{ secrets.REGISTRY_PASSWORD }}       
+            "
 
       - name: force clean Repository
         run: sudo rm -rf ${{ github.workspace }}/terraform
