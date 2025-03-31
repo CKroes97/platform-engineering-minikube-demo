@@ -9,7 +9,7 @@ resource "helm_release" "harbor" {
   namespace = kubernetes_namespace.registry_namespace.metadata[0].name
   repository= "https://helm.goharbor.io"
   chart     = "harbor"
-  values = [templatefile("${path.module}/values.yaml", {
+  values = [templatefile("helm_values/harbor.yaml", {
     HARBOR_URL      = var.harbor_url
     HARBOR_USERNAME = var.harbor_username
     HARBOR_PASSWORD = var.harbor_password
