@@ -34,7 +34,7 @@
     cmd: "cri-dockerd --version"
   register: cri_dockerd_installed
   changed_when: false
-  ignore_errors: true 
+  ignore_errors: true
 
 - name: Download cri-dockerd tarball
   ansible.builtin.get_url:
@@ -43,7 +43,6 @@
     mode: '0644'
   when: cri_dockerd_installed.rc != 0
     
-
 - name: Create temporary extraction directory
   ansible.builtin.file:
     path: "/tmp/cri-dockerd"
