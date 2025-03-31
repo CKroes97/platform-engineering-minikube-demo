@@ -26,8 +26,11 @@ jobs:
       - name: Initialize Terraform
         run: sudo terraform -chdir=terraform init
 
-      - name: print harbor url 
-        run: echo ${{ secrets.HARBOR_URL }}
+      - name: Debug Environment Variables
+        run: |
+          echo "TF_VAR_harbor_url=${TF_VAR_harbor_url}"
+        env:
+          TF_VAR_harbor_url: ${{ secrets.HARBOR_URL }}
 
       - name: Apply Terraform
         env:
