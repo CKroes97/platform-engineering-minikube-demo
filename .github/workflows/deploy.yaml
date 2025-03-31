@@ -29,10 +29,6 @@ jobs:
       - name: Apply Terraform
         run: >-
           sudo terraform -chdir=terraform apply -auto-approve 
-          -var "harbor_url=${{ secrets.HARBOR_URL}}"
-          -var "harbor_username=${{ secrets.HARBOR_USERNAME}}"
-          -var "harbor_password=${{ secrets.HARBOR_PASSWORD}}"
-
 
       - name: force clean Repository
         run: sudo rm -rf ${{ github.workspace }}/terraform
