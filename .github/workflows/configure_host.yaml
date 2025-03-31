@@ -26,7 +26,7 @@ jobs:
 
       - name: Run Ansible Playbook
         run: >-
-          sudo ansible-playbook -i ansible/inventory ansible/host.yaml \
+          sudo ansible-playbook -i ansible/inventory ansible/host.yaml 
           --extra-vars "registry_user=${{ secrets.REGISTRY_USER }} registry_password=${{ secrets.REGISTRY_PASSWORD }}"
 
       - name: force clean Repository
