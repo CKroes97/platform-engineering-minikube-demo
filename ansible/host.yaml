@@ -6,5 +6,5 @@
 
     - role: docker-registry
       vars:
-        registry_user: "{{ registry_user }}"
-        registry_password: "{{ registry_password }}"
+        registry_user_1: "{{ registry_user }}"
+        registry_password_1: "{{ registry_password }}"
