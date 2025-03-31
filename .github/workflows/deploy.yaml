@@ -27,11 +27,12 @@ jobs:
         run: sudo terraform -chdir=terraform init
 
       - name: Apply Terraform
-        env:
-          TF_VAR_harbor_url: ${{ secrets.HARBOR_URL }}
-          TF_VAR_harbor_username: ${{ secrets.HARBOR_USERNAME }}
-          TF_VAR_harbor_password: ${{ secrets.HARBOR_PASSWORD }}
-        run: sudo terraform -chdir=terraform apply -auto-approve
+        run: >-
+          sudo terraform -chdir=terraform apply -auto-approve 
+          -var "harbor_url ${{ secrets.HARBOR_URL}}"
+          -var "harbor_username ${{ secrets.HARBOR_USERNAME}}"
+          -var "harbor_password ${{ secrets.HARBOR PASSWORD}}"
+
 
       - name: force clean Repository
         run: sudo rm -rf ${{ github.workspace }}/terraform
