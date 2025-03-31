@@ -8,14 +8,6 @@ output "debug_harbor_url" {
   value = local.debug_harbor_url
 }
 
-output "debug_harbor_username" {
-  value = local.debug_harbor_username
-}
-
-output "debug_harbor_password" {
-  value = "******" # Voorkom lekken van het wachtwoord
-}
-
 # resource "kubernetes_namespace" "registry_namespace" {
 #   metadata {
 #     name = "docker-registry"
