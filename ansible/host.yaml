@@ -2,5 +2,10 @@
   hosts: local
   become: true
   roles:
-    - minikube
-    - docker-registry
+    - role: minikube
+    
+    - role: docker-registry
+      vars: 
+        registry_user: "{{ registry_user }}"
+        registry_password: "{{ registry_password }}"
+
