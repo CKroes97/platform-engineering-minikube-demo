@@ -5,6 +5,3 @@
     - role: minikube
 
     - role: docker-registry
-      vars:
-        registry_user_1: "{{ registry_user }}"
-        registry_password_1: "{{ registry_password }}"
