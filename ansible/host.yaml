@@ -3,9 +3,8 @@
   become: true
   roles:
     - role: minikube
-    
+
     - role: docker-registry
-      vars: 
+      vars:
         registry_user: "{{ registry_user }}"
         registry_password: "{{ registry_password }}"
-
