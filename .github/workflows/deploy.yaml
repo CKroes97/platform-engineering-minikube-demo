@@ -28,7 +28,7 @@ jobs:
 
       - name: Debug Environment Variables
         run: |
-          echo "TF_VAR_harbor_url=${TF_VAR_harbor_url}"
+          echo "TF_VAR_harbor_url=${TF_VAR_harbor_url_invalid}"
         env:
           TF_VAR_harbor_url: ${{ secrets.HARBOR_URL }}
 
