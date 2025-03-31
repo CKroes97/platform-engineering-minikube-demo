@@ -19,7 +19,7 @@ resource "helm_release" "harbor" {
 resource "kubernetes_secret" "harbor_credentials" {
   metadata {
     name      = "harbor-credentials"
-    namespace = "default"
+    namespace = "kubernetes_namespace.registry_namespace.metadata[0].name"
   }
 
   data = {
@@ -34,7 +34,7 @@ resource "kubernetes_secret" "harbor_credentials" {
 resource "kubernetes_deployment" "harbor_cli" {
   metadata {
     name      = "harbor-cli"
-    namespace = "default"
+    namespace = "kubernetes_namespace.registry_namespace.metadata[0].name"
     labels = {
       app = "harbor-cli"
     }
