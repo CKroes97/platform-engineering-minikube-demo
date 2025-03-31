@@ -94,6 +94,12 @@ output "debug_harbor_password" {
 
 
 # Terraform Variables for GitHub Secrets
-variable "harbor_url" {}
-variable "harbor_username" {}
-variable "harbor_password" {}
+variable "harbor_url" {
+  type = string
+}
+variable "harbor_username" {
+  type = string
+}
+variable "harbor_password" {
+  type = string
+}
