@@ -4,69 +4,69 @@ resource "kubernetes_namespace" "registry_namespace" {
   }
 }
 
-resource "helm_release" "harbor" {
-  name      = "harbor"
-  namespace = kubernetes_namespace.registry_namespace.metadata[0].name
-  repository= "https://helm.goharbor.io"
-  chart     = "harbor"
-  values = [templatefile("helm_values/harbor.yaml", {
-    HARBOR_URL      = var.harbor_url
-    HARBOR_USERNAME = var.harbor_username
-    HARBOR_PASSWORD = var.harbor_password
-  })]
-}
-
-resource "kubernetes_secret" "harbor_credentials" {
+resource "kubernetes_persistent_volume_claim" "registry_pvc" {
   metadata {
-    name      = "harbor-credentials"
+    name      = "registry-pvc"
     namespace = kubernetes_namespace.registry_namespace.metadata[0].name
   }
-
-  data = {
-    HARBOR_URL      = var.harbor_url
-    HARBOR_USERNAME = var.harbor_username
-    HARBOR_PASSWORD = var.harbor_password
+  spec {
+    access_modes = ["ReadWriteOnce"]
+    resources {
+      requests = {
+        storage = "5Gi"
+      }
+    }
   }
-
-  type = "Opaque"
 }
 
-resource "kubernetes_deployment" "harbor_cli" {
+resource "kubernetes_deployment" "registry" {
   metadata {
-    name      = "harbor-cli"
+    name      = "registry"
     namespace = kubernetes_namespace.registry_namespace.metadata[0].name
     labels = {
-      app = "harbor-cli"
+      app = "registry"
     }
   }
 
   spec {
     replicas = 1
-
     selector {
       match_labels = {
-        app = "harbor-cli"
+        app = "registry"
       }
     }
 
     template {
       metadata {
         labels = {
-          app = "harbor-cli"
+          app = "registry"
         }
       }
 
       spec {
         container {
-          name  = "hcli"
-          image = "goharbor/harbor-cli:latest"
+          name  = "registry"
+          image = "registry:2"
 
-          command = ["/bin/sh", "-c", "sleep infinity"]
+          port {
+            container_port = 5000
+          }
 
-          env_from {
-            secret_ref {
-              name = kubernetes_secret.harbor_credentials.metadata[0].name
-            }
+          env {
+            name  = "REGISTRY_STORAGE_FILESYSTEM_ROOTDIRECTORY"
+            value = "/var/lib/registry"
+          }
+
+          volume_mount {
+            name       = "registry-storage"
+            mount_path = "/var/lib/registry"
+          }
+        }
+
+        volume {
+          name = "registry-storage"
+          persistent_volume_claim {
+            claim_name = kubernetes_persistent_volume_claim.registry_pvc.metadata[0].name
           }
         }
       }
@@ -74,14 +74,24 @@ resource "kubernetes_deployment" "harbor_cli" {
   }
 }
 
+resource "kubernetes_service" "registry" {
+  metadata {
+    name      = "registry"
+    namespace = kubernetes_namespace.registry_namespace.metadata[0].name
+  }
 
-# Terraform Variables for GitHub Secrets
-variable "harbor_url" {
-  type = string
-}
-variable "harbor_username" {
-  type = string
-}
-variable "harbor_password" {
-  type = string
+  spec {
+    selector = {
+      app = "registry"
+    }
+
+    port {
+      protocol    = "TCP"
+      port        = 5000
+      target_port = 5000
+      node_port   = 30080
+    }
+
+    type = "NodePort"
+  }
 }
