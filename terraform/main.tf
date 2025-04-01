@@ -64,7 +64,7 @@ resource "kubernetes_deployment" "registry" {
 
           env {
             name  = "REGISTRY_AUTH_HTPASSWD_PATH"
-            value = "/etc/platform-registry/htpasswd"
+            value = "htpasswd"
           }
 
           env {
@@ -76,6 +76,13 @@ resource "kubernetes_deployment" "registry" {
             name       = "registry-storage"
             mount_path = "/var/lib/registry"
           }
+
+          volume_mount {
+            name       = "auth-volume"
+            mount_path = "/etc/platform-registry/"
+            read_only  = true
+          }
+        }
         }
 
         volume {
