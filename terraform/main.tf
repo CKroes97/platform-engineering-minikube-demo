@@ -64,7 +64,7 @@ resource "kubernetes_deployment" "registry" {
 
           env {
             name  = "REGISTRY_AUTH_HTPASSWD_PATH"
-            value = "/auth/htpasswd"
+            value = "/etc/platform-registry/htpasswd"
           }
 
           env {
