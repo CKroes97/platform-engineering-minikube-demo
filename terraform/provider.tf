@@ -10,12 +10,6 @@ terraform {
   }
 }
 
-provider "helm" {
-  kubernetes {
-    config_path = "~/.kube/config" # Path to your Kubeconfig file
-  }
-}
-
 provider "kubernetes" {
   config_path    = "~/.kube/config"
   config_context = "minikube"
