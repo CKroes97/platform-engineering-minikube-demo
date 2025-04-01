@@ -19,19 +19,6 @@ resource "kubernetes_persistent_volume_claim" "registry_pvc" {
   }
 }
 
-resource "kubernetes_secret" "registry_auth_secret" {
-  metadata {
-    name      = "registry-auth-secret"
-    namespace = kubernetes_namespace.registry_namespace.metadata[0].name
-  }
-
-  data = {
-    "htpasswd" = file("/etc/platform-registry/htpasswd")  # Directly reference the file
-  }
-
-  type = "Opaque"
-}
-
 resource "kubernetes_deployment" "registry" {
   metadata {
     name      = "registry"
