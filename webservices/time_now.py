@@ -9,7 +9,7 @@ class TimeHandler(BaseHTTPRequestHandler):
             self.send_response(200)
             self.send_header('Content-type', 'application/json')
             self.end_headers()
-            response = {"time": datetime.utcnow().isoformat()}
+            response = {"time":  datetime.now(datetime.timezone.utc).isoformat()}
             self.wfile.write(json.dumps(response).encode('utf-8'))
         else:
             self.send_response(404)
