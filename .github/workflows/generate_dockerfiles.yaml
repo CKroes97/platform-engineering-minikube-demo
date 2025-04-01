@@ -22,7 +22,7 @@ jobs:
         run: pip install ruff
 
       - name: Run linter (ruff)
-        run: ruff check webservices/ scripts/
+        run: ruff check webservices/ workflow_scripts/
 
       - name: Run Dockerfile generation script
         run: python workflow_scripts/generate_dockerfiles.py
