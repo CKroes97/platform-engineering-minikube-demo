@@ -1,8 +1,16 @@
+- name: Check if minikube is already installed
+  ansible.builtin.command:
+    cmd: "minikube version"
+  register: minikube_installed
+  changed_when: false
+  ignore_errors: true
+
 - name: Download and install Minikube
   ansible.builtin.get_url:
     url: "https://github.com/kubernetes/minikube/releases/latest/download/minikube-linux-amd64"
     dest: "/usr/local/bin/minikube"
     mode: "0755"
+  when: minikube_installed.rc != 0
 
 - name: Create systemd service file for Minikube
   ansible.builtin.copy:

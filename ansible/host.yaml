@@ -2,4 +2,6 @@
   hosts: local
   become: true
   roles:
-    - common
+    - role: minikube
+
+    - role: docker-registry
