@@ -72,10 +72,9 @@ resource "kubernetes_deployment" "registry" {
 
           env {
             name  = "REGISTRY_AUTH_HTPASSWD_REALM"
-            value = "Registry Realm"
+            value = "Registry"
           }
 
-          
           env {
             name  = "REGISTRY_AUTH"
             value = "htpasswd"
