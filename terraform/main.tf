@@ -19,6 +19,19 @@ resource "kubernetes_persistent_volume_claim" "registry_pvc" {
   }
 }
 
+resource "kubernetes_secret" "registry_auth_secret" {
+  metadata {
+    name      = "registry-auth-secret"
+    namespace = kubernetes_namespace.registry_namespace.metadata[0].name
+  }
+
+  data = {
+    "htpasswd" = file("/etc/platform-registry/htpasswd")  # Directly reference the file
+  }
+
+  type = "Opaque"
+}
+
 resource "kubernetes_deployment" "registry" {
   metadata {
     name      = "registry"
@@ -55,6 +68,17 @@ resource "kubernetes_deployment" "registry" {
           env {
             name  = "REGISTRY_STORAGE_FILESYSTEM_ROOTDIRECTORY"
             value = "/var/lib/registry"
+          }
+
+          env {
+            name  = "REGISTRY_AUTH_HTPASSWD_REALM"
+            value = "Registry Realm"
+          }
+
+          
+          env {
+            name  = "REGISTRY_AUTH"
+            value = "htpasswd"
           }
 
           volume_mount {
