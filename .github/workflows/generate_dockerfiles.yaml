@@ -16,7 +16,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
-          python-version: "3.x"
+          python-version: "3.11"
 
       - name: Install dependencies
         run: pip install ruff
@@ -28,19 +28,21 @@ jobs:
         run: python workflow_scripts/generate_dockerfiles.py
 
       - name: Commit and Push Changes
+        id: commit_and_push
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git checkout -b generate-dockerfiles
           git add generated_dockerfiles/
           git commit -m "Auto-generate Dockerfiles for new webservices"
-          git push origin generate-dockerfiles
+          git push origin generate-dockerfiles-$(date +'%Y%m%d%H%M%S')
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v7
         with:
-          branch: generate-dockerfiles
+          branch: ${{ steps.commit-and-push.outputs.branch }}
           title: "Auto-generate Dockerfiles for new webservices"
           body: "This PR adds Dockerfiles for newly detected Python web services."
           base: main
