@@ -32,71 +32,71 @@ resource "kubernetes_secret" "registry_auth_secret" {
   type = "Opaque"
 }
 
-resource "kubernetes_deployment" "registry" {
-  metadata {
-    name      = "registry"
-    namespace = kubernetes_namespace.registry_namespace.metadata[0].name
-    labels = {
-      app = "registry"
-    }
-  }
+# resource "kubernetes_deployment" "registry" {
+#   metadata {
+#     name      = "registry"
+#     namespace = kubernetes_namespace.registry_namespace.metadata[0].name
+#     labels = {
+#       app = "registry"
+#     }
+#   }
 
-  spec {
-    replicas = 1
-    selector {
-      match_labels = {
-        app = "registry"
-      }
-    }
+#   spec {
+#     replicas = 1
+#     selector {
+#       match_labels = {
+#         app = "registry"
+#       }
+#     }
 
-    template {
-      metadata {
-        labels = {
-          app = "registry"
-        }
-      }
+#     template {
+#       metadata {
+#         labels = {
+#           app = "registry"
+#         }
+#       }
 
-      spec {
-        container {
-          name  = "registry"
-          image = "registry:2"
+#       spec {
+#         container {
+#           name  = "registry"
+#           image = "registry:2"
 
-          port {
-            container_port = 5000
-          }
+#           port {
+#             container_port = 5000
+#           }
 
-          env {
-            name  = "REGISTRY_STORAGE_FILESYSTEM_ROOTDIRECTORY"
-            value = "/var/lib/registry"
-          }
+#           env {
+#             name  = "REGISTRY_STORAGE_FILESYSTEM_ROOTDIRECTORY"
+#             value = "/var/lib/registry"
+#           }
 
-          env {
-            name  = "REGISTRY_AUTH_HTPASSWD_REALM"
-            value = "Registry Realm"
-          }
+#           env {
+#             name  = "REGISTRY_AUTH_HTPASSWD_REALM"
+#             value = "Registry Realm"
+#           }
 
           
-          env {
-            name  = "REGISTRY_AUTH"
-            value = "htpasswd"
-          }
+#           env {
+#             name  = "REGISTRY_AUTH"
+#             value = "htpasswd"
+#           }
 
-          volume_mount {
-            name       = "registry-storage"
-            mount_path = "/var/lib/registry"
-          }
-        }
+#           volume_mount {
+#             name       = "registry-storage"
+#             mount_path = "/var/lib/registry"
+#           }
+#         }
 
-        volume {
-          name = "registry-storage"
-          persistent_volume_claim {
-            claim_name = kubernetes_persistent_volume_claim.registry_pvc.metadata[0].name
-          }
-        }
-      }
-    }
-  }
-}
+#         volume {
+#           name = "registry-storage"
+#           persistent_volume_claim {
+#             claim_name = kubernetes_persistent_volume_claim.registry_pvc.metadata[0].name
+#           }
+#         }
+#       }
+#     }
+#   }
+# }
 
 resource "kubernetes_service" "registry" {
   metadata {
