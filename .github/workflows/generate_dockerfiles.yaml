@@ -38,7 +38,7 @@ jobs:
           git add generated_dockerfiles/
           git commit -m "Auto-generate Dockerfiles for new webservices"
           git push origin $BRANCH_NAME
-          echo echo "branch_name"="$BRANCH_NAME" >> $GITHUB_OUTPUT
+          echo echo "branch_name"="$BRANCH_NAME" >> $GITHUB_ENV
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
