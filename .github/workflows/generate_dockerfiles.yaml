@@ -38,14 +38,14 @@ jobs:
           git add generated_dockerfiles/
           git commit -m "Auto-generate Dockerfiles for new webservices"
           git push origin $BRANCH_NAME
-          echo "::set-output name=branch_name::$BRANCH_NAME"
+          echo echo "branch_name"="$BRANCH_NAME" >> $GITHUB_OUTPUT
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v7
         with:
-          branch: ${{ steps.commit-and-push.outputs.branch_name }}
+          branch: $branch_name
           title: "Auto-generate Dockerfiles for new webservices"
           body: "This PR adds Dockerfiles for newly detected Python web services."
           base: main
