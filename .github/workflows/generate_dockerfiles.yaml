@@ -45,7 +45,7 @@ jobs:
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v7
         with:
-          branch: $branch_name
+          branch: ${{ env.branch_name }}
           title: "Auto-generate Dockerfiles for new webservices"
           body: "This PR adds Dockerfiles for newly detected Python web services."
           base: main
