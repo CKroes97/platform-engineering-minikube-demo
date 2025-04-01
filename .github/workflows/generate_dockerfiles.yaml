@@ -32,7 +32,7 @@ jobs:
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          TIMESTAMP= $(date +'%Y%m%d%H%M%S')
+          TIMESTAMP="$(date +'%Y%m%d%H%M%S')"
           BRANCH_NAME="generate-dockerfiles-$TIMESTAMP"
           git checkout -b $BRANCH_NAME
           git add generated_dockerfiles/
