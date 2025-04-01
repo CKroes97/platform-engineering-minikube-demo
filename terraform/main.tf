@@ -83,8 +83,7 @@ resource "kubernetes_deployment" "registry" {
             read_only  = true
           }
         }
-        }
-
+        
         volume {
           name = "registry-storage"
           persistent_volume_claim {
