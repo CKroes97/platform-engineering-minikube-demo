@@ -4,7 +4,7 @@ on:
   push:
     paths:
       - "webservices/**.py"
-      - "generate_dockerfiles.yaml"
+      - ".github/workflows/generate_dockerfiles.yaml"
   workflow_dispatch: 
 
 jobs:
