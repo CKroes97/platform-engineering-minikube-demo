@@ -28,9 +28,7 @@ jobs:
         run: python workflow_scripts/generate_dockerfiles.py
 
       - name: Commit and Push Changes
-        id: commit_and_push
         run: |
-          git fetch
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           TIMESTAMP="$(date +'%Y%m%d%H%M%S')"
@@ -40,16 +38,10 @@ jobs:
           git commit -m "Auto-generate Dockerfiles for new webservices"
           git push origin $BRANCH_NAME
           echo "branch_name"="$BRANCH_NAME" >> "$GITHUB_ENV"
-          git checkout main
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      # - name: Create Pull Request
-      #   uses: peter-evans/create-pull-request@v7
-      #   with:
-      #     branch: ${{ env.branch_name }}
-      #     title: "Auto-generate Dockerfiles for new webservices"
-      #     body: "This PR adds Dockerfiles for newly detected Python web services."
-      #     commit-message: "Create PR"
-      #     base: main
-      #     token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Create PR
+        run: | 
+          gh pr create --base main --head ${{ env.branch_name }} \
+           --title "Generate Dockerfiles" --body "Automated update"
