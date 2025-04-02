@@ -14,3 +14,8 @@
   ansible.builtin.apt:
     name: gh
     state: present
+
+- name: install github python package 
+  ansible.builtin.pip:
+    name: github
+    state: present
