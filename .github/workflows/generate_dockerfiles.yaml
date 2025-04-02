@@ -30,6 +30,7 @@ jobs:
       - name: Commit and Push Changes
         id: commit_and_push
         run: |
+          git fetch
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           TIMESTAMP="$(date +'%Y%m%d%H%M%S')"
