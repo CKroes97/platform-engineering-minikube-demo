@@ -32,8 +32,7 @@ jobs:
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          TIMESTAMP="$(date +'%Y%m%d%H%M%S')"
-          BRANCH_NAME="generate-dockerfiles-$TIMESTAMP"
+          BRANCH_NAME="generate-dockerfiles-${{ github.sha }}"
           git checkout -b $BRANCH_NAME
           git add generated_dockerfiles/
           git commit -m "Auto-generate Dockerfiles for new webservices"
