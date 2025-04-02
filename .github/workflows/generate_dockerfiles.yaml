@@ -4,7 +4,8 @@ on:
   push:
     paths:
       - "webservices/**.py"
-  workflow_dispatch: # Allows manual triggering
+      - "generate_dockerfiles.yaml"
+  workflow_dispatch: 
 
 jobs:
   generate-dockerfiles:
