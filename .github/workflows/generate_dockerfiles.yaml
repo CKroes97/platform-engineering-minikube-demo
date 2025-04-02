@@ -43,7 +43,7 @@ jobs:
 
       - name: Create PR
         run: | 
-          gh pr create --base main --head ${{ env.branch_name }} \
+          gh pr create --base ${{ github.head_ref }} --head ${{ env.branch_name }} \
            --title "Generate Dockerfiles" --body "Automated update"
         env:
          GH_TOKEN: ${{ github.token }}
