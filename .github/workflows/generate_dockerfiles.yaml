@@ -49,5 +49,6 @@ jobs:
           branch: ${{ env.branch_name }}
           title: "Auto-generate Dockerfiles for new webservices"
           body: "This PR adds Dockerfiles for newly detected Python web services."
+          commit-message: "Create PR"
           base: main
           token: ${{ secrets.GITHUB_TOKEN }}
