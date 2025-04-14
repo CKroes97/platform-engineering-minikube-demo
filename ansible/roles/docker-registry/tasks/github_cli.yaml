@@ -16,6 +16,6 @@
     state: present
 
 - name: install github python package 
-  ansible.builtin.pip:
+  ansible.builtin.pipx:
     name: pygithub
     state: present
