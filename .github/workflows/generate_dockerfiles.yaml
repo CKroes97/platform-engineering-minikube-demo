@@ -50,6 +50,6 @@ jobs:
 
       - name: Merge PR if not redundant
         run: python workflow_scripts/check_if_pr_redundant.py \
-         --current-branch ${{ env.branch_name}} \
-         --base-branch ${{ github.ref_name }} 
+         --current-branch "${{ env.branch_name}}" \
+         --base-branch "${{ github.ref_name }}" \
          --repository "${{ github.branch_name }}"
