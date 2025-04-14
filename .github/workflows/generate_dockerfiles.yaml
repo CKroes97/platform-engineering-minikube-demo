@@ -5,6 +5,7 @@ on:
     paths:
       - "webservices/**.py"
       - ".github/workflows/generate_dockerfiles.yaml"
+      - "workflow_scripts/check_if_pr_redundant.py"
   workflow_dispatch: 
 
 jobs:
