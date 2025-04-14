@@ -67,6 +67,7 @@ def check_existing_prs(repo, base_branch, current_branch, folder_to_check):
 
 def main():
     args = parse_arguments()
+    print(os.getenv("GITHUB_TOKEN"))
     g = Github(os.getenv("GITHUB_TOKEN"))
     current_branch = args.current_branch
     base_branch = args.base_branch
