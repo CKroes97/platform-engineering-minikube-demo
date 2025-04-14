@@ -67,7 +67,6 @@
     path: "/tmp/cri-dockerd"
     state: absent
 
-
 - name: Remove cri-dockerd tarball
   ansible.builtin.file:
     path: "/tmp/cri-dockerd.tgz"

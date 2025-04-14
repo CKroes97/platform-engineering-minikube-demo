@@ -33,6 +33,13 @@
       WantedBy=multi-user.target
     mode: "0644"
 
+- name: Ensure filesystem access (did I tell that you that this should run on a dedicated machine?)
+  ansible.builtin.sysctl:
+    name: fs.protected_regular
+    value: '0'
+    state: present
+    reload: true
+
 - name: Reload systemd to read new service
   ansible.builtin.systemd:
     daemon_reload: true
@@ -47,9 +54,3 @@
     name: minikube
     state: started
 
-- name: Ensure filesystem access (did I tell that you that this should run on a dedicated machine?)
-  ansible.builtin.sysctl:
-    name: fs.protected_regular
-    value: '0'
-    state: present
-    reload: true
