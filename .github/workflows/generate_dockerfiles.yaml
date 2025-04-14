@@ -55,4 +55,4 @@ jobs:
          --base-branch "${{ github.ref_name }}" \
          --repository "${{ github.branch_name }}"
         env:
-         GH_TOKEN: ${{ github.token }}
+         GITHUB_TOKEN: ${{ github.token }}
