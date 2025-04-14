@@ -85,7 +85,7 @@ def main():
         )
         delete_branch_from_github(repo, args.current_branch)
     else:
-        print("No matching PR found. No action taken.")
+        current_branch.merge(commit_message="Merge via Github Action")
 
 if __name__ == "__main__":
     main()
