@@ -11,5 +11,6 @@ Usage:
 - Fork repo
 - run init.sh to add a github runner (token can be gotten from github repo settings > actions )
     Note: this adds a dedicated Linux user with paswordless Sudo rights.
+- Run the "configure_host.yaml" action
 - Run the "deploy.yaml" action
 - Profit

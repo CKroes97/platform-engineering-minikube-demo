@@ -54,6 +54,6 @@ jobs:
          python workflow_scripts/check_if_pr_redundant.py \
          --current-branch "${{ env.branch_name}}" \
          --base-branch "${{ github.ref_name }}" \
-         --repository "${{ github.branch_name }}"
+         --repository "${{ github.repository }}"
         env:
          GITHUB_TOKEN: ${{ github.token }}
