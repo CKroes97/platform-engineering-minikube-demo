@@ -10,9 +10,11 @@
     state: present
     filename: github-cli
 
-- name: Install GitHub CLI
+- name: Install GitHub CLI and virtualenv
   ansible.builtin.apt:
-    name: gh
+    name: 
+    - gh
+    - virtualenv
     state: present
 
 - name: Install github python package
