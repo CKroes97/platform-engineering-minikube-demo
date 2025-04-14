@@ -53,4 +53,3 @@
   ansible.builtin.systemd:
     name: minikube
     state: started
-

@@ -15,7 +15,7 @@
     name: gh
     state: present
 
-- name: install github python package 
+- name: Install github python package
   ansible.builtin.pip:
     name: pygithub
     state: present
