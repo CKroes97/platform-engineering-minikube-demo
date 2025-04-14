@@ -39,10 +39,9 @@ def delete_branch_from_github(repo, branch_name):
 
 
 # Function to get the repository and authenticated user
-def get_repo_and_user(github_token, repo_name):
+def get_repo_and_user(github, repo_name):
     """Authenticate to GitHub with a token and get the repository."""
-    g = Github(github_token)
-    repo = g.get_repo(repo_name)
+    repo = github.get_repo(repo_name)
     return repo
 
 
@@ -67,7 +66,6 @@ def check_existing_prs(repo, base_branch, current_branch, folder_to_check):
 
 def main():
     args = parse_arguments()
-    print(os.getenv("GITHUB_TOKEN"))
     g = Github(os.getenv("GITHUB_TOKEN"))
     current_branch = args.current_branch
     base_branch = args.base_branch
