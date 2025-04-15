@@ -25,6 +25,9 @@ jobs:
         with:
           python-version: "3.11"
 
+      - name: Install requirements
+        run: pip install pathlib docker
+
       - name: Run Dockerfile generation script
         run: | 
           python workflow_scripts/build_docker_image/build_docker_images.py \
