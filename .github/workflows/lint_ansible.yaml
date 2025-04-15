@@ -9,7 +9,7 @@ on:
   pull_request:
 
 jobs:
-  ansible:
+  ansible-lint:
 
     runs-on: self-hosted 
 
