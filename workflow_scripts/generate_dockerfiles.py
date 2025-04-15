@@ -17,7 +17,7 @@ def generate_dockerfile(service_name):
 
     dockerfile_content = (
         f"# Auto-generated Dockerfile for {service_name}\n"
-        "FROM python:3.11-slim\n"
+        "FROM python:3.14.0a7-slim\n"
         "WORKDIR /app\n"
         f"COPY {WEBSERVICES_DIR}/{service_name}.py /app/{service_name}.py\n"
         'CMD ["python", "/app/{service_name}.py"]\n'
