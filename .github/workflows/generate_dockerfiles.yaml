@@ -51,7 +51,7 @@ jobs:
            --title "Generate Dockerfiles" --body "Automated update"
         env:
          GH_TOKEN: ${{ github.token }}
-        if: ${{ steps.commit_build,outcome == 'success' }}
+        if: ${{ steps.commit_build.outcome == 'success' }}
 
       - name: Merge PR if not redundant
         run: |
@@ -61,4 +61,4 @@ jobs:
          --repository "${{ github.repository }}"
         env:
          GITHUB_TOKEN: ${{ github.token }}
-        if: ${{ steps.commit_build,outcome == 'success' }}
+        if: ${{ steps.commit_build.outcome == 'success' }}
