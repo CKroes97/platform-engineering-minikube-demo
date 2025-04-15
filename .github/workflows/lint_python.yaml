@@ -4,7 +4,8 @@ on:
   workflow_dispatch:
   push:
     paths:
-      - 'ansible/**'
+      - 'webservices/*'
+      - 'workflow_scripts/*'
   pull_request:
 
 jobs:
@@ -28,4 +29,4 @@ jobs:
         run: sudo pip install ruff
 
       - name: Run ruff
-        run: ruff check /webservices /workflow_scripts
+        run: ruff check webservices workflow_scripts
