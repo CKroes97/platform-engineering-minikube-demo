@@ -26,7 +26,7 @@ jobs:
           python-version: "3.11"
 
       - name: Ensure ansible is intalled
-        run: sudo pip install ansible-dev-tools
+        run: pip install ansible-dev-tools
 
       - name: Run Ansible Lint
         run: ansible-lint ansible/

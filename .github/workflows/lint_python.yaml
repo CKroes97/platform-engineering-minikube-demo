@@ -27,7 +27,7 @@ jobs:
           python-version: "3.11"
 
       - name: Ensure ruff is intalled
-        run: sudo pip install ruff
+        run: pip install ruff
 
       - name: Run ruff
         run: ruff check webservices workflow_scripts
