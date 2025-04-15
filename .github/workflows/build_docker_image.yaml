@@ -18,3 +18,18 @@ jobs:
 
       - name: Checkout repository
         uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.11"
+
+      - name: Run Dockerfile generation script
+        run: | 
+          python workflow_scripts/generate_dockerfiles/generate_dockerfiles.py \
+           --dockerfiles-dir generated_dockerfiles \
+           --docker-registry ${{ secrets.DOCKER_REGISTRY }}
+        env:
+          DOCKER_HOST: "localhost:30080"
+          DOCKER_USERNAME: ${{ secrets.REGISTRY_USER }}
+          DOCKER_PASSWORD: ${{ secrets.REGISTRY_PASSWORD }}
