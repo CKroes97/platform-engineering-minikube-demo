@@ -1,0 +1,64 @@
+name: Generate Dockerfiles
+
+on:
+  push:
+    paths:
+      - "webservices/**.py"
+      - ".github/workflows/generate_dockerfiles.yaml"
+      - "workflow_scripts/check_if_pr_redundant.py"
+  workflow_dispatch: 
+
+jobs:
+  generate-dockerfiles:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: pip install ruff pygithub
+
+      - name: Run linter (ruff)
+        run: ruff check webservices/ workflow_scripts/
+
+      - name: Run Dockerfile generation script
+        run: python workflow_scripts/generate_dockerfiles.py
+
+      # Step will fail on an empty commit. In that case just skip all next steps
+      - name: Commit and Push Changes
+        id: commit_build
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          BRANCH_NAME="generate-dockerfiles-${{ github.sha }}"
+          git checkout -b $BRANCH_NAME
+          git add generated_dockerfiles/
+          git commit -m "Auto-generate Dockerfiles for new webservices"
+          git push origin $BRANCH_NAME
+          echo "branch_name"="$BRANCH_NAME" >> "$GITHUB_ENV"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        continue-on-error: true
+
+      - name: Create PR
+        run: | 
+          gh pr create --base ${{ github.ref_name }} --head ${{ env.branch_name }} \
+           --title "Generate Dockerfiles" --body "Automated update"
+        env:
+         GH_TOKEN: ${{ github.token }}
+        if: ${{ steps.commit_build.outcome == 'success' }}
+
+      - name: Merge PR if not redundant
+        run: |
+         python workflow_scripts/check_if_pr_redundant.py \
+         --current-branch "${{ env.branch_name}}" \
+         --base-branch "${{ github.ref_name }}" \
+         --repository "${{ github.repository }}"
+        env:
+         GITHUB_TOKEN: ${{ github.token }}
+        if: ${{ steps.commit_build.outcome == 'success' }}
