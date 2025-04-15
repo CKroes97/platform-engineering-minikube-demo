@@ -30,6 +30,7 @@ jobs:
         run: python workflow_scripts/generate_dockerfiles.py
 
       - name: Commit and Push Changes
+        id: commit_build
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
@@ -41,6 +42,7 @@ jobs:
           echo "branch_name"="$BRANCH_NAME" >> "$GITHUB_ENV"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        continue-on-error: true
 
       - name: Create PR
         run: | 
@@ -48,6 +50,7 @@ jobs:
            --title "Generate Dockerfiles" --body "Automated update"
         env:
          GH_TOKEN: ${{ github.token }}
+        if: success()
 
       - name: Merge PR if not redundant
         run: |
@@ -57,3 +60,4 @@ jobs:
          --repository "${{ github.repository }}"
         env:
          GITHUB_TOKEN: ${{ github.token }}
+        if: success()
