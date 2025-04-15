@@ -9,10 +9,6 @@ def generate_dockerfile(service_name):
     service_dir = os.path.join(OUTPUT_DIR, service_name)
     dockerfile_path = os.path.join(service_dir, "Dockerfile")
 
-    if os.path.exists(dockerfile_path):
-        print(f"Skipping {service_name}, Dockerfile already exists.")
-        return
-
     os.makedirs(service_dir, exist_ok=True)
 
     dockerfile_content = (
