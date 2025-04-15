@@ -31,8 +31,8 @@ jobs:
       - name: Run Dockerfile generation script
         run: | 
           python workflow_scripts/build_docker_image/build_docker_images.py \
-           --dockerfiles-dir generated_dockerfiles \
-           --docker-registry ${{ secrets.DOCKER_REGISTRY }}
+           --dockerfiles-dir "generated_dockerfiles" \
+           --docker-registry "${{ secrets.DOCKER_REGISTRY }}"
         env:
           DOCKER_HOST: "localhost:30080"
           DOCKER_USERNAME: ${{ secrets.REGISTRY_USER }}
