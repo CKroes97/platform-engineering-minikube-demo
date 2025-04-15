@@ -48,19 +48,16 @@ def get_repo_and_user(github, repo_name):
 # Function to check if a PR already exists with no diff in the generated_dockerfiles folder
 def check_existing_prs(repo, base_branch, current_branch, folder_to_check):
     """Check if an open PR exists with no diff in the specified folder."""
-    open_prs = repo.get_pulls(state="open", base=base_branch)
-
+    open_prs = repo.get_pulls(state="open", head=current_branch, base=base_branch)
     for pr in open_prs:
         # Compare the PR branch with the current branch
-        if pr.head.ref == current_branch:
-            # Check the diff of the PR to see if it contains changes in the specified folder
-            files = pr.get_files()
-            for file in files:
-                if file.filename.startswith(folder_to_check):
-                    print(
-                        f"Found existing PR {pr.number} with changes in {folder_to_check}."
-                    )
-                    return pr
+        # Check the diff of the PR to see if it contains changes in the specified folder
+        for file in pr.get_files():
+            if file.filename.startswith(folder_to_check):
+                print(
+                    f"Found existing PR {pr.number} with changes in {folder_to_check}."
+                )
+                return pr
     return None
 
 
@@ -73,18 +70,20 @@ def main():
     folder = args.folder
 
     repo = get_repo_and_user(g, repository)
-    existing_pr = check_existing_prs(
-        repo, base_branch, current_branch, folder
-    )
+    existing_pr = check_existing_prs(repo, base_branch, current_branch, folder)
 
     if existing_pr:
         print(
             f"Existing PR {existing_pr.number} found with no diff. "
             f"Deleting branch '{args.current_branch}'."
         )
+        existing_pr.merge(
+            commit_message="Merge via Github Action", merge_method="squash"
+        )
         delete_branch_from_github(repo, args.current_branch)
     else:
-        current_branch.merge(commit_message="Merge via Github Action")
+        delete_branch_from_github(repo, args.current_branch)
+
 
 if __name__ == "__main__":
     main()
