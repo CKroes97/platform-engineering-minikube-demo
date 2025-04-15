@@ -5,8 +5,9 @@ on:
     paths:
       - "webservices/**.py"
       - ".github/workflows/generate_dockerfiles.yaml"
-      - "workflow_scripts/check_if_pr_redundant.py"
+      - "workflow_scripts/generate_dockerfiles/*"
   workflow_dispatch: 
+  pull_request:
 
 jobs:
   generate-dockerfiles:
@@ -21,13 +22,10 @@ jobs:
           python-version: "3.11"
 
       - name: Install dependencies
-        run: pip install ruff pygithub
-
-      - name: Run linter (ruff)
-        run: ruff check webservices/ workflow_scripts/
+        run: pip install pygithub
 
       - name: Run Dockerfile generation script
-        run: python workflow_scripts/generate_dockerfiles.py
+        run: python workflow_scripts/generate_dockerfiles/generate_dockerfiles.py
 
       # Step will fail on an empty commit. In that case just skip all next steps
       - name: Commit and Push Changes
@@ -55,7 +53,7 @@ jobs:
 
       - name: Merge PR if not redundant
         run: |
-         python workflow_scripts/check_if_pr_redundant.py \
+         python workflow_scripts/generate_dockerfiles/check_if_pr_redundant.py \
          --current-branch "${{ env.branch_name}}" \
          --base-branch "${{ github.ref_name }}" \
          --repository "${{ github.repository }}"

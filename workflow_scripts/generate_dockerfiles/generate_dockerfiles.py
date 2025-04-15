@@ -9,18 +9,14 @@ def generate_dockerfile(service_name):
     service_dir = os.path.join(OUTPUT_DIR, service_name)
     dockerfile_path = os.path.join(service_dir, "Dockerfile")
 
-    if os.path.exists(dockerfile_path):
-        print(f"Skipping {service_name}, Dockerfile already exists.")
-        return
-
     os.makedirs(service_dir, exist_ok=True)
 
     dockerfile_content = (
         f"# Auto-generated Dockerfile for {service_name}\n"
-        "FROM python:3.11-slim\n"
+        "FROM python:3.14.0a7-slim\n"
         "WORKDIR /app\n"
         f"COPY {WEBSERVICES_DIR}/{service_name}.py /app/{service_name}.py\n"
-        'CMD ["python", "/app/{service_name}.py"]\n'
+        f'CMD ["python", "/app/{service_name}.py"]\n'
     )
 
     with open(dockerfile_path, "w", encoding="utf-8") as dockerfile:

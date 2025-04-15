@@ -1,15 +1,16 @@
-name: Ansible lint
+name: Python lint
 
 on:
   workflow_dispatch:
   push:
     paths:
-      - 'ansible/**'
-      - .github/workflows/lint_ansible.yaml
+      - 'webservices/*'
+      - 'workflow_scripts/*'
+      - '.github/workflows/lint_python.yaml'
   pull_request:
 
 jobs:
-  ansible-lint:
+  python-lint:
 
     runs-on: self-hosted 
 
@@ -25,12 +26,8 @@ jobs:
         with:
           python-version: "3.11"
 
-      - name: Ensure ansible is intalled
-        run: pip install ansible-dev-tools
+      - name: Ensure ruff is intalled
+        run: pip install ruff
 
-      - name: Run Ansible Lint
-        run: ansible-lint ansible/
-
-      - name: force clean Repository
-        run: sudo rm -rf ${{ github.workspace }}/terraform
- 
+      - name: Run ruff
+        run: ruff check webservices workflow_scripts
