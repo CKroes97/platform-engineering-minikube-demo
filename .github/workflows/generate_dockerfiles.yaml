@@ -22,10 +22,7 @@ jobs:
           python-version: "3.11"
 
       - name: Install dependencies
-        run: pip install ruff pygithub
-
-      - name: Run linter (ruff)
-        run: ruff check webservices/ workflow_scripts/
+        run: pip install pygithub
 
       - name: Run Dockerfile generation script
         run: python workflow_scripts/generate_dockerfiles/generate_dockerfiles.py

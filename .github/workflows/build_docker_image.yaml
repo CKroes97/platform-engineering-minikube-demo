@@ -5,4 +5,16 @@ on:
   push:
     paths:
       - 'generated_dockerfiles'
+      - .github\workflows\build_docker_image.yaml
   pull_request:
+
+jobs: 
+  build-image:
+    runs-on: self-hosted
+
+    steps:
+      - name: force clean Repository
+        run: sudo rm -rf ${{ github.workspace }}/terraform
+
+      - name: Checkout repository
+        uses: actions/checkout@v4
