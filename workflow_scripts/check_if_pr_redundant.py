@@ -74,14 +74,18 @@ def main():
 
     if existing_pr:
         print(
-            f"Existing PR {existing_pr.number} found with no diff. "
-            f"Deleting branch '{args.current_branch}'."
+            f"Existing PR {existing_pr.number} found with diff. "
+            f"Merging and deleting branch '{args.current_branch}'."
         )
         existing_pr.merge(
             commit_message="Merge via Github Action", merge_method="squash"
         )
         delete_branch_from_github(repo, args.current_branch)
     else:
+        print(
+            f"Existing PR {existing_pr.number} found with no diff. "
+            f"Deleting branch '{args.current_branch}'."
+        )
         delete_branch_from_github(repo, args.current_branch)
 
 
