@@ -29,6 +29,7 @@ jobs:
       - name: Run Dockerfile generation script
         run: python workflow_scripts/generate_dockerfiles.py
 
+      # Step will fail on an empty commit. In that case just skip all next steps
       - name: Commit and Push Changes
         id: commit_build
         run: |
@@ -50,7 +51,7 @@ jobs:
            --title "Generate Dockerfiles" --body "Automated update"
         env:
          GH_TOKEN: ${{ github.token }}
-        if: success()
+        if: ${{ steps.commit_build,outcome == 'success' }}
 
       - name: Merge PR if not redundant
         run: |
@@ -60,4 +61,4 @@ jobs:
          --repository "${{ github.repository }}"
         env:
          GITHUB_TOKEN: ${{ github.token }}
-        if: success()
+        if: ${{ steps.commit_build,outcome == 'success' }}
