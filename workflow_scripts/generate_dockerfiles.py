@@ -20,7 +20,7 @@ def generate_dockerfile(service_name):
         "FROM python:3.14.0a7-slim\n"
         "WORKDIR /app\n"
         f"COPY {WEBSERVICES_DIR}/{service_name}.py /app/{service_name}.py\n"
-        'CMD ["python", "/app/{service_name}.py"]\n'
+        f'CMD ["python", "/app/{service_name}.py"]\n'
     )
 
     with open(dockerfile_path, "w", encoding="utf-8") as dockerfile:
