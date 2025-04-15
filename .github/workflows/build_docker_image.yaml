@@ -1,0 +1,8 @@
+name: Build docker image
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'generated_dockerfiles'
+  pull_request:
