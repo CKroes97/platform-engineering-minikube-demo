@@ -34,4 +34,4 @@
     path: /var/run/docker.sock
     owner: root
     group: docker
-    mode: '0755'
+    mode: '0770'
