@@ -28,6 +28,9 @@ jobs:
       - name: Install requirements
         run: pip install pathlib docker
 
+      - name: Set up Docker vars
+        uses: docker/setup-buildx-action@v1
+
       - name: Run Dockerfile generation script
         run: | 
           python workflow_scripts/build_docker_image/build_docker_images.py \
