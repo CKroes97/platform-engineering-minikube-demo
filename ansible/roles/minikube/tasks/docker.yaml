@@ -30,12 +30,9 @@
     append: true
 
 - name: Configure Docker daemon socket
-  ansible.builtin.copy:
-    dest: /etc/docker/daemon.json
-    content: |
-      {
-        "hosts": ["unix:///var/run/docker.sock", "tcp://0.0.0.0:2375"]
-      }
+  ansible.builtin.file:
+    path: /etc/docker/daemon.json
+    state: absent
   register: docker_socket
 
 - name: Restart Docker service
@@ -43,4 +40,3 @@
     name: docker
     state: restarted
   when: docker_socket.changed
-  
