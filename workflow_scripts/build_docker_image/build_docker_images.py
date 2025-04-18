@@ -68,8 +68,8 @@ def build_and_push_images(dockerfiles_dir, docker_registry):
     client = docker.from_env()
 
     client.login(
-        username=os.getenv("DOCKER_USERNAME"),
-        password=os.getenv("DOCKER_PASSWORD"),
+        username=os.getenv("DOCKER_REGISTRY_USERNAME"),
+        password=os.getenv("DOCKER_REGISTRY_PASSWORD"),
         registry=docker_registry,
     )
 
