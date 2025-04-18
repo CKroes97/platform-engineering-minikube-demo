@@ -41,6 +41,12 @@
     group: "{{ ansible_env.SUDO_USER }}"
     mode: "0755"
 
+- name: Ensure /home/{{ ansible_env.USER }}/ exists
+  file:
+    path: /home/{{ ansible_env.USER }}/ 
+    state: directory
+    mode: '0755'
+
 - name: Create .terraformrc file with plugin_cache_dir
   ansible.builtin.copy:
     dest: "/home/{{ ansible_env.USER }}/.terraformrc"

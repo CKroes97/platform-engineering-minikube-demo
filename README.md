@@ -11,6 +11,7 @@ Security shortcuts taken for easy and quick development. Do not expose WSL conta
 Developed for Ubuntu 24.04 running on WSL
 
 Usage:
+- Make sure you are running the latest version of WSL (`wsl --update`)
 - Fork repo
 - run init.sh to add a github runner (token can be gotten from github repo settings > actions )
     Note: this adds a dedicated Linux user with paswordless Sudo rights.
