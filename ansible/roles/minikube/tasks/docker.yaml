@@ -28,15 +28,3 @@
     name: "{{ ansible_env.SUDO_USER }}"
     groups: docker
     append: true
-
-- name: Configure Docker daemon socket
-  ansible.builtin.file:
-    path: /etc/docker/daemon.json
-    state: absent
-  register: docker_socket
-
-- name: Restart Docker service
-  ansible.builtin.service:
-    name: docker
-    state: restarted
-  when: docker_socket.changed
