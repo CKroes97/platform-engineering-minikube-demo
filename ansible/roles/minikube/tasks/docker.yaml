@@ -28,3 +28,9 @@
     name: "{{ ansible_env.SUDO_USER }}"
     groups: docker
     append: true
+
+- name: Give user access to socket
+  ansible.builtin.user:
+    name: ansible_env.SUDO_USER
+    groups: docker
+    append: yes
