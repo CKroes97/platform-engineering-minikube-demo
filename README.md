@@ -12,7 +12,8 @@ Developed for Ubuntu 24.04 running on WSL
 
 Usage:
 - Make sure you are running the latest version of WSL (`wsl --update`)
-- Fork repo
+- Install a fresh WSl instance of Ubuntu-24.04
+- Fork repo in wsl instance
 - run init.sh to add a github runner (token can be gotten from github repo settings > actions )
     Note: this adds a dedicated Linux user with paswordless Sudo rights.
 - Run the "configure_host.yaml" action in Github actions
