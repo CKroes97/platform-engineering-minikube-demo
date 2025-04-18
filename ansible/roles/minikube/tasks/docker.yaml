@@ -35,3 +35,10 @@
     owner: root
     group: docker
     mode: '0770'
+  register: permission_change
+
+- name: Restart docker service
+  ansible.builtin.service:
+    name: docker
+    state: restarted
+  when: permission_change.changed
