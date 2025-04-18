@@ -34,6 +34,6 @@ jobs:
            --dockerfiles-dir "generated_dockerfiles" \
            --docker-registry "${{ secrets.DOCKER_REGISTRY }}"
         env:
-          DOCKER_HOST: "127.0.0.1:30080"
+          DOCKER_HOST: "unix:///var/run/docker.sock"
           DOCKER_USERNAME: ${{ secrets.REGISTRY_USER }}
           DOCKER_PASSWORD: ${{ secrets.REGISTRY_PASSWORD }}
