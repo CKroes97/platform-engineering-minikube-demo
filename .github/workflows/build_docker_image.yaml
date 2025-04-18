@@ -29,7 +29,8 @@ jobs:
         run: pip install pathlib docker
 
       - name: Echo Unix username
-        run: whoami
+        run: |
+          echo "The Unix username is: $(whoami)"
 
       - name: Run Dockerfile generation script
         run: | 
