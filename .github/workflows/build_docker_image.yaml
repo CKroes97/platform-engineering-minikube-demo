@@ -30,8 +30,10 @@ jobs:
 
       - name: Echo Unix username
         run: |
-          echo "The Unix username is: $(whoami)"
-
+          USERNAME=$(whoami)
+          echo "::add-mask::$USERNAME"
+          echo "The Unix username is: $USERNAME"
+          
       - name: Run Dockerfile generation script
         run: | 
           python workflow_scripts/build_docker_image/build_docker_images.py \
