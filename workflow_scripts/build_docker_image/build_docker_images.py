@@ -2,6 +2,7 @@ import argparse
 from pathlib import Path
 import docker
 import os
+import sys
 
 
 def parse_arguments():
@@ -54,9 +55,11 @@ def build_and_push_image(client, dockerfile_path, docker_registry):
             print(line)
         print(f"Successfully pushed {image_name} to {docker_registry}")
     except docker.errors.BuildError as e:
-        print(f"Build error for {dockerfile_path}: {e}")
+        raise(f"Build error for {dockerfile_path}: {e}")
+        sys.exit(1)
     except docker.errors.APIError as e:
         print(f"API error for {dockerfile_path}: {e}")
+        sys.exit(2)
 
 
 
