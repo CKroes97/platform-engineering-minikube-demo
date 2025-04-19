@@ -38,14 +38,11 @@ def build_and_push_image(client, dockerfile_path, docker_registry):
         print(f"Building image from {dockerfile_path}...")
         dockerfile_path = Path(dockerfile_path)
         image, build_logs = client.images.build(
-            path=str(Path.cwd()),
-            dockerfile=str(dockerfile_path)
+            path=str(Path.cwd()), dockerfile=str(dockerfile_path)
         )
 
         # Extract the image SHA
-        image_name = (
-            f"{docker_registry}/{dockerfile_path.parent.name.lower()}:{str(image.id).split(':')[1]}"
-        )
+        image_name = f"{docker_registry}/{dockerfile_path.parent.name.lower()}:{str(image.id).split(':')[1]}"
 
         # Tag the image with the SHA
         image.tag(image_name)
@@ -61,7 +58,6 @@ def build_and_push_image(client, dockerfile_path, docker_registry):
     except docker.errors.APIError as e:
         print(f"API error for {dockerfile_path}: {e}")
         sys.exit(2)
-
 
 
 def main():
