@@ -20,3 +20,6 @@ Usage:
 - Run the "deploy.yaml" action in Github actions
 - Add Python webserver scripts to the "webservices" folder
 - Profit
+
+Desired end state architecture:
+![architecture overview](docs/architecture.png)
