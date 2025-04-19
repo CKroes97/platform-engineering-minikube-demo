@@ -38,7 +38,7 @@ def build_and_push_image(client, dockerfile_path, docker_registry):
         print(f"Building image from {dockerfile_path}...")
         dockerfile_path = Path(dockerfile_path)
         image, build_logs = client.images.build(
-            path=str(Path.cwd())
+            path=str(Path.cwd()),
             dockerfile=str(dockerfile_path)
         )
 
