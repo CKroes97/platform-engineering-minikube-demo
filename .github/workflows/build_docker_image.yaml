@@ -6,7 +6,7 @@ on:
     paths:
       - 'generated_dockerfiles'
       - '.github/workflows/build_docker_image.yaml'
-      - 'workflow_scripts/build_docker_image.py'
+      - 'workflow_scripts/build_docker_image'
   pull_request:
 
 jobs: 
