@@ -4,9 +4,9 @@ on:
   workflow_dispatch:
   push:
     paths:
-      - 'generated_dockerfiles'
+      - 'generated_dockerfiles/**'
       - '.github/workflows/build_docker_image.yaml'
-      - 'workflow_scripts/build_docker_image'
+      - 'workflow_scripts/build_docker_image/**'
   pull_request:
 
 jobs: 
