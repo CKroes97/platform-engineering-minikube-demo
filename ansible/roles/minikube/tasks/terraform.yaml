@@ -41,9 +41,9 @@
     group: "{{ ansible_env.SUDO_USER }}"
     mode: "0755"
 
-- name: Ensure /home/{{ ansible_env.USER }}/ exists
-  file:
-    path: /home/{{ ansible_env.USER }}/ 
+- name: Ensure home root exists
+  ansible.builtin.file:
+    path: /home/{{ ansible_env.USER }}/
     state: directory
     mode: '0755'
 
