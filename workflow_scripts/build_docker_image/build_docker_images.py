@@ -24,7 +24,7 @@ def parse_arguments():
 def find_dockerfiles(dockerfiles_dir):
     dockerfiles_dir = Path(dockerfiles_dir)
     dockerfile_paths = [
-        str(path)
+        str(path.relative_to(Path.cwd()) / "Dockerfile")
         for path in dockerfiles_dir.iterdir()
         if path.is_dir() and (path / "Dockerfile").exists()
     ]
