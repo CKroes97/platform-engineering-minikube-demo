@@ -38,7 +38,7 @@ def build_and_push_image(client, dockerfile_path, docker_registry):
         print(f"Building image from {dockerfile_path}...")
         dockerfile_path = Path(dockerfile_path)
         image, build_logs = client.images.build(
-            path=str(dockerfile_path.parent), dockerfile=str(dockerfile_path)
+           dockerfile=str(dockerfile_path)
         )
 
         # Extract the image SHA
@@ -55,7 +55,7 @@ def build_and_push_image(client, dockerfile_path, docker_registry):
             print(line)
         print(f"Successfully pushed {image_name} to {docker_registry}")
     except docker.errors.BuildError as e:
-        raise(f"Build error for {dockerfile_path}: {e}")
+        print(f"Build error for {dockerfile_path}: {e}")
         sys.exit(1)
     except docker.errors.APIError as e:
         print(f"API error for {dockerfile_path}: {e}")
