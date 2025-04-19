@@ -44,7 +44,7 @@ def build_and_push_image(client, dockerfile_path, docker_registry):
 
         # Extract the image SHA
         image_name = (
-            f"{docker_registry}/{dockerfile_path.parent.name.lower()}:{image.id}"
+            f"{docker_registry}/{dockerfile_path.parent.name.lower()}:{image.id.split(':')[1]}"
         )
 
         # Tag the image with the SHA
