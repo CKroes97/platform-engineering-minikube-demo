@@ -4,8 +4,8 @@ on:
   workflow_dispatch:
   push:
     paths:
-      - 'webservices/*'
-      - 'workflow_scripts/*'
+      - 'webservices/**'
+      - 'workflow_scripts/**'
       - '.github/workflows/lint_python.yaml'
   pull_request:
 
