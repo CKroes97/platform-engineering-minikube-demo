@@ -32,7 +32,7 @@ jobs:
         run: | 
           python workflow_scripts/build_docker_image/build_docker_images.py \
            --dockerfiles-dir "generated_dockerfiles" \
-           --docker-registry "${{ secrets.DOCKER_REGISTRY }}"
+           --docker-registry "localhost:30080"
         env:
           DOCKER_REGISTRY_USERNAME: ${{ secrets.REGISTRY_USER }}
           DOCKER__REGISTRY_PASSWORD: ${{ secrets.REGISTRY_PASSWORD }}
