@@ -17,16 +17,16 @@ jobs:
 
       - name: Deploy cert manager
         run: |
-         kubectl apply \
+         sudo kubectl apply \
          --filename https://github.com/cert-manager/cert-manager/releases/download/v1.15.0/cert-manager.yaml
 
       - name: Install Kratix
         run: | 
-          kubectl apply \
+          sudo kubectl apply \
           --filename https://github.com/syntasso/kratix/releases/latest/download/install-all-in-one.yaml
 
       - name: Configure Kratix
         run: | 
-          kubectl apply \
+          sudo kubectl apply \
           --filename https://github.com/syntasso/kratix/releases/latest/download/config-all-in-one.yaml
 
