@@ -18,7 +18,6 @@ jobs:
       - name: force clean Repository
         run: sudo rm -rf ${{ github.workspace }}/terraform
 
-
       - name: Set up Terraform
         uses: hashicorp/setup-terraform@v3
         with:
