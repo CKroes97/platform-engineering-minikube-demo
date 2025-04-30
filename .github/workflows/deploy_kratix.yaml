@@ -15,9 +15,6 @@ jobs:
     runs-on: self-hosted
 
     steps:
-      - name: force clean Repository
-        run: sudo rm -rf ${{ github.workspace }}/terraform
-
       - name: Deploy cert manager
         run: |
          sudo kubectl apply \
