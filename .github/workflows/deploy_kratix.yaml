@@ -1,0 +1,32 @@
+name: Deploy Kratix
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - '.github\workflows\deploy_kratix.yaml'
+  pull_request:
+
+jobs: 
+  build-image:
+    runs-on: self-hosted
+
+    steps:
+      - name: force clean Repository
+        run: sudo rm -rf ${{ github.workspace }}/terraform
+
+      - name: Deploy cert manager
+        run: |
+         kubectl apply \
+         --filename https://github.com/cert-manager/cert-manager/releases/download/v1.15.0/cert-manager.yaml
+
+      - name: Install Kratix
+        run: | 
+          kubectl apply \
+          --filename https://github.com/syntasso/kratix/releases/latest/download/install-all-in-one.yaml
+
+      - name: Configure Kratix
+        run: | 
+          kubectl apply \
+          --filename https://github.com/syntasso/kratix/releases/latest/download/config-all-in-one.yaml
+
