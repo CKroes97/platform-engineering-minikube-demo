@@ -1,5 +1,8 @@
 name: Deploy Kratix
 
+permissions:
+  contents: read
+
 on:
   workflow_dispatch:
   push:
@@ -30,7 +33,7 @@ jobs:
 
       - name: Wait for 10s deployment to finish
         run: sleep 10 
-        
+
       - name: Configure Kratix
         run: | 
           sudo kubectl apply \
