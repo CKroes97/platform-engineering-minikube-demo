@@ -28,6 +28,14 @@ jobs:
       - name: Install requirements
         run: pip install pathlib docker
 
+      - name: Login to docker to generate auth files
+        run: |
+          docker login --username $DOCKER_REGISTRY_USERNAME \
+           --password $ DOCKER__REGISTRY_PASSWORD 
+        env:
+          DOCKER_REGISTRY_USERNAME: ${{ secrets.REGISTRY_USER }}
+          DOCKER__REGISTRY_PASSWORD: ${{ secrets.REGISTRY_PASSWORD }}
+
       - name: Run Dockerfile generation script
         run: | 
           python workflow_scripts/build_docker_image/build_docker_images.py \
