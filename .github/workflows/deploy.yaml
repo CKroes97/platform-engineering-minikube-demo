@@ -23,6 +23,9 @@ jobs:
         with:
           terraform_version: latest
 
+      - name: Ensure dir exists
+        run: mkdir -p terraform
+
       - name: Initialize Terraform
         run: sudo terraform -chdir=terraform init
 
