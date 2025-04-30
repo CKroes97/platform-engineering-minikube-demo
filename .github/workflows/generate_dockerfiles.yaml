@@ -1,5 +1,9 @@
 name: Generate Dockerfiles
 
+permissions:
+  contents: write
+  pull-requests: write
+
 on:
   push:
     paths:

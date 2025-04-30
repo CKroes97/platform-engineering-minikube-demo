@@ -1,5 +1,8 @@
 name: Python lint
 
+permissions:
+  contents: read
+
 on:
   workflow_dispatch:
   push:

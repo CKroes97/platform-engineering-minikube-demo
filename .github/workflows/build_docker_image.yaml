@@ -1,5 +1,8 @@
 name: Build docker image
 
+permissions:
+  contents: read
+
 on:
   workflow_dispatch:
   push:
@@ -27,6 +30,15 @@ jobs:
 
       - name: Install requirements
         run: pip install pathlib docker
+
+      - name: Login to docker to generate auth files
+        run: |
+          docker login --username $DOCKER_REGISTRY_USERNAME \
+           --password $DOCKER__REGISTRY_PASSWORD \
+           "localhost:30080"
+        env:
+          DOCKER_REGISTRY_USERNAME: ${{ secrets.REGISTRY_USER }}
+          DOCKER__REGISTRY_PASSWORD: ${{ secrets.REGISTRY_PASSWORD }}
 
       - name: Run Dockerfile generation script
         run: | 
