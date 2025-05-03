@@ -20,7 +20,7 @@ jobs:
          sudo kubectl apply \
          --filename https://github.com/cert-manager/cert-manager/releases/download/v1.15.0/cert-manager.yaml
 
-      - name: Wait for 10s deployment to finish
+      - name: Wait for 45s deployment to finish
         run: sleep 45 
 
       - name: Install Kratix
@@ -28,7 +28,7 @@ jobs:
           sudo kubectl apply \
           --filename https://github.com/syntasso/kratix/releases/latest/download/install-all-in-one.yaml
 
-      - name: Wait for 10s deployment to finish
+      - name: Wait for 45s deployment to finish
         run: sleep 45 
 
       - name: Configure Kratix
