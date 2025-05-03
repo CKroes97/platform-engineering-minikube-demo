@@ -28,8 +28,8 @@ jobs:
           sudo kubectl apply \
           --filename https://github.com/syntasso/kratix/releases/latest/download/install-all-in-one.yaml
 
-      - name: Wait for 45s deployment to finish
-        run: sleep 45 
+      - name: Wait for 90s deployment to finish
+        run: sleep 90 
 
       - name: Configure Kratix
         run: | 
