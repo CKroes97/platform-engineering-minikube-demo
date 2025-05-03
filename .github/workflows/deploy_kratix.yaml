@@ -21,7 +21,7 @@ jobs:
          --filename https://github.com/cert-manager/cert-manager/releases/download/v1.15.0/cert-manager.yaml
 
       - name: Wait for 10s deployment to finish
-        run: sleep 10 
+        run: sleep 45 
 
       - name: Install Kratix
         run: | 
@@ -29,7 +29,7 @@ jobs:
           --filename https://github.com/syntasso/kratix/releases/latest/download/install-all-in-one.yaml
 
       - name: Wait for 10s deployment to finish
-        run: sleep 10 
+        run: sleep 45 
 
       - name: Configure Kratix
         run: | 
