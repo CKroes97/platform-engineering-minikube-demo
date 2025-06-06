@@ -18,21 +18,36 @@ jobs:
       - name: Deploy cert manager
         run: |
          sudo kubectl apply \
-         --filename https://github.com/cert-manager/cert-manager/releases/download/v1.15.0/cert-manager.yaml
-
-      - name: Wait for 10s deployment to finish
-        run: sleep 10 
+           --filename https://github.com/cert-manager/cert-manager/releases/download/v1.15.0/cert-manager.yaml
+         sudo kubectl wait --namespace cert-manager \
+          --for=condition=Available deployments \
+          --all \
+          --timeout=300s
 
       - name: Install Kratix
         run: | 
           sudo kubectl apply \
-          --filename https://github.com/syntasso/kratix/releases/latest/download/install-all-in-one.yaml
-
-      - name: Wait for 10s deployment to finish
-        run: sleep 10 
+           --filename https://github.com/syntasso/kratix/releases/latest/download/install-all-in-one.yaml
+           sudo kubectl wait --namespace kratix-platform-system \
+            --for=condition=Available deployments \
+            --all \
+            --timeout=300s
 
       - name: Configure Kratix
         run: | 
           sudo kubectl apply \
-          --filename https://github.com/syntasso/kratix/releases/latest/download/config-all-in-one.yaml
+            --filename https://github.com/syntasso/kratix/releases/latest/download/config-all-in-one.yaml
+          sudo kubectl wait --namespace kratix-platform-system \
+            --for=condition=Available deployments \
+            --all \
+            --timeout=300s
+          
+      - name: Instal Runtime marketplace module
+        run: | 
+          sudo kubectl apply \
+            --filename https://raw.githubusercontent.com/syntasso/kratix-marketplace/main/runtime/promise.yaml
+          sudo kubectl wait \
+          --for=condition=Available deployments \
+          --all \
+          --timeout 300s
 
