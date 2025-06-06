@@ -18,28 +18,28 @@ jobs:
       - name: Deploy cert manager
         run: |
          sudo kubectl apply \
-         --filename https://github.com/cert-manager/cert-manager/releases/download/v1.15.0/cert-manager.yaml
+           --filename https://github.com/cert-manager/cert-manager/releases/download/v1.15.0/cert-manager.yaml
          kubectl wait --namespace cert-manager \
-        --for=condition=Ready pods \
-        --all \
-        --timeout=300s
+          --for=condition=Ready pods \
+          --all \
+          --timeout=300s
 
       - name: Install Kratix
         run: | 
           sudo kubectl apply \
-          --filename https://github.com/syntasso/kratix/releases/latest/download/install-all-in-one.yaml
+           --filename https://github.com/syntasso/kratix/releases/latest/download/install-all-in-one.yaml
           kubectl wait --namespace kratix-platform-system \
-          --for=condition=Ready pods \
-          --all \
-          --timeout=300s
+            --for=condition=Ready pods \
+            --all \
+            --timeout=300s
 
       - name: Configure Kratix
         run: | 
           sudo kubectl apply \
-          --filename https://github.com/syntasso/kratix/releases/latest/download/config-all-in-one.yaml
+            --filename https://github.com/syntasso/kratix/releases/latest/download/config-all-in-one.yaml
           kubectl wait --namespace kratix-platform-system \
-          --for=condition=Ready pods \
-          --all \
-          --timeout=300s
+            --for=condition=Ready pods \
+            --all \
+            --timeout=300s
           
 
