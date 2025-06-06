@@ -42,4 +42,12 @@ jobs:
             --all \
             --timeout=300s
           
+      - name: Instal Runtime marketplace module
+      run: | 
+        sudo kubectl apply \
+          --filename https://raw.githubusercontent.com/syntasso/kratix-marketplace/main/runtime/promise.yaml
+        sudo kubectl wait \
+         --for=condition=Ready pods \
+         --all \
+         --timeout 300s
 
