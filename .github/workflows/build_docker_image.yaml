@@ -62,7 +62,7 @@ jobs:
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          BRANCH_NAME="generate-dockerfiles-${{ github.sha }}"
+          BRANCH_NAME="generate-requests-${{ github.sha }}"
           git checkout -b $BRANCH_NAME
           git add generated_dockerfiles/
           git add generated_python_webservices_requests/
