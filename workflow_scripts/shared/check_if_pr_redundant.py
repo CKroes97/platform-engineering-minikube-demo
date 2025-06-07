@@ -83,7 +83,7 @@ def main():
         delete_branch_from_github(repo, args.current_branch)
     else:
         print(
-            f"Existing PR {existing_pr.number} found with no diff. "
+            f"Existing PR no PR found with diff. "
             f"Deleting branch '{args.current_branch}'."
         )
         delete_branch_from_github(repo, args.current_branch)
