@@ -8,8 +8,7 @@ on:
   workflow_dispatch:
   push:
     paths:
-      - '.github/workflows/build_deployments.yaml'
-      - '.github/workflows/build_deployments/**'
+      - '.github/workflows/build_deployments**'
       - 'workflow_scripts/build_docker_image/**'
       - "workflow_scripts/generate_dockerfiles/**"
       - 'workflow_scripts/shared/**'
