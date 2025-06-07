@@ -1,0 +1,32 @@
+name: Build and deploy webservice to cluster
+
+permissions:
+  contents: write
+  pull-requests: write
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - '.github/workflows/build_deployments.yaml'
+      - '.github/workflows/build_deployments/**'
+      - 'workflow_scripts/build_docker_image/**'
+      - "workflow_scripts/generate_dockerfiles/**"
+      - 'workflow_scripts/shared/**'
+      - 'webservices/**.py'
+      - 'generated_dockerfiles/**'
+      - 'generated_python_webservices_requests/**'
+  pull_request:
+
+jobs: 
+  call-generate-dockerfiles:
+    uses: ./.github/workflows/build_deployments/generate_dockerfiles.yaml
+    secrets: inherit
+
+  call-build-image:
+    uses: ./.github/workflows/build_deployments/build_docker_image.yaml
+    secrets: inherit
+
+  call-deploy-requests:
+    uses: ./.github/workflows/build_deployments/deploy_requests.yaml
+    secrets: inherit
