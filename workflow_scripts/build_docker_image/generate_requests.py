@@ -10,7 +10,7 @@ def parse_args():
     parser = argparse.ArgumentParser(
         description="Render Kratix Runtime YAML from Jinja2 templates for each Docker image."
     )
-    parser.add_argument("--namespace", required=True, help="Kubernetes namespace")
+    parser.add_argument("--namespace", help="Kubernetes namespace", default="kratix-runtime")
     parser.add_argument("--env", help="Optional environment name to inject as 'env'")
     parser.add_argument(
         "--template-path",
