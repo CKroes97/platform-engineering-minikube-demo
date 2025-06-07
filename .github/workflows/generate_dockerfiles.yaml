@@ -26,7 +26,7 @@ jobs:
           python-version: "3.11"
 
       - name: Install dependencies
-        run: pip install -r workflow_scripts/generated_dockerfiles/requirements.txt
+        run: pip install -r workflow_scripts/generate_dockerfiles/requirements.txt
 
       - name: Run Dockerfile generation script
         run: python workflow_scripts/generate_dockerfiles/generate_dockerfiles.py
