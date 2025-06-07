@@ -5,7 +5,7 @@ metadata:
   namespace: kratix-runtime
 spec:
   lifecycle: dev
-  image: 1e0b96d98b38ccae795e0928ded5d724bd34e884f86539a4a04747577078f0aa
+  image: localhost:30080+test+1e0b96d98b38ccae795e0928ded5d724bd34e884f86539a4a04747577078f0aa
   servicePort: 80
   replicas: 1
   applicationEnv:
