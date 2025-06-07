@@ -50,12 +50,12 @@ jobs:
           DOCKER_REGISTRY_USERNAME: ${{ secrets.REGISTRY_USER }}
           DOCKER__REGISTRY_PASSWORD: ${{ secrets.REGISTRY_PASSWORD }}
 
-       - name: Create request for deployment
-          run: |
-            python workflow_scripts/generate_requests.py \
-              --env dev \
-              --template-path templates/runtime-requests.yaml \
-              --output-dir generated_python_webservices_requests
+      - name: Create request for deployment
+        run: |
+          python workflow_scripts/generate_requests.py \
+            --env dev \
+            --template-path templates/runtime-requests.yaml \
+            --output-dir generated_python_webservices_requests
 
       - name: Create PR
         run: | 
