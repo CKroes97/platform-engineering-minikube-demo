@@ -72,6 +72,7 @@ jobs:
           git commit -m "Auto-generate Dockerfiles for new webservices"
           git push origin $BRANCH_NAME
           echo "branch_name"="$BRANCH_NAME" >> "$GITHUB_ENV"
+          sleep 3
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         continue-on-error: true
