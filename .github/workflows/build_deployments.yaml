@@ -25,6 +25,7 @@ jobs:
   call-build-image:
     uses: ./.github/workflows/build_deployments-build_docker_image.yaml
     secrets: inherit
+    needs: call-generate-dockerfiles
 
   call-deploy-requests:
     uses: ./.github/workflows/build_deployments-deploy_requests.yaml
