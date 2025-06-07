@@ -6,7 +6,7 @@ class SimpleAddHandler(BaseHTTPRequestHandler):
     def do_GET(self):
         parsed_path = urlparse(self.path)
         
-        if parsed_path.path != '/add':
+        if parsed_path.path != '/multiply':
             self.send_response(404)
             self.end_headers()
             self.wfile.write(b'Not Found')
@@ -16,7 +16,7 @@ class SimpleAddHandler(BaseHTTPRequestHandler):
         try:
             a = float(query.get('a', [None])[0])
             b = float(query.get('b', [None])[0])
-            result = {'a': a, 'b': b, 'sum': a + b}
+            result = {'a': a, 'b': b, 'result': a * b}
             response = json.dumps(result).encode('utf-8')
             
             self.send_response(200)

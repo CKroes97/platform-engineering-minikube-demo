@@ -10,6 +10,7 @@ on:
       - "webservices/**.py"
       - ".github/workflows/generate_dockerfiles.yaml"
       - "workflow_scripts/generate_dockerfiles/*"
+      - "workflow_scripts/shared/**"
   workflow_dispatch: 
   pull_request:
 
@@ -26,7 +27,7 @@ jobs:
           python-version: "3.11"
 
       - name: Install dependencies
-        run: pip install pygithub
+        run: pip install -r workflow_scripts/generate_dockerfiles/requirements.txt
 
       - name: Run Dockerfile generation script
         run: python workflow_scripts/generate_dockerfiles/generate_dockerfiles.py
@@ -51,13 +52,14 @@ jobs:
         run: | 
           gh pr create --base ${{ github.ref_name }} --head ${{ env.branch_name }} \
            --title "Generate Dockerfiles" --body "Automated update"
+          sleep 3
         env:
          GH_TOKEN: ${{ github.token }}
         if: ${{ steps.commit_build.outcome == 'success' }}
 
       - name: Merge PR if not redundant
         run: |
-         python workflow_scripts/generate_dockerfiles/check_if_pr_redundant.py \
+         python workflow_scripts/shared/check_if_pr_redundant.py \
          --current-branch "${{ env.branch_name}}" \
          --base-branch "${{ github.ref_name }}" \
          --repository "${{ github.repository }}"
