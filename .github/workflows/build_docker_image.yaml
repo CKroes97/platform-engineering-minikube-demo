@@ -15,7 +15,6 @@ on:
 jobs: 
   build-image:
     runs-on: self-hosted
-
     steps:
       - name: force clean Repository
         run: sudo rm -rf ${{ github.workspace }}/terraform
@@ -52,7 +51,7 @@ jobs:
 
       - name: Create request for deployment
         run: |
-          python workflow_scripts/generate_requests.py \
+          python workflow_scripts/build_docker_image/generate_requests.py \
             --env dev \
             --template-path templates/runtime-requests.yaml \
             --output-dir generated_python_webservices_requests
