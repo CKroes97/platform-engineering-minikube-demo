@@ -20,13 +20,13 @@ on:
 
 jobs: 
   call-generate-dockerfiles:
-    uses: ./.github/workflows/build_deployments/generate_dockerfiles.yaml
+    uses: ./.github/workflows/build_deployments-generate_dockerfiles.yaml
     secrets: inherit
 
   call-build-image:
-    uses: ./.github/workflows/build_deployments/build_docker_image.yaml
+    uses: ./.github/workflows/build_deployments-build_docker_image.yaml
     secrets: inherit
 
   call-deploy-requests:
-    uses: ./.github/workflows/build_deployments/deploy_requests.yaml
+    uses: ./.github/workflows/build_deployments-deploy_requests.yaml
     secrets: inherit
