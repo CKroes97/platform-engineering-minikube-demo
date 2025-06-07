@@ -71,7 +71,7 @@ def main():
         values = {
             "runtimeRequestName": image_name,
             "namespace": args.namespace,
-            "image": f"{args.docker_registry}+{image_name}+{image_tag}",
+            "image": f"{args.docker_registry}/{image_name}:{image_tag}",
         }
         if args.env:
             values["env"] = args.env
