@@ -29,6 +29,7 @@ def parse_args():
         default="generated_dockerfiles/image_tags.json",
         help="Path to JSON file with image tags (generated during build)",
     )
+    parser.add_argument( "--docker-registry", default="localhost:30080")
     return parser.parse_args()
 
 
@@ -70,7 +71,7 @@ def main():
         values = {
             "runtimeRequestName": image_name,
             "namespace": args.namespace,
-            "image": image_tag,
+            "image": f"{args.docker_registry}+{image_name}+{image_tag}",
         }
         if args.env:
             values["env"] = args.env
