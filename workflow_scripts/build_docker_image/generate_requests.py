@@ -69,7 +69,7 @@ def main():
 
     for image_name, image_tag in image_tags.items():
         values = {
-            "runtimeRequestName": image_name,
+            "runtimeRequestName": image_name.replace("_","-"),
             "namespace": args.namespace,
             "image": f"{args.docker_registry}/{image_name}:{image_tag}",
         }
