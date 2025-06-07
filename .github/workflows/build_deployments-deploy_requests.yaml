@@ -10,4 +10,6 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      - run: git pull
+      
       - run: sudo kubectl apply -f generated_python_webservices_requests/ 
