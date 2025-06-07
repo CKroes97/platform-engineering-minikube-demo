@@ -92,7 +92,8 @@ jobs:
          python workflow_scripts/shared/check_if_pr_redundant.py \
          --current-branch "${{ env.branch_name}}" \
          --base-branch "${{ github.ref_name }}" \
-         --repository "${{ github.repository }}"
+         --repository "${{ github.repository }}" \ 
+         --folder "generated_python_webservices_requests, generated_dockerfiles"
         env:
          GITHUB_TOKEN: ${{ github.token }}
         if: ${{ steps.commit_build.outcome == 'success' }}

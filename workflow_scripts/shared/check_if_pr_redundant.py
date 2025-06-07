@@ -26,7 +26,8 @@ def parse_arguments():
     parser.add_argument(
         "--folder",
         default="generated_dockerfiles",
-        help="The folder to check for diffs.",
+        help="Comma-separated list of folders to check for diffs.",
+        type=lambda s: [f.strip() for f in s.split(",") if f.strip()],
     )
     return parser.parse_args()
 
@@ -46,17 +47,13 @@ def get_repo_and_user(github, repo_name):
 
 
 # Function to check if a PR already exists with no diff in the generated_dockerfiles folder
-def check_existing_prs(repo, base_branch, current_branch, folder_to_check):
-    """Check if an open PR exists with no diff in the specified folder."""
+def check_existing_prs(repo, base_branch, current_branch, folders_to_check):
+    """Check if an open PR exists with diffs in any of the specified folders."""
     open_prs = repo.get_pulls(state="open", head=current_branch, base=base_branch)
     for pr in open_prs:
-        # Compare the PR branch with the current branch
-        # Check the diff of the PR to see if it contains changes in the specified folder
         for file in pr.get_files():
-            if file.filename.startswith(folder_to_check):
-                print(
-                    f"Found existing PR {pr.number} with changes in {folder_to_check}."
-                )
+            if any(file.filename.startswith(folder) for folder in folders_to_check):
+                print(f"Found existing PR {pr.number} with changes in {file.filename}.")
                 return pr
     return None
 
