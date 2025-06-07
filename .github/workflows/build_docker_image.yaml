@@ -11,6 +11,7 @@ on:
       - 'generated_dockerfiles/**'
       - '.github/workflows/build_docker_image.yaml'
       - 'workflow_scripts/build_docker_image/**'
+      - 'workflow_scripts/shared/**'
       - 'webservices/**.py'
   pull_request:
 
