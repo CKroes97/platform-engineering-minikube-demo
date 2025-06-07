@@ -29,7 +29,7 @@ jobs:
           python-version: "3.11"
 
       - name: Install requirements
-        run: pip install pathlib docker
+        run: pip install -r workflow_scripts/build_docker_image/requirements.txt
 
       - name: Login to docker to generate auth files
         run: |
@@ -41,7 +41,7 @@ jobs:
           DOCKER_REGISTRY_USERNAME: ${{ secrets.REGISTRY_USER }}
           DOCKER__REGISTRY_PASSWORD: ${{ secrets.REGISTRY_PASSWORD }}
 
-      - name: Run Dockerfile generation script
+      - name: Run Dockerfile build script
         run: | 
           python workflow_scripts/build_docker_image/build_docker_images.py \
            --dockerfiles-dir "generated_dockerfiles" \
@@ -49,3 +49,28 @@ jobs:
         env:
           DOCKER_REGISTRY_USERNAME: ${{ secrets.REGISTRY_USER }}
           DOCKER__REGISTRY_PASSWORD: ${{ secrets.REGISTRY_PASSWORD }}
+
+       - name: Create request for deployment
+          run: |
+            python workflow_scripts/generate_requests.py \
+              --env dev \
+              --template-path templates/runtime-requests.yaml \
+              --output-dir generated_python_webservices_requests
+
+      - name: Create PR
+        run: | 
+          gh pr create --base ${{ github.ref_name }} --head ${{ env.branch_name }} \
+           --title "Generate Dockerfiles" --body "Automated update"
+        env:
+         GH_TOKEN: ${{ github.token }}
+        if: ${{ steps.commit_build.outcome == 'success' }}
+
+      - name: Merge PR if not redundant
+        run: |
+         python workflow_scripts/shared/check_if_pr_redundant.py \
+         --current-branch "${{ env.branch_name}}" \
+         --base-branch "${{ github.ref_name }}" \
+         --repository "${{ github.repository }}"
+        env:
+         GITHUB_TOKEN: ${{ github.token }}
+        if: ${{ steps.commit_build.outcome == 'success' }}

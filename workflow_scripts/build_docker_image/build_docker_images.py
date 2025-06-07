@@ -1,5 +1,6 @@
 import argparse
 from pathlib import Path
+import json
 import docker
 import os
 import sys
@@ -32,6 +33,14 @@ def find_dockerfiles(dockerfiles_dir):
     return dockerfile_paths
 
 
+def set_github_env_var(name, value):
+    github_env = os.getenv("GITHUB_ENV")
+    if not github_env:
+        raise RuntimeError("GITHUB_ENV not set")
+    with open(github_env, "a") as f:
+        f.write(f"{name}={value}\n")
+
+
 def build_and_push_image(client, dockerfile_path, docker_registry):
     try:
         # Build the Docker image
@@ -42,22 +51,45 @@ def build_and_push_image(client, dockerfile_path, docker_registry):
         )
 
         # Extract the image SHA
-        image_name = f"{docker_registry}/{dockerfile_path.parent.name.lower()}:{str(image.id).split(':')[1]}"
+        image_name = dockerfile_path.parent.name.lower()
+        image_tag = str(image.id).split(":")[1]
+        image_name_tagged = f"{docker_registry}/{image_name}:{image_tag}"
 
         # Tag the image with the SHA
-        image.tag(image_name)
+        image.tag(image_name_tagged)
+
+        set_github_env_var("DOCKER_IMAGE", image_name_tagged)
 
         # Push the Docker image to the registry
-        print(f"Pushing image {image_name} to registry...")
-        for line in client.images.push(image_name, stream=True, decode=True):
+        print(f"Pushing image {image_name_tagged} to registry...")
+        for line in client.images.push(image_name_tagged, stream=True, decode=True):
             print(line)
-        print(f"Successfully pushed {image_name} to {docker_registry}")
+        print(f"Successfully pushed {image_name_tagged} to {docker_registry}")
     except docker.errors.BuildError as e:
         print(f"Build error for {dockerfile_path}: {e}")
         sys.exit(1)
     except docker.errors.APIError as e:
         print(f"API error for {dockerfile_path}: {e}")
         sys.exit(2)
+
+    update_image_tag(image_name, image_tag)
+
+
+def update_image_tag(
+    service_name, new_tag, json_path="generated_dockerfiles/image_tags.json"
+):
+    json_path = Path(json_path)
+
+    if json_path.exists():
+        with json_path.open("r") as f:
+            existing_tags = json.load(f)
+    else:
+        existing_tags = {}
+
+    existing_tags[service_name] = new_tag
+
+    with json_path.open("w") as f:
+        json.dump(existing_tags, f, indent=2)
 
 
 def main():
