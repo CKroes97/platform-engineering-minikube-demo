@@ -1,0 +1,13 @@
+apiVersion: marketplace.kratix.io/v1alpha1
+kind: Runtime
+metadata:
+  name: test
+  namespace: kratix-runtime
+spec:
+  lifecycle: dev
+  image: 6e0fc30b6c02e2742f1fc698dfda21eadbc075f8f8d593f0f593a65a41dbafb2
+  servicePort: 80
+  replicas: 1
+  applicationEnv:
+  - name: hello
+    value: from-env
