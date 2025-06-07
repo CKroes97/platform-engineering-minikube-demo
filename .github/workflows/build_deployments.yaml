@@ -29,3 +29,6 @@ jobs:
   call-deploy-requests:
     uses: ./.github/workflows/build_deployments-deploy_requests.yaml
     secrets: inherit
+    needs: 
+      - call-generate-dockerfiles
+      - call-build-image
