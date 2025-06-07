@@ -1,7 +1,8 @@
 name: Build docker image
 
 permissions:
-  contents: read
+  contents: write
+  pull-requests: write
 
 on:
   workflow_dispatch:
@@ -56,14 +57,6 @@ jobs:
             --template-path templates/runtime-requests.yaml \
             --output-dir generated_python_webservices_requests
 
-      - name: Create PR
-        run: | 
-          gh pr create --base ${{ github.ref_name }} --head ${{ env.branch_name }} \
-           --title "Generate Dockerfiles" --body "Automated update"
-        env:
-         GH_TOKEN: ${{ github.token }}
-        if: ${{ steps.commit_build.outcome == 'success' }}
-
       - name: Commit and Push Changes
         id: commit_build
         run: |
@@ -79,6 +72,13 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         continue-on-error: true
 
+      - name: Create PR
+        run: | 
+          gh pr create --base ${{ github.ref_name }} --head ${{ env.branch_name }} \
+           --title "Generate Dockerfiles" --body "Automated update"
+        env:
+         GH_TOKEN: ${{ github.token }}
+        if: ${{ steps.commit_build.outcome == 'success' }}
 
       - name: Merge PR if not redundant
         run: |
