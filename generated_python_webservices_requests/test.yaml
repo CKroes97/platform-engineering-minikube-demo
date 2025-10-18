@@ -5,7 +5,7 @@ metadata:
   namespace: default
 spec:
   lifecycle: dev
-  image: localhost:30080/test:1e0b96d98b38ccae795e0928ded5d724bd34e884f86539a4a04747577078f0aa
+  image: localhost:30080/test:70991446aae0c7718a78c3f3273fc6cd9cc4ad1c21b72c487daf16efd1b4f609
   servicePort: 80
   replicas: 1
   applicationEnv:
