@@ -28,7 +28,7 @@ jobs:
       - name: Login to docker to generate auth files
         run: |
           echo $DOCKER__REGISTRY_PASSWORD | \
-          sudo docker login --username $DOCKER_REGISTRY_USERNAME \
+          docker login --username $DOCKER_REGISTRY_USERNAME \
            --password-stdin  \
            "localhost:30080"
         env:
