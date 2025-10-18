@@ -1,7 +1,8 @@
 name: Build docker image
 
 permissions:
-  contents: read
+  contents: write
+  pull-requests: write
 
 on:
   workflow_dispatch:
@@ -10,12 +11,13 @@ on:
       - 'generated_dockerfiles/**'
       - '.github/workflows/build_docker_image.yaml'
       - 'workflow_scripts/build_docker_image/**'
+      - 'workflow_scripts/shared/**'
+      - 'webservices/**.py'
   pull_request:
 
 jobs: 
   build-image:
     runs-on: self-hosted
-
     steps:
       - name: force clean Repository
         run: sudo rm -rf ${{ github.workspace }}/terraform
@@ -29,7 +31,7 @@ jobs:
           python-version: "3.11"
 
       - name: Install requirements
-        run: pip install pathlib docker
+        run: pip install -r workflow_scripts/build_docker_image/requirements.txt
 
       - name: Login to docker to generate auth files
         run: |
@@ -41,7 +43,7 @@ jobs:
           DOCKER_REGISTRY_USERNAME: ${{ secrets.REGISTRY_USER }}
           DOCKER__REGISTRY_PASSWORD: ${{ secrets.REGISTRY_PASSWORD }}
 
-      - name: Run Dockerfile generation script
+      - name: Run Dockerfile build script
         run: | 
           python workflow_scripts/build_docker_image/build_docker_images.py \
            --dockerfiles-dir "generated_dockerfiles" \
@@ -49,3 +51,49 @@ jobs:
         env:
           DOCKER_REGISTRY_USERNAME: ${{ secrets.REGISTRY_USER }}
           DOCKER__REGISTRY_PASSWORD: ${{ secrets.REGISTRY_PASSWORD }}
+
+      - name: Create request for deployment
+        run: |
+          python workflow_scripts/build_docker_image/generate_requests.py \
+            --env dev \
+            --template-path templates/runtime-requests.yaml \
+            --output-dir generated_python_webservices_requests \
+            --docker-registry "localhost:30080"
+
+      - name: Commit and Push Changes
+        id: commit_build
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git pull
+          BRANCH_NAME="generate-requests-${{ github.sha }}"
+          git checkout -b $BRANCH_NAME
+          git add generated_dockerfiles/
+          git add generated_python_webservices_requests/
+          git commit -m "Auto-generate Dockerfiles for new webservices"
+          git push origin $BRANCH_NAME
+          echo "branch_name"="$BRANCH_NAME" >> "$GITHUB_ENV"
+          sleep 3
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        continue-on-error: true
+
+      - name: Create PR
+        run: | 
+          gh pr create --base ${{ github.ref_name }} --head ${{ env.branch_name }} \
+           --title "Generate Dockerfiles" --body "Automated update"
+          sleep 3
+        env:
+         GH_TOKEN: ${{ github.token }}
+        if: ${{ steps.commit_build.outcome == 'success' }}
+
+      - name: Merge PR if not redundant
+        run: |
+         python workflow_scripts/shared/check_if_pr_redundant.py \
+         --current-branch "${{ env.branch_name}}" \
+         --base-branch "${{ github.ref_name }}" \
+         --repository "${{ github.repository }}" \
+         --folder "generated_python_webservices_requests, generated_dockerfiles"
+        env:
+         GITHUB_TOKEN: ${{ github.token }}
+        if: ${{ steps.commit_build.outcome == 'success' }}
