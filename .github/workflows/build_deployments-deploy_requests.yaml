@@ -1,0 +1,15 @@
+name: Generate Dockerfiles
+
+on:
+  workflow_call:
+
+jobs:
+  generate-dockerfiles:
+    runs-on: self-hosted
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - run: git pull
+      
+      - run: sudo kubectl apply -f generated_python_webservices_requests/ 

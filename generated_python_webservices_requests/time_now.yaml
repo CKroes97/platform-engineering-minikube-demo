@@ -1,8 +1,8 @@
 apiVersion: marketplace.kratix.io/v1alpha1
 kind: Runtime
 metadata:
-  name: time_now
-  namespace: kratix-runtime
+  name: time-now
+  namespace: default
 spec:
   lifecycle: dev
   image: localhost:30080/time_now:9be0e09763e5f35aa7297f938bd2310b87bf3a52d6e7e76c691c2258fd25fca0

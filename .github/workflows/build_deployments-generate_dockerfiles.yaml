@@ -1,18 +1,7 @@
 name: Generate Dockerfiles
 
-permissions:
-  contents: write
-  pull-requests: write
-
 on:
-  push:
-    paths:
-      - "webservices/**.py"
-      - ".github/workflows/generate_dockerfiles.yaml"
-      - "workflow_scripts/generate_dockerfiles/*"
-      - "workflow_scripts/shared/**"
-  workflow_dispatch: 
-  pull_request:
+  workflow_call:
 
 jobs:
   generate-dockerfiles:
@@ -25,6 +14,8 @@ jobs:
         uses: actions/setup-python@v4
         with:
           python-version: "3.11"
+
+      - run: git pull
 
       - name: Install dependencies
         run: pip install -r workflow_scripts/generate_dockerfiles/requirements.txt
