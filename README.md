@@ -22,7 +22,7 @@ Usage:
 - Profit
 
 When facing issues building the docker images and pushing them to the repository
-it might help to log in to the WSL instance and run `sudo docker login`
+it might help to log in to the WSL instance and run `sudo docker login localhost:30080`
 
 Desired end state architecture:
 ![architecture overview](docs/architecture.png)
