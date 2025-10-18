@@ -1,5 +1,8 @@
 name: Generate Dockerfiles
 
+permissions:
+  contents: read
+
 on:
   workflow_call:
 
