@@ -17,9 +17,10 @@ class TimeHandler(BaseHTTPRequestHandler):
 
 
 def main():
-    server = HTTPServer(("0.0.0.0", 80), TimeHandler)
-    print("Server running on port 80...")
-    server.serve_forever()
+    server_address = ('', 8000)
+    httpd = HTTPServer(server_address, TimeHandler)
+    print('Serving on port 8000...')
+    httpd.serve_forever()
 
 
 if __name__ == "__main__":

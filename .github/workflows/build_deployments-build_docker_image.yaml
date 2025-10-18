@@ -5,15 +5,7 @@ permissions:
   pull-requests: write
 
 on:
-  workflow_dispatch:
-  push:
-    paths:
-      - 'generated_dockerfiles/**'
-      - '.github/workflows/build_docker_image.yaml'
-      - 'workflow_scripts/build_docker_image/**'
-      - 'workflow_scripts/shared/**'
-      - 'webservices/**.py'
-  pull_request:
+  workflow_call:
 
 jobs: 
   build-image:
@@ -36,7 +28,7 @@ jobs:
       - name: Login to docker to generate auth files
         run: |
           echo $DOCKER__REGISTRY_PASSWORD | \
-          sudo docker login --username $DOCKER_REGISTRY_USERNAME \
+          docker login --username $DOCKER_REGISTRY_USERNAME \
            --password-stdin  \
            "localhost:30080"
         env:
