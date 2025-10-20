@@ -24,7 +24,7 @@ jobs:
       - name: Install Ansible
         shell: bash
         run: |
-          sudo dnf update
+          sudo dnf update -y
           sudo dnf install -y ansible
 
       - name: Run Ansible Playbook
