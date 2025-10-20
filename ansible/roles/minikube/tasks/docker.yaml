@@ -8,9 +8,9 @@
     name: docker-ce-stable
     description: Docker CE Stable - $basearch
     baseurl: "https://download.docker.com/linux/fedora/docker-ce.repo"
-    gpgcheck: yes
+    gpgcheck: true
     gpgkey: "https://download.docker.com/linux/fedora/gpg"
-    enabled: yes
+    enabled: true
     state: present
 
 - name: Install Docker
