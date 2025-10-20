@@ -1,14 +1,12 @@
-- name: Add github GPG key
-  ansible.builtin.get_url:
-    url: "https://cli.github.com/packages/githubcli-archive-keyring.gpg"
-    dest: "/etc/apt/keyrings/githubcli-archive-keyring.gpg"
-    mode: '0644'
-
-- name: Add GitHub CLI dnf repository
-  ansible.builtin.apt_repository:
-    repo: "deb [arch=amd64 signed-by=/etc/apt/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main"
-    state: present
-    filename: github-cli
+- name: Add GitHub CLI YUM repository
+  ansible.builtin.yum_repository:
+    name: github-cli
+    description: GitHub CLI
+    baseurl: https://cli.github.com/packages/rpm/
+    gpgcheck: yes
+    repo_gpgcheck: yes
+    gpgkey: https://cli.github.com/packages/rpm/gh-cli-key.gpg
+    enabled: yes
 
 - name: Install GitHub CLI
   ansible.builtin.dnf:
