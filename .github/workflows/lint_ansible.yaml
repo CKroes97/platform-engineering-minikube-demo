@@ -24,7 +24,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Set up Python
-        run: sudo dnf install python3 python3-pip
+        run: sudo dnf install python3 python3-pip -y
 
       - name: Ensure ansible is intalled
         run: pip install ansible-dev-tools
