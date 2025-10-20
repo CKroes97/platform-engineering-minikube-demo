@@ -25,10 +25,10 @@
     groups: docker
     append: true
 
-- name: Ensure Docker socket permissions
-  ansible.builtin.file:
-    path: /var/run/docker.sock
-    owner: root
-    group: docker
-    mode: '0760'
-  notify: Restart Docker
+# - name: Ensure Docker socket permissions
+#   ansible.builtin.file:
+#     path: /var/run/docker.sock
+#     owner: root
+#     group: docker
+#     mode: '0760'
+#   notify: Restart Docker
