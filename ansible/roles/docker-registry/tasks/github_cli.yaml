@@ -3,10 +3,10 @@
     name: github-cli
     description: GitHub CLI
     baseurl: https://cli.github.com/packages/rpm/
-    gpgcheck: yes
-    repo_gpgcheck: yes
+    gpgcheck: true
+    repo_gpgcheck: true
     gpgkey: https://cli.github.com/packages/rpm/gh-cli-key.gpg
-    enabled: yes
+    enabled: true
 
 - name: Install GitHub CLI
   ansible.builtin.dnf:
