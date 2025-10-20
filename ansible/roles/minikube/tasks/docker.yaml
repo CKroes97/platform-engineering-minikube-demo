@@ -14,7 +14,7 @@
     filename: docker
 
 - name: Install Docker
-  ansible.builtin.apt:
+  ansible.builtin.dnf:
     name:
       - docker-ce
       - docker-ce-cli

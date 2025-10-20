@@ -29,7 +29,7 @@
     filename: kubernetes
 
 - name: Install Kubectl
-  ansible.builtin.apt:
+  ansible.builtin.dnf:
     name:
       - kubectl
     state: present

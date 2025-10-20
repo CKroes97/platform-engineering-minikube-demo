@@ -11,6 +11,6 @@
     filename: github-cli
 
 - name: Install GitHub CLI
-  ansible.builtin.apt:
+  ansible.builtin.dnf:
     name: gh
     state: present

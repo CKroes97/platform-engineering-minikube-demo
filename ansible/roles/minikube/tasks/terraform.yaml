@@ -28,7 +28,7 @@
     filename: hashicorp
 
 - name: Install Terraform
-  ansible.builtin.apt:
+  ansible.builtin.dnf:
     name:
       - terraform
     state: present
