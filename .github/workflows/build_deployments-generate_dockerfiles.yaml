@@ -3,6 +3,9 @@ name: Generate Dockerfiles
 on:
   workflow_call:
 
+permissions:
+  contents: read
+
 jobs:
   generate-dockerfiles:
     runs-on: ubuntu-latest
