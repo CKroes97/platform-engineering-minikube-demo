@@ -34,7 +34,7 @@
     mode: "0644"
 
 - name: Ensure filesystem access (did I tell that you that this should run on a dedicated machine?)
-  ansible.builtin.sysctl:
+  ansible.posix.sysctl:
     name: fs.protected_regular
     value: '0'
     state: present
