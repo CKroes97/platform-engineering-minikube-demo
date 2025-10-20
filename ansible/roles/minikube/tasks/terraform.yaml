@@ -3,9 +3,9 @@
     name: hashicorp
     description: HashiCorp Stable - Fedora
     baseurl: https://rpm.releases.hashicorp.com/fedora/$releasever/$basearch/stable
-    gpgcheck: yes
-    repo_gpgcheck: yes
-    enabled: yes
+    gpgcheck: true
+    repo_gpgcheck: true
+    enabled: true
     gpgkey: https://rpm.releases.hashicorp.com/gpg
 
 - name: Install Terraform
