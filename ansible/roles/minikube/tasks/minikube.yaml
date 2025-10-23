@@ -40,7 +40,7 @@
       [Install]
       WantedBy=multi-user.target
     mode: "0644"
-    become: true
+  become: true
 
 - name: Ensure filesystem access (did I tell that you that this should run on a dedicated machine?)
   ansible.posix.sysctl:
@@ -48,7 +48,7 @@
     value: '0'
     state: present
     reload: true
-    become: true
+  become: true
 
 - name: Reload systemd to read new service
   ansible.builtin.systemd:
@@ -58,10 +58,10 @@
   ansible.builtin.systemd:
     name: minikube
     enabled: true
-    become: true
+  become: true
 
 - name: Start Minikube service
   ansible.builtin.systemd:
     name: minikube
     state: started
-    become: true
+  become: true
