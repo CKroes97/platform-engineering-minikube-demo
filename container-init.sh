@@ -11,7 +11,11 @@ read -p "Enter GitHub Runner Token: " GITHUB_RUNNER_TOKEN
 read -s -p "Enter password for $RUNNER_USER: " RUNNER_PASS
 
 # Validate inputs
+<<<<<<< HEAD
 if [[ -z "$GITHUB_RUNNER_TOKEN" || -z "$RUNNER_PASS" ]]; then
+=======
+if [[ -z "$GITHUB_RUNNER_TOKEN"]]; then
+>>>>>>> parent of d28b777 (set to root)
     echo "Error: All inputs are required."
     exit 1
 fi
