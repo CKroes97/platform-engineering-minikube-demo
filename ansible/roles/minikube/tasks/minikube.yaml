@@ -34,8 +34,8 @@
       RemainAfterExit=true
       ExecStop=/usr/local/bin/minikube stop
       StandardOutput=journal
-      User=runner
-      Group=runner
+      User=root
+      Group=root
 
       [Install]
       WantedBy=multi-user.target
