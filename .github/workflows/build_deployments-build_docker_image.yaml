@@ -52,8 +52,8 @@ jobs:
 
       - name: Login to docker to generate auth files
         run: |
-          echo $DOCKER_REGISTRY_PASSWORD | \
-          docker login --username $DOCKER_REGISTRY_USERNAME \
+          echo ${{ env.DOCKER_REGISTRY_PASSWORD }} | \
+          docker login --username ${{ env.DOCKER_REGISTRY_USERNAME }} \
            --password-stdin  \
            "${{ env.MINIKUBE_IP }}:30080"
            timeout=30
