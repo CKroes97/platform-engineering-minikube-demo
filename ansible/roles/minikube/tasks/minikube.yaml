@@ -30,13 +30,12 @@
 
       [Service]
       Type=oneshot
-      ExecStart=/usr/local/bin/minikube start --driver=docker --force
+      ExecStart=/usr/local/bin/minikube start --driver=docker
       RemainAfterExit=true
       ExecStop=/usr/local/bin/minikube stop
       StandardOutput=journal
-      User=root
-      Group=root
-      Environment=HOME=/root
+      User=runner
+      Group=runner
 
       [Install]
       WantedBy=multi-user.target
