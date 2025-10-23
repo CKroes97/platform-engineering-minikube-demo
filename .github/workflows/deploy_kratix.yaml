@@ -46,7 +46,3 @@ jobs:
         run: |
           kubectl apply \
             --filename https://raw.githubusercontent.com/syntasso/kratix-marketplace/main/runtime/promise.yaml
-          kubectl wait \
-          --for=condition=Available deployments \
-          --all \
-          --timeout 300s
