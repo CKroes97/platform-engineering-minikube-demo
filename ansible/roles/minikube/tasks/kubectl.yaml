@@ -1,35 +1,15 @@
-- name: Download GPG key
-  ansible.builtin.get_url:
-    url: "https://pkgs.k8s.io/core:/stable:/v1.32/deb/Release.key"
-    dest: "/tmp/kubernetes-apt-keyring.gpg"
-    mode: '0644'
-
-- name: Convert Kubectl GPG key to dearmored format
-  ansible.builtin.command:
-    cmd: gpg --yes --dearmor --output /etc/apt/keyrings/kubernetes-apt-keyring.gpg /tmp/kubernetes-apt-keyring.gpg
-    creates: /etc/apt/keyrings/kubernetes-apt-keyring.gpg
-
-- name: Remove temporary key file
-  ansible.builtin.file:
-    path: "/tmp/kubernetes-apt-keyring.gpg"
-    state: absent
-
-- name: Set correct permissions on the Kubectl GPG key
-  ansible.builtin.file:
-    path: /etc/apt/keyrings/kubernetes-apt-keyring.gpg
-    mode: '0644'
-
-- name: Add Kubectl repository
-  ansible.builtin.apt_repository:
-    repo: >-
-      deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg]
-       https://pkgs.k8s.io/core:/stable:/v1.32/deb/
-       /
-    state: present
-    filename: kubernetes
+- name: Add Kubernetes repository
+  ansible.builtin.yum_repository:
+    name: kubernetes
+    description: Kubernetes repository
+    baseurl: https://pkgs.k8s.io/core:/stable:/v1.34/rpm/
+    gpgcheck: true
+    repo_gpgcheck: true
+    gpgkey: https://pkgs.k8s.io/core:/stable:/v1.34/rpm/repodata/repomd.xml.key
+    enabled: true
 
 - name: Install Kubectl
-  ansible.builtin.apt:
+  ansible.builtin.dnf:
     name:
       - kubectl
     state: present

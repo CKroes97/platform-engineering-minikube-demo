@@ -1,9 +1,16 @@
+- name: Ensure 'which' utility is installed
+  ansible.builtin.dnf:
+    name: which
+    state: present
+  become: true
+
 - name: Check if minikube is already installed
   ansible.builtin.command:
     cmd: "minikube version"
   register: minikube_installed
   changed_when: false
   ignore_errors: true
+  become: true
 
 - name: Download and install Minikube
   ansible.builtin.get_url:
@@ -11,6 +18,7 @@
     dest: "/usr/local/bin/minikube"
     mode: "0755"
   when: minikube_installed.rc != 0
+  become: true
 
 - name: Create systemd service file for Minikube
   ansible.builtin.copy:
@@ -22,23 +30,24 @@
 
       [Service]
       Type=oneshot
-      ExecStart=/usr/local/bin/minikube start --driver=none
+      ExecStart=/usr/local/bin/minikube start --driver=docker
       RemainAfterExit=true
       ExecStop=/usr/local/bin/minikube stop
       StandardOutput=journal
-      User=root
-      Group=root
+      User=runner
+      Group=runner
 
       [Install]
       WantedBy=multi-user.target
     mode: "0644"
 
 - name: Ensure filesystem access (did I tell that you that this should run on a dedicated machine?)
-  ansible.builtin.sysctl:
+  ansible.posix.sysctl:
     name: fs.protected_regular
     value: '0'
     state: present
     reload: true
+  become: true
 
 - name: Reload systemd to read new service
   ansible.builtin.systemd:

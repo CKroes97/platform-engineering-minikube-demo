@@ -24,12 +24,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Set up Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: "3.11"
-
-      - name: Ensure ansible is intalled
-        run: pip install ansible-dev-tools
+        run: sudo dnf install python3 python3-pip python3-ansible-lint -y
 
       - name: Run Ansible Lint
         run: ansible-lint ansible/

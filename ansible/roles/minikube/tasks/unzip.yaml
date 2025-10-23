@@ -1,4 +1,4 @@
 - name: Install unzip
-  ansible.builtin.apt:
+  ansible.builtin.dnf:
     name: unzip
     state: present

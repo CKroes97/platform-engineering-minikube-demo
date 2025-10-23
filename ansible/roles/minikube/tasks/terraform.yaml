@@ -1,34 +1,15 @@
-- name: Download Terraform GPG key
-  ansible.builtin.get_url:
-    url: "https://apt.releases.hashicorp.com/gpg"
-    dest: "/tmp/hashicorp-apt-keyring.gpg"
-    mode: '0644'
-
-- name: Convert Terraform GPG key to dearmored format
-  ansible.builtin.command:
-    cmd: gpg --yes --dearmor --output /usr/share/keyrings/hashicorp-archive-keyring.gpg /tmp/hashicorp-apt-keyring.gpg
-    creates: /etc/apt/keyrings/hashicorp-archive-keyring.gpg
-
-- name: Remove temporary key file
-  ansible.builtin.file:
-    path: "/tmp/hashicorp-apt-keyring.gpg"
-    state: absent
-
-- name: Set correct permissions on the Terraform GPG key
-  ansible.builtin.file:
-    path: /usr/share/keyrings/hashicorp-archive-keyring.gpg
-    mode: '0644'
-
-- name: Add Terraform repository
-  ansible.builtin.apt_repository:
-    repo: >-
-      deb [signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg]
-      https://apt.releases.hashicorp.com {{ ansible_distribution_release }} main
-    state: present
-    filename: hashicorp
+- name: Add HashiCorp repository
+  ansible.builtin.yum_repository:
+    name: hashicorp
+    description: HashiCorp Stable - Fedora
+    baseurl: https://rpm.releases.hashicorp.com/fedora/$releasever/$basearch/stable
+    gpgcheck: true
+    repo_gpgcheck: true
+    enabled: true
+    gpgkey: https://rpm.releases.hashicorp.com/gpg
 
 - name: Install Terraform
-  ansible.builtin.apt:
+  ansible.builtin.dnf:
     name:
       - terraform
     state: present
@@ -40,19 +21,22 @@
     owner: "{{ ansible_env.SUDO_USER }}"
     group: "{{ ansible_env.SUDO_USER }}"
     mode: "0755"
+    recurse: true
 
 - name: Ensure home root exists
   ansible.builtin.file:
-    path: /home/{{ ansible_env.USER }}/
+    path: /home/root/
     state: directory
     mode: '0755'
+  become: true
 
 - name: Create .terraformrc file with plugin_cache_dir
   ansible.builtin.copy:
     dest: "/home/{{ ansible_env.USER }}/.terraformrc"
     content: |
       plugin_cache_dir = "~/"
-    owner: "{{ ansible_env.USER }}"
-    group: "{{ ansible_env.USER }}"
+    owner: "root"
+    group: "root"
     mode: '0644'
+  become: true
   when: ansible_env.USER is defined
