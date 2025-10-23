@@ -1,4 +1,32 @@
 # platform-engineering-minikube-demo
+# Requirements
+On windows host
+Requires docker
+Requires latest version of WSL
+Requires default version of WSL to be set to 2
+You can install a fedora-41 container with the script `install-container.ps1`
+
+The fedora-41 container tends to have its DNS settings messed up and also it tends to not us systemd.
+
+Update `/etc/wsl.conf` to:
+```
+[network]
+generateResolvConf=false
+[boot]
+systemd=true
+```
+
+Update `/etc/resolv.conf` to at least:
+```
+nameserver <your-favourite-dns-server>
+```
+Then install dotnet & git
+
+git clone this repository on the wsl container
+
+Then continue with kicking off `container-init.sh`
+
+# Overview
 Implementation of the platform engineering reference architecture for OpenShift but then just with regular Kubernetes running on Minikube for demo purposes.
 
 V2 also adds an LLM server, firewall and MCP.
@@ -13,8 +41,7 @@ Security shortcuts taken for easy and quick development. Do not expose WSL conta
 Developed for Fedora 41 running on WSL
 
 Usage:
-- Make sure you are running the latest version of WSL (`wsl --update`)
-- Run `install-container.ps1` 
+- Take the steps from "Requirements" above
 - Clone repo (again) in  fedora 41 instance
 - run init.sh to add a github runner (token can be gotten from github repo settings > actions )
     Note: this adds a dedicated Linux user with paswordless Sudo rights.
@@ -26,5 +53,5 @@ Usage:
 When facing issues building the docker images and pushing them to the repository
 it might help to log in to the WSL instance and run `sudo docker login localhost:30080`
 
-Desired end state architecture:
+V1 Desired end state architecture:
 ![architecture overview](docs/architecture.png)

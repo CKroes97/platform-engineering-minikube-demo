@@ -8,7 +8,6 @@ usage() {
 
 # Prompt user for inputs
 read -p "Enter GitHub Runner Token: " GITHUB_RUNNER_TOKEN
-read -p "Enter Unix username for GitHub Runner: " RUNNER_USER
 read -s -p "Enter password for $RUNNER_USER: " RUNNER_PASS
 
 # Validate inputs
@@ -17,11 +16,7 @@ if [[ -z "$GITHUB_RUNNER_TOKEN" || -z "$RUNNER_USER" || -z "$RUNNER_PASS" ]]; th
     exit 1
 fi
 
-if ! id "$RUNNER_USER" &>/dev/null; then
-    echo "Creating user $RUNNER_USER..."
-    sudo useradd -m -s /bin/bash "$RUNNER_USER"
-    echo "$RUNNER_USER:$RUNNER_PASS" | sudo chpasswd
-fi
+$RUNNER_USER="runner"
 
 # Grant passwordless sudo access
 echo "$RUNNER_USER ALL=(ALL) NOPASSWD:ALL" | sudo tee /etc/sudoers.d/$RUNNER_USER
