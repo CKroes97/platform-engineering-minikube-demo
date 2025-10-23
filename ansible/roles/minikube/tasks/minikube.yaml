@@ -36,6 +36,7 @@
       StandardOutput=journal
       User=root
       Group=root
+      Environment=HOME=/root
 
       [Install]
       WantedBy=multi-user.target
