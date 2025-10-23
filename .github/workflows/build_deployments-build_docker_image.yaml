@@ -23,12 +23,39 @@ jobs:
       - name: Install requirements
         run: pip install -r workflow_scripts/build_docker_image/requirements.txt
 
+      - name: Get Minikube IP
+        id: minikube-ip
+        run: |
+          MINIKUBE_IP=$(minikube ip)
+          echo "MINIKUBE_IP=$MINIKUBE_IP" >> $GITHUB_ENV
+          echo "Detected Minikube IP: $MINIKUBE_IP"
+
+      - name: Configure Docker insecure registry
+        run: |
+          REGISTRY_ADDR="${{ env.MINIKUBE_IP }}:30080"
+          echo "Adding insecure registry: $REGISTRY_ADDR"
+          sudo mkdir -p /etc/docker
+          sudo tee /etc/docker/daemon.json >/dev/null <<EOF
+          {
+            "insecure-registries": ["$REGISTRY_ADDR"]
+          }
+          EOF
+
+          sudo chmod 644 /etc/docker/daemon.json
+          sudo systemctl restart docker
+
+      - name: Restart Docker
+        run: |
+          echo "Restarting Docker..."
+          sudo systemctl restart docker
+          sleep 3
+
       - name: Login to docker to generate auth files
         run: |
           echo $DOCKER_REGISTRY_PASSWORD | \
-          sudo docker login --username $DOCKER_REGISTRY_USERNAME \
+          docker login --username $DOCKER_REGISTRY_USERNAME \
            --password-stdin  \
-           "localhost:30080"
+           "${{ env.MINIKUBE_IP }}:30080"
         env:
           DOCKER_REGISTRY_USERNAME: ${{ secrets.REGISTRY_USER }}
           DOCKER_REGISTRY_PASSWORD: ${{ secrets.REGISTRY_PASSWORD }}
@@ -37,7 +64,7 @@ jobs:
         run: | 
           python workflow_scripts/build_docker_image/build_docker_images.py \
            --dockerfiles-dir "generated_dockerfiles" \
-           --docker-registry "localhost:30080"
+           --docker-registry "${{ env.MINIKUBE_IP }}:30080"
         env:
           DOCKER_REGISTRY_USERNAME: ${{ secrets.REGISTRY_USER }}
           DOCKER_REGISTRY_PASSWORD: ${{ secrets.REGISTRY_PASSWORD }}
@@ -48,7 +75,7 @@ jobs:
             --env dev \
             --template-path templates/runtime-requests.yaml \
             --output-dir generated_python_webservices_requests \
-            --docker-registry "localhost:30080"
+            --docker-registry "${{ env.MINIKUBE_IP }}:30080"
 
       - name: Commit and Push Changes
         id: commit_build
