@@ -3,8 +3,10 @@
 set -e
 
 usage() {
-    echo "Usage: setup.sh"
+    echo "Usage: container-init.sh"
 }
+
+$RUNNER_USER="runner"
 
 # Prompt user for inputs
 read -p "Enter GitHub Runner Token: " GITHUB_RUNNER_TOKEN
@@ -16,7 +18,12 @@ if [[ -z "$GITHUB_RUNNER_TOKEN" || -z "$RUNNER_PASS" ]]; then
     exit 1
 fi
 
-$RUNNER_USER="runner"
+if ! id "$RUNNER_USER" &>/dev/null; then
+    echo "Creating user $RUNNER_USER..."
+    sudo useradd -m -s /bin/bash "$RUNNER_USER"
+    echo "$RUNNER_USER:$RUNNER_PASS" | sudo chpasswd
+fi
+
 
 # Grant passwordless sudo access
 echo "$RUNNER_USER ALL=(ALL) NOPASSWD:ALL" | sudo tee /etc/sudoers.d/$RUNNER_USER
