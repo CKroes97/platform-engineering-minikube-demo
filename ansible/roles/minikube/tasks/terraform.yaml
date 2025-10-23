@@ -25,16 +25,18 @@
 
 - name: Ensure home root exists
   ansible.builtin.file:
-    path: /home/{{ ansible_env.USER }}/
+    path: /home/root/
     state: directory
     mode: '0755'
+    become: true
 
 - name: Create .terraformrc file with plugin_cache_dir
   ansible.builtin.copy:
     dest: "/home/{{ ansible_env.USER }}/.terraformrc"
     content: |
       plugin_cache_dir = "~/"
-    owner: "{{ ansible_env.USER }}"
-    group: "{{ ansible_env.USER }}"
+    owner: "root"
+    group: "root"
     mode: '0644'
+    become: true
   when: ansible_env.USER is defined

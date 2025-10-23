@@ -28,11 +28,11 @@ jobs:
           terraform_version: latest
 
       - name: Initialize Terraform
-        run: terraform -chdir=terraform init
+        run: sudo terraform -chdir=terraform init
 
       - name: Apply Terraform
         run: >-
-          terraform -chdir=terraform apply -auto-approve 
+          sudo terraform -chdir=terraform apply -auto-approve 
 
       - name: force clean Repository
         run: sudo rm -rf ${{ github.workspace }}/terraform

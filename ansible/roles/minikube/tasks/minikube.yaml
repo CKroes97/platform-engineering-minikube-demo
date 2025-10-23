@@ -10,6 +10,7 @@
   register: minikube_installed
   changed_when: false
   ignore_errors: true
+  become: true
 
 - name: Download and install Minikube
   ansible.builtin.get_url:
@@ -17,6 +18,7 @@
     dest: "/usr/local/bin/minikube"
     mode: "0755"
   when: minikube_installed.rc != 0
+  become: true
 
 - name: Create systemd service file for Minikube
   ansible.builtin.copy:
@@ -38,6 +40,7 @@
       [Install]
       WantedBy=multi-user.target
     mode: "0644"
+    become: true
 
 - name: Ensure filesystem access (did I tell that you that this should run on a dedicated machine?)
   ansible.posix.sysctl:
@@ -45,6 +48,7 @@
     value: '0'
     state: present
     reload: true
+    become: true
 
 - name: Reload systemd to read new service
   ansible.builtin.systemd:
@@ -54,8 +58,10 @@
   ansible.builtin.systemd:
     name: minikube
     enabled: true
+    become: true
 
 - name: Start Minikube service
   ansible.builtin.systemd:
     name: minikube
     state: started
+    become: true
