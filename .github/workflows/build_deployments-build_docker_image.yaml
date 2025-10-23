@@ -25,13 +25,13 @@ jobs:
 
       - name: Login to docker to generate auth files
         run: |
-          echo $DOCKER__REGISTRY_PASSWORD | \
+          echo $DOCKER_REGISTRY_PASSWORD | \
           sudo docker login --username $DOCKER_REGISTRY_USERNAME \
            --password-stdin  \
            "localhost:30080"
         env:
           DOCKER_REGISTRY_USERNAME: ${{ secrets.REGISTRY_USER }}
-          DOCKER__REGISTRY_PASSWORD: ${{ secrets.REGISTRY_PASSWORD }}
+          DOCKER_REGISTRY_PASSWORD: ${{ secrets.REGISTRY_PASSWORD }}
 
       - name: Run Dockerfile build script
         run: | 
@@ -40,7 +40,7 @@ jobs:
            --docker-registry "localhost:30080"
         env:
           DOCKER_REGISTRY_USERNAME: ${{ secrets.REGISTRY_USER }}
-          DOCKER__REGISTRY_PASSWORD: ${{ secrets.REGISTRY_PASSWORD }}
+          DOCKER_REGISTRY_PASSWORD: ${{ secrets.REGISTRY_PASSWORD }}
 
       - name: Create request for deployment
         run: |
