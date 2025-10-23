@@ -56,6 +56,11 @@ jobs:
           docker login --username $DOCKER_REGISTRY_USERNAME \
            --password-stdin  \
            "${{ env.MINIKUBE_IP }}:30080"
+           timeout=30
+            until docker info >/dev/null 2>&1 || [ $timeout -le 0 ]; do
+                sleep 1
+                timeout=$((timeout - 1))
+            done
         env:
           DOCKER_REGISTRY_USERNAME: ${{ secrets.REGISTRY_USER }}
           DOCKER_REGISTRY_PASSWORD: ${{ secrets.REGISTRY_PASSWORD }}
