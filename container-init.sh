@@ -10,7 +10,7 @@ usage() {
 read -p "Enter GitHub Runner Token: " GITHUB_RUNNER_TOKEN
 
 # Validate inputs
-if [ -z "$GITHUB_RUNNER_TOKEN"] then
+if [ -z "$GITHUB_RUNNER_TOKEN" ]; then
     echo "Error: All inputs are required."
     exit 1
 fi
