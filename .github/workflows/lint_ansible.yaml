@@ -27,7 +27,7 @@ jobs:
         run: sudo dnf install python3 python3-pip -y
 
       - name: Ensure ansible is intalled
-        run: pip install ansible-dev-tools
+        run: pip install ansible-dev-tools python3-ansible-lint
 
       - name: Run Ansible Lint
         run: ansible-lint ansible/
