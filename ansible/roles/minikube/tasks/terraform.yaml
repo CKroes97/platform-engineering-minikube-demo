@@ -28,7 +28,7 @@
     path: /home/root/
     state: directory
     mode: '0755'
-    become: true
+  become: true
 
 - name: Create .terraformrc file with plugin_cache_dir
   ansible.builtin.copy:
@@ -38,5 +38,5 @@
     owner: "root"
     group: "root"
     mode: '0644'
-    become: true
+  become: true
   when: ansible_env.USER is defined
