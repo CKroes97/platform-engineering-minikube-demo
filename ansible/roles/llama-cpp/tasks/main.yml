@@ -1,2 +1,13 @@
 - name: Set up envirionment for llama-cpp
   ansible.builtin.include_tasks: setup_environment.yml
+
+- name: Install llama-cpp
+  ansible.builtin.include_tasks: llama_cpp.yml
+  vars:
+    repo_url: "https://github.com/ggml-org/llama.cpp.git"
+    repo_dest: "/opt/llama.cpp"
+    build_dir: "{{ repo_dest }}/build"
+    cmake_generator: "Ninja"          # or "Unix Makefiles"
+    cmake_build_type: "Release"
+    enable_cuda: "ON"
+    cuda_architectures: "120;113;86" 
