@@ -2,3 +2,9 @@
   ansible.builtin.service:
     name: docker
     state: restarted
+  notify: Restart Minikube
+
+- name: Restart Minikube
+  ansible.builtin.service:
+      name: docker
+      state: restarted
