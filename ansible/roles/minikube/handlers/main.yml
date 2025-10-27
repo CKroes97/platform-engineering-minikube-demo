@@ -6,5 +6,5 @@
 
 - name: Restart Minikube
   ansible.builtin.service:
-      name: docker
-      state: restarted
+    name: docker
+    state: restarted
