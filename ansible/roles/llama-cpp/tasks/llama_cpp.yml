@@ -5,7 +5,7 @@
       - cmake
       - ninja-build
       - gcc-13
-      - gcc-13-c++
+      - g++-13
       - make
     state: present
 
