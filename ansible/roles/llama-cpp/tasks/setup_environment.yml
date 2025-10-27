@@ -17,6 +17,11 @@
     path: /usr/lib64/libcuda.so.1
   register: libcuda
 
+- name: Check for CUDA toolkit (nvcc)
+  ansible.builtin.stat:
+    path: /usr/local/cuda/bin/nvcc
+  register: cuda_nvcc
+
 - name: Install NVIDIA driver libraries (if libcuda.so.1 missing)
   ansible.builtin.dnf:
     name:
@@ -31,17 +36,20 @@
   ansible.builtin.file:
     path: /tmp/nvidia-driver-libs
     state: directory
-  when: libcuda.stat.exists
+  when:
+   - libcuda.stat.exists
+   - not cuda_nvcc.stat.exists
   register: temp_nvidia_dir
 
 - name: Download NVIDIA RPMs for DB update (if host supplies CUDA)
   ansible.builtin.shell: >
-      dnf download --destdir=/tmp/nvidia-driver-libs
-      --resolve --arch x86_64 {{ nvidia_packages | join(' ') }} &&
+      rpm --install --verbose --hash --justdb /tmp/nvidia-driver-libs/* &&
       touch /tmp/nvidia-driver-libs/.dnf_download_complete
   args:
     creates: /tmp/nvidia-driver-libs/.dnf_download_complete
-  when: libcuda.stat.exists
+  when:
+   - libcuda.stat.exists
+   - not cuda_nvcc.stat.exists
 
 - name: Update RPM database to mark NVIDIA libs as installed
   ansible.builtin.shell: >
@@ -49,7 +57,9 @@
       touch /tmp/nvidia-driver-libs/.rpm_db_updated
   args:
     creates: /tmp/nvidia-driver-libs/.rpm_db_updated
-  when: libcuda.stat.exists
+  when:
+   - libcuda.stat.exists
+   - not cuda_nvcc.stat.exists
 
 - name: Install CUDA meta-package
   ansible.builtin.dnf:
