@@ -34,6 +34,7 @@
       -DCMAKE_CUDA_ARCHITECTURES="{{ cuda_architectures }}"
       -DCMAKE_C_COMPILER=/usr/bin/gcc-13
       -DCMAKE_CXX_COMPILER=/usr/bin/g++-13
+      -DCMAKE_CUDA_COMPILER=/usr/local/cuda/bin/nvcc
   args:
     chdir: "{{ repo_dest }}"
 
