@@ -10,4 +10,4 @@
     cmake_generator: "Ninja"          # or "Unix Makefiles"
     cmake_build_type: "Release"
     enable_cuda: "ON"
-    cuda_architectures: "120;113;86" 
+    cuda_architectures: "89" 
