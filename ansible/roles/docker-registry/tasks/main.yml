@@ -1,0 +1,5 @@
+- name: Generate credentials
+  ansible.builtin.include_tasks: credentials.yml
+
+- name: Install Github CLI
+  ansible.builtin.include_tasks: github_cli.yml

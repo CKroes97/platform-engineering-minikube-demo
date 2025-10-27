@@ -66,7 +66,7 @@ jobs:
         run: |
           python workflow_scripts/build_docker_image/generate_requests.py \
             --env dev \
-            --template-path templates/runtime-requests.yaml \
+            --template-path templates/runtime-requests.yml \
             --output-dir generated_python_webservices_requests \
             --docker-registry "${{ env.MINIKUBE_IP }}:30080"
 

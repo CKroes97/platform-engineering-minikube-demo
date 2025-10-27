@@ -8,7 +8,7 @@ on:
   push:
     paths:
       - 'ansible/**'
-      - .github/workflows/lint_ansible.yaml
+      - .github/workflows/lint_ansible.yml
   pull_request:
 
 jobs:

@@ -45,8 +45,8 @@ Usage:
 - Clone repo (again) in  fedora 41 instance
 - run init.sh to add a github runner (token can be gotten from github repo settings > actions )
     Note: this adds a dedicated Linux user with paswordless Sudo rights.
-- Run the "configure_host.yaml" action in Github actions
-- Run the "deploy.yaml" action in Github actions
+- Run the "configure_host.yml" action in Github actions
+- Run the "deploy.yml" action in Github actions
 - Add Python webserver scripts to the "webservices" folder
 - Profit
 

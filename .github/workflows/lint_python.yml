@@ -9,7 +9,7 @@ on:
     paths:
       - 'webservices/**'
       - 'workflow_scripts/**'
-      - '.github/workflows/lint_python.yaml'
+      - '.github/workflows/lint_python.yml'
   pull_request:
 
 jobs:

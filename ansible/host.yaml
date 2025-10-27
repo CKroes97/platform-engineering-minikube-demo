@@ -2,6 +2,6 @@
   hosts: local
   become: true
   roles:
-    - role: minikube
-
-    - role: docker-registry
+    - minikube
+    - docker-registry
+    - llama-cpp

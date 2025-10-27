@@ -7,7 +7,7 @@ on:
   workflow_dispatch:
   push:
     paths:
-      - '.github/workflows/deploy.yaml'
+      - '.github/workflows/deploy.yml'
       - 'terraform/**'
   pull_request:
 
