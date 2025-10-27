@@ -39,14 +39,16 @@
       dnf download --destdir=/tmp/nvidia-driver-libs
       --resolve --arch x86_64 {{ nvidia_packages | join(' ') }} &&
       touch /tmp/nvidia-driver-libs/.dnf_download_complete
-  creates: /tmp/nvidia-driver-libs/.dnf_download_complete
+  args:
+    creates: /tmp/nvidia-driver-libs/.dnf_download_complete
   when: libcuda.stat.exists
 
 - name: Update RPM database to mark NVIDIA libs as installed
   ansible.builtin.shell: >
       rpm --install --verbose --hash --justdb /tmp/nvidia-driver-libs/* &&
       touch /tmp/nvidia-driver-libs/.rpm_db_updated
-  creates: /tmp/nvidia-driver-libs/.rpm_db_updated
+  args:
+    creates: /tmp/nvidia-driver-libs/.rpm_db_updated
   when: libcuda.stat.exists
 
 - name: Install CUDA meta-package
