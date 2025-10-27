@@ -4,7 +4,8 @@
       - git
       - cmake
       - ninja-build
-      - gcc-c++
+      - gcc-13
+      - gcc-13-c++
       - make
     state: present
 
@@ -31,6 +32,8 @@
       -DCMAKE_BUILD_TYPE={{ cmake_build_type }}
       -DGGML_CUDA={{ enable_cuda }}
       -DCMAKE_CUDA_ARCHITECTURES="{{ cuda_architectures }}"
+      -DCMAKE_C_COMPILER=/usr/bin/gcc-13
+      -DCMAKE_CXX_COMPILER=/usr/bin/g++-13
   args:
     chdir: "{{ repo_dest }}"
 
