@@ -42,6 +42,6 @@
 - name: Build llama.cpp binaries
   ansible.builtin.command:
     cmd: >
-      cmake --build "{{ build_dir }}" --config {{ cmake_build_type }} -- /m: # for Ninja remove /m:
+      cmake --build "{{ build_dir }}" --config {{ cmake_build_type }} 
   args:
     chdir: "{{ build_dir }}"
