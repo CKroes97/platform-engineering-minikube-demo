@@ -18,7 +18,7 @@ jobs:
       - name: Deploy cert manager
         run: |
           kubectl apply \
-            --filename https://github.com/cert-manager/cert-manager/releases/download/v1.19.1/cert-manager.yml
+            --filename https://github.com/cert-manager/cert-manager/releases/download/v1.19.1/cert-manager.yaml
           kubectl wait --namespace cert-manager \
            --for=condition=Available deployments \
            --all \
@@ -27,7 +27,7 @@ jobs:
       - name: Install Kratix
         run: |
           kubectl apply \
-           --filename https://github.com/syntasso/kratix/releases/latest/download/install-all-in-one.yml
+           --filename https://github.com/syntasso/kratix/releases/latest/download/install-all-in-one.yaml
           kubectl wait --namespace kratix-platform-system \
             --for=condition=Available deployments \
             --all \
@@ -36,7 +36,7 @@ jobs:
       - name: Configure Kratix
         run: |
           kubectl apply \
-            --filename https://github.com/syntasso/kratix/releases/latest/download/config-all-in-one.yml
+            --filename https://github.com/syntasso/kratix/releases/latest/download/config-all-in-one.yaml
           kubectl wait --namespace kratix-platform-system \
             --for=condition=Available deployments \
             --all \
@@ -45,4 +45,4 @@ jobs:
       - name: Instal Runtime marketplace module
         run: |
           kubectl apply \
-            --filename https://raw.githubusercontent.com/syntasso/kratix-marketplace/main/runtime/promise.yml
+            --filename https://raw.githubusercontent.com/syntasso/kratix-marketplace/main/runtime/promise.yaml
