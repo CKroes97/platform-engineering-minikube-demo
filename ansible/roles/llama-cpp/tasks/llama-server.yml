@@ -1,0 +1,51 @@
+- name: Ensure llama service user exists
+  ansible.builtin.user:
+    name: "{{ service_user }}"
+    shell: /sbin/nologin
+    system: true
+    create_home: false
+
+- name: Ensure model directory exists
+  ansible.builtin.file:
+    path: "{{ model_dir }}"
+    state: directory
+    owner: "{{ service_user }}"
+    mode: '0755'
+
+- name: Create systemd service for llama-server
+  ansible.builtin.copy:
+    dest: /etc/systemd/system/{{ service_name }}.service
+    mode: '0644'
+    content: |
+      [Unit]
+      Description=Llama.cpp server serving GPT-OSS-20B
+      After=network.target
+
+      [Service]
+      Type=simple
+      User={{ service_user }}
+      WorkingDirectory={{ repo_dir }}
+      ExecStart={{ repo_dir }}/build/bin/llama-server \
+        --hf {{ model_spec }} \
+        --port {{ service_port }} \
+        --host 0.0.0.0 \
+        --n-gpu-layers {{ gpu_layers }} \
+        --threads {{ threads }} \
+        --ctx-size {{ ctx_size }} \
+        --embedding
+      Restart=on-failure
+      RestartSec=5
+      Environment=LLAMA_LOG_LEVEL=info
+
+      [Install]
+      WantedBy=multi-user.target
+
+- name: Reload systemd daemon
+  ansible.builtin.systemd:
+    daemon_reload: true
+
+- name: Enable and start llama-server
+  ansible.builtin.systemd:
+    name: "{{ service_name }}"
+    state: started
+    enabled: true

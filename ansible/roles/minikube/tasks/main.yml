@@ -1,0 +1,18 @@
+---
+- name: Configure docker
+  ansible.builtin.include_tasks: docker.yml
+
+- name: Configure unzip
+  ansible.builtin.include_tasks: unzip.yml
+
+- name: Configure kubectl
+  ansible.builtin.include_tasks: kubectl.yml
+
+- name: Configure minikube
+  ansible.builtin.include_tasks: minikube.yml
+
+- name: Configure nodejs
+  ansible.builtin.include_tasks: nodejs.yml
+
+- name: Configure terraform
+  ansible.builtin.include_tasks: terraform.yml

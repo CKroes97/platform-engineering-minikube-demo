@@ -7,7 +7,7 @@ on:
   workflow_dispatch:
   push:
     paths:
-      - ".github/workflows/deploy_kratix.yaml"
+      - ".github/workflows/deploy_kratix.yml"
   pull_request:
 
 jobs:
@@ -18,7 +18,7 @@ jobs:
       - name: Deploy cert manager
         run: |
           kubectl apply \
-            --filename https://github.com/cert-manager/cert-manager/releases/download/v1.15.0/cert-manager.yaml
+            --filename https://github.com/cert-manager/cert-manager/releases/download/v1.19.1/cert-manager.yaml
           kubectl wait --namespace cert-manager \
            --for=condition=Available deployments \
            --all \

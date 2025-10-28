@@ -1,0 +1,78 @@
+- name: Install essential development tools and libraries
+  ansible.builtin.dnf:
+    name:
+      - "@c-development"
+      - "@development-tools"
+      - cmake
+    state: present
+
+- name: Add Nvidia repository using dnf config-manager
+  ansible.builtin.command:
+    cmd: dnf-3 config-manager --add-repo https://developer.download.nvidia.com/compute/cuda/repos/fedora41/x86_64/cuda-fedora41.repo
+    creates: /etc/yum.repos.d/cuda-fedora41.repo
+  become: true
+
+- name: Check if libcuda.so.1 exists (host-supplied drivers)
+  ansible.builtin.stat:
+    path: /usr/lib64/libcuda.so.1
+  register: libcuda
+
+- name: Check for CUDA toolkit (nvcc)
+  ansible.builtin.stat:
+    path: /usr/local/cuda/bin/nvcc
+  register: cuda_nvcc
+
+- name: Install NVIDIA driver libraries (if libcuda.so.1 missing)
+  ansible.builtin.dnf:
+    name:
+      - nvidia-driver-cuda
+      - nvidia-driver-libs
+      - nvidia-driver-cuda-libs
+      - nvidia-persistenced
+    state: present
+  when: not libcuda.stat.exists
+
+- name: Create temporary directory for RPMs (if host supplies CUDA)
+  ansible.builtin.file:
+    path: /tmp/nvidia-driver-libs
+    state: directory
+    mode: '0755'
+  when:
+    - libcuda.stat.exists
+    - not cuda_nvcc.stat.exists
+  register: temp_nvidia_dir
+
+- name: Download NVIDIA RPMs for DB update (if host supplies CUDA)
+  ansible.builtin.shell: >
+      rpm --install --verbose --hash --justdb /tmp/nvidia-driver-libs/* &&
+      touch /tmp/nvidia-driver-libs/.dnf_download_complete
+  args:
+    creates: /tmp/nvidia-driver-libs/.dnf_download_complete
+  # noqa: command-instead-of-module
+  when:
+    - libcuda.stat.exists
+    - not cuda_nvcc.stat.exists
+
+- name: Update RPM database to mark NVIDIA libs as installed
+  ansible.builtin.shell: >
+      rpm --install --verbose --hash --justdb /tmp/nvidia-driver-libs/* &&
+      touch /tmp/nvidia-driver-libs/.rpm_db_updated
+  # noqa: command-instead-of-module
+  args:
+    creates: /tmp/nvidia-driver-libs/.rpm_db_updated
+  when:
+    - libcuda.stat.exists
+    - not cuda_nvcc.stat.exists
+
+- name: Install CUDA meta-package
+  ansible.builtin.dnf:
+    name: cuda
+    state: present
+
+- name: Configure CUDA environment in /etc/profile.d
+  ansible.builtin.copy:
+    dest: /etc/profile.d/cuda.sh
+    mode: '0755'
+    content: |
+      #!/bin/sh
+      export PATH=$PATH:/usr/local/cuda/bin

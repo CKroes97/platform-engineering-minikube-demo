@@ -8,21 +8,21 @@ from jinja2.exceptions import UndefinedError
 
 def parse_args():
     parser = argparse.ArgumentParser(
-        description="Render Kratix Runtime YAML from Jinja2 templates for each Docker image."
+        description="Render Kratix Runtime yml from Jinja2 templates for each Docker image."
     )
     parser.add_argument("--namespace", help="Kubernetes namespace", default="default")
     parser.add_argument("--env", help="Optional environment name to inject as 'env'")
     parser.add_argument(
         "--template-path",
         "-t",
-        default="templates/runtime_requests.yaml",
+        default="templates/runtime_requests.yml",
         help="Path of the Jinja2 template file",
     )
     parser.add_argument(
         "--output-dir",
         "-o",
         default="generated_python_webservices_requests",
-        help="Directory to write rendered YAML files",
+        help="Directory to write rendered yml files",
     )
     parser.add_argument(
         "--image-tags-json",
@@ -52,7 +52,7 @@ def render_template(template_path, output_dir, image_name, values):
         return
 
     os.makedirs(output_dir, exist_ok=True)
-    output_file = os.path.join(output_dir, f"{image_name}.yaml")
+    output_file = os.path.join(output_dir, f"{image_name}.yml")
 
     with open(output_file, "w", encoding="utf-8") as out_file:
         out_file.write(rendered)
