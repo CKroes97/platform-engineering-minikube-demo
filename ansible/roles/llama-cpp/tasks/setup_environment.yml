@@ -57,6 +57,7 @@
   ansible.builtin.shell: >
       rpm --install --verbose --hash --justdb /tmp/nvidia-driver-libs/* &&
       touch /tmp/nvidia-driver-libs/.rpm_db_updated
+  # noqa: command-instead-of-module
   args:
     creates: /tmp/nvidia-driver-libs/.rpm_db_updated
   when:
