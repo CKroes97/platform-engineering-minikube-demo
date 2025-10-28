@@ -10,7 +10,7 @@
     cmake_generator: "Ninja"          # or "Unix Makefiles"
     cmake_build_type: "Release"
     enable_cuda: "ON"
-    cuda_architectures: "89" 
+    cuda_architectures: "89"
 
 - name: Run llama-server
   ansible.builtin.include_tasks: llama-server.yml
