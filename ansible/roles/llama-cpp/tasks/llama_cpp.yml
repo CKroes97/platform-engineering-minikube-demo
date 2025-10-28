@@ -37,6 +37,7 @@
       -DCMAKE_CXX_COMPILER=/usr/bin/g++-13
       -DCMAKE_CUDA_COMPILER=/usr/local/cuda/bin/nvcc
   args:
+    creates: "{{ build_dir }}/bin/llama-server"
     chdir: "{{ repo_dest }}"
 
 - name: Build llama.cpp binaries
@@ -44,4 +45,5 @@
     cmd: >
       cmake --build "{{ build_dir }}" --config {{ cmake_build_type }} 
   args:
+    creates: "{{ build_dir }}/bin/llama-server"
     chdir: "{{ build_dir }}"
