@@ -26,7 +26,7 @@
       User={{ service_user }}
       WorkingDirectory={{ repo_dir }}
       ExecStart={{ repo_dir }}/build/bin/llama-server \
-        --hf {{ model_spec }} \
+        -hf {{ model_spec }} \
         --port {{ service_port }} \
         --host 0.0.0.0 \
         --n-gpu-layers {{ gpu_layers }} \
