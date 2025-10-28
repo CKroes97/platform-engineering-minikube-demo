@@ -13,7 +13,7 @@
     cuda_architectures: "89" 
 
 - name: Run llama-server
-  ansible.builtin.include_tasks: llama_server.yml
+  ansible.builtin.include_tasks: llama-server.yml
   vars:
     repo_dir: "/opt/llama.cpp"
     model_dir: "/opt/llama_models"
