@@ -37,4 +37,3 @@
     owner: root
     group: docker
     mode: '0760'
-  notify: Restart Docker
