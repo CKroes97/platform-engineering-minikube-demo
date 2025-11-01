@@ -5,7 +5,7 @@ metadata:
   namespace: default
 spec:
   lifecycle: dev
-  image: 192.168.49.2:30080/ping-llama:d3483f0a2a85233187a8399d588ba8cea674f7d83f8f7ca574d1c58e6a1f9ec3
+  image: docker-registry.registry.svc.cluster.local:5000/ping-llama:d3483f0a2a85233187a8399d588ba8cea674f7d83f8f7ca574d1c58e6a1f9ec3
   servicePort: 80
   replicas: 1
   applicationEnv:
