@@ -22,5 +22,5 @@
     service_name: "llama-server"
     service_port: 39443
     threads: 8
-    gpu_layers: 20
+    gpu_layers: 90
     ctx_size: 4096
