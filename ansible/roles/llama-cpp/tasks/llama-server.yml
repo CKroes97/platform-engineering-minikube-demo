@@ -3,7 +3,7 @@
     name: "{{ service_user }}"
     shell: /sbin/nologin
     system: true
-    create_home: false
+    create_home: true
 
 - name: Ensure model directory exists
   ansible.builtin.file:
