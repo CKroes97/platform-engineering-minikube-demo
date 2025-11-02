@@ -12,9 +12,9 @@ def extract_final_message(raw_text: str) -> str:
     """
     Extracts the final assistant message from LLaMA chat output.
     """
-    marker = "<|start|>assistant<|channel|>final<|message|>"
+    marker = "<|channel|>final<|message|>"
     if marker in raw_text:
-        return raw_text.split(marker, 1)[1].strip()
+        return raw_text.split(marker)[-1].strip()
     return raw_text.strip()  # fallback to full text if marker missing
 
 def ping_llama():
