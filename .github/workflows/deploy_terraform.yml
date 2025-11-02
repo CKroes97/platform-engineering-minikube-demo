@@ -34,8 +34,8 @@ jobs:
         run: >-
           sudo terraform -chdir=terraform apply -auto-approve
         env:
-          TF_VAR_registry_user: ${{ secrets.REGISTRY_USER }}
-          TF_VAR_registry_password: ${{ secrets.REGISTRY_PASSWORD }}
+          TF_VAR_registry_user: "${{ secrets.REGISTRY_USER }}"
+          TF_VAR_registry_password: "${{ secrets.REGISTRY_PASSWORD }}"
 
       - name: force clean Repository
         run: sudo rm -rf ${{ github.workspace }}/terraform
