@@ -2,7 +2,7 @@ import os
 import time
 import json
 import urllib.request
-from datetime import datetime
+from datetime import datetime, timezone
 
 LLAMA_URL = os.getenv("LLAMA_URL", "http://192.168.49.2:39443/v1/completions")
 PROMPT = os.getenv("PROMPT", "Hello, how are you?")
@@ -24,11 +24,11 @@ def ping_llama():
             data = json.load(resp)
             text = data.get("content", data.get("response", str(data)))
 
-        log_entry = f"[{datetime.now(datetime.timezone.utc).isoformat()}] {text.strip()}\n"
+        log_entry = f"[{datetime.now(timezone.utc).isoformat()}] {text.strip()}\n"
         print(log_entry.strip())
 
     except Exception as e:
-        error_msg = f"[{datetime.now(datetime.timezone.utc).isoformat()}] ERROR: {e}\n"
+        error_msg = f"[{datetime.now(timezone.utc).isoformat()}] ERROR: {e}\n"
         print(error_msg.strip())
 
 
