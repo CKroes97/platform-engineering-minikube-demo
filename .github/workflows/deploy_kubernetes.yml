@@ -19,14 +19,14 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
+      - name: Copy htpasswd file to runner
+        run: |
+          sudo cp /etc/platform-registry/htpasswd htpasswd
+
       - name: deploy kubernetes folder
         run: |
           kubectl apply -k kubernetes/registry
           kubectl apply -f kubernetes/default
-
-      - name: Copy htpasswd file to runner
-        run: |
-          sudo cp /etc/platform-registry/htpasswd htpasswd
       
       - name: Deploy cert manager
         run: |
