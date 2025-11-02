@@ -22,10 +22,11 @@ jobs:
       - name: Copy htpasswd file to runner
         run: |
           DIR=/home/runner/actions-runner/_work/platform-engineering-minikube-demo/platform-engineering-minikube-demo/kubernetes
+          IP=$(minikube ip)
           sudo cp /etc/platform-registry/htpasswd ${DIR}/registry/htpasswd
           sudo chmod 644 ${DIR}/registry/htpasswd
           AUTH=$(echo -n "${REGISTRY_USER}:${REGISTRY_PASSWORD}" | base64)
-          echo ".dockerconfigjson={\"auths\":{\"registry.docker-registry.svc.cluster.local:5000\":{\"auth\":\"${AUTH}\"}}}" > ${DIR}/default/dockerconfig
+          echo ".dockerconfigjson={\"auths\":{\"${IP}:30080\":{\"auth\":\"${AUTH}\"}}}" > ${DIR}/default/dockerconfig
 
       - name: deploy kubernetes folder
         run: |

@@ -68,7 +68,7 @@ jobs:
             --env dev \
             --template-path templates/runtime-requests.yml \
             --output-dir generated_python_webservices_requests \
-            --docker-registry "registry.docker-registry.svc.cluster.local:5000"
+            --docker-registry "${{ env.MINIKUBE_IP }}:30080"
 
       - name: Commit and Push Changes
         id: commit_build
