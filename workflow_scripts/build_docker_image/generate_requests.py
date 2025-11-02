@@ -29,7 +29,7 @@ def parse_args():
         default="generated_dockerfiles/image_tags.json",
         help="Path to JSON file with image tags (generated during build)",
     )
-    parser.add_argument( "--docker-registry", default="localhost:30080")
+    parser.add_argument("--docker-registry", default="localhost:30080")
     return parser.parse_args()
 
 
@@ -69,7 +69,7 @@ def main():
 
     for image_name, image_tag in image_tags.items():
         values = {
-            "runtimeRequestName": image_name.replace("_","-"),
+            "runtimeRequestName": image_name.replace("_", "-"),
             "namespace": args.namespace,
             "image": f"{args.docker_registry}/{image_name}:{image_tag}",
         }

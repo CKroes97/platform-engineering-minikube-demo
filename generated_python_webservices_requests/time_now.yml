@@ -1,11 +1,11 @@
 apiVersion: marketplace.kratix.io/v1alpha1
 kind: Runtime
 metadata:
-  name: test
+  name: time-now
   namespace: default
 spec:
   lifecycle: dev
-  image: 192.168.49.2:30080/test:65068b3d901260abd37e7294baf4707ab997b7ccf3d3f7093a9d2eba5a8658bb
+  image: 192.168.49.2:30080/time_now:8376bf9839754270f65de6cd116d8dc8b2cb865fd9f47d174cbe577e46533a6c
   servicePort: 80
   replicas: 1
   applicationEnv:

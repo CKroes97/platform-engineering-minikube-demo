@@ -1,4 +1,4 @@
-name: Generate Dockerfiles
+name: Deploy requests
 
 permissions:
   contents: read
@@ -7,10 +7,15 @@ on:
   workflow_call:
 
 jobs:
-  generate-dockerfiles:
+  deploy-requests:
     runs-on: self-hosted
     steps:
+      - run: sleep 5
+
       - name: Checkout repository
         uses: actions/checkout@v4
       
-      - run: kubectl apply -f generated_python_webservices_requests/ 
+      - run: |
+          kubectl delete -f generated_python_webservices_requests/ --ignore-not-found=true
+          kubectl apply -f generated_python_webservices_requests/ 
+        name: Re-deploy requests

@@ -1,5 +1,5 @@
 from http.server import BaseHTTPRequestHandler, HTTPServer
-from datetime import datetime
+from datetime import datetime, timezone
 import json
 
 
@@ -9,7 +9,7 @@ class TimeHandler(BaseHTTPRequestHandler):
             self.send_response(200)
             self.send_header("Content-type", "application/json")
             self.end_headers()
-            response = {"time": datetime.now(datetime.timezone.utc).isoformat()}
+            response = {"time": datetime.now(timezone.utc).isoformat()}
             self.wfile.write(json.dumps(response).encode("utf-8"))
         else:
             self.send_response(404)
@@ -17,9 +17,9 @@ class TimeHandler(BaseHTTPRequestHandler):
 
 
 def main():
-    server_address = ('', 8000)
+    server_address = ("", 8000)
     httpd = HTTPServer(server_address, TimeHandler)
-    print('Serving on port 8000...')
+    print("Serving on port 8000...")
     httpd.serve_forever()
 
 

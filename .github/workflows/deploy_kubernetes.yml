@@ -1,0 +1,72 @@
+name: Deploy Kubernetes
+
+permissions:
+  contents: read
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - ".github/workflows/deploy_kubernetes.yml"
+      - "kubernetes/**"
+  pull_request:
+
+jobs:
+  deploy-kubernetes:
+    runs-on: self-hosted
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Copy htpasswd file to runner
+        run: |
+          DIR=/home/runner/actions-runner/_work/platform-engineering-minikube-demo/platform-engineering-minikube-demo/kubernetes
+          IP=$(minikube ip)
+          sudo cp /etc/platform-registry/htpasswd ${DIR}/registry/htpasswd
+          sudo chmod 644 ${DIR}/registry/htpasswd
+          AUTH=$(echo -n "${{ secrets.REGISTRY_USER }}:${{ secrets.REGISTRY_PASSWORD }}" | base64)
+          echo -n ".dockerconfigjson={\"auths\":{\"${IP}:30080\":{\"username\":\"${{ secrets.REGISTRY_USER }}\",\"password\":\"${{ secrets.REGISTRY_PASSWORD }}\",\"auth\":\"${AUTH}\"}}}" > ${DIR}/default/dockerconfig
+
+      - name: deploy kubernetes folder
+        run: |
+          kubectl apply -k kubernetes/registry
+          kubectl apply -k kubernetes/default
+      
+      - name: Deploy cert manager
+        run: |
+          kubectl apply \
+            --filename https://github.com/cert-manager/cert-manager/releases/download/v1.19.1/cert-manager.yaml
+          kubectl wait --namespace cert-manager \
+           --for=condition=Available deployments \
+           --all \
+           --timeout=300s
+
+      - name: Remove htpasswd from runner
+        run: |
+          DIR=/home/runner/actions-runner/_work/platform-engineering-minikube-demo/platform-engineering-minikube-demo/kubernetes
+          sudo rm ${DIR}/registry/htpasswd
+          sudo rm ${DIR}/default/dockerconfig
+
+      - name: Install Kratix
+        run: |
+          kubectl apply \
+           --filename https://github.com/syntasso/kratix/releases/latest/download/install-all-in-one.yaml
+          kubectl wait --namespace kratix-platform-system \
+            --for=condition=Available deployments \
+            --all \
+            --timeout=300s
+
+      - name: Configure Kratix
+        run: |
+          kubectl apply \
+            --filename https://github.com/syntasso/kratix/releases/latest/download/config-all-in-one.yaml
+          kubectl wait --namespace kratix-platform-system \
+            --for=condition=Available deployments \
+            --all \
+            --timeout=300s
+
+      - name: Instal Runtime marketplace module
+        run: |
+          kubectl apply \
+            --filename https://raw.githubusercontent.com/syntasso/kratix-marketplace/main/runtime/promise.yaml

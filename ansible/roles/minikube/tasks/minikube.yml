@@ -30,7 +30,7 @@
 
       [Service]
       Type=oneshot
-      ExecStart=/usr/local/bin/minikube start --driver=docker
+      ExecStart=/usr/local/bin/minikube start --driver=docker --insecure-registry "192.168.0.0/16"
       RemainAfterExit=true
       ExecStop=/usr/local/bin/minikube stop
       StandardOutput=journal
