@@ -11,7 +11,12 @@ INTERVAL = int(os.getenv("INTERVAL", "150"))  # seconds
 
 def ping_llama():
     try:
-        payload = json.dumps({"prompt": PROMPT, "n_predict": 32}).encode("utf-8")
+        # Prepare OpenAI-style chat request
+        payload = json.dumps({
+            "model": "bartowski/openai_gpt-oss-20b-GGUF",
+            "messages": [{"role": "user", "content": PROMPT}],
+            "max_tokens": 200
+        }).encode("utf-8")
 
         req = urllib.request.Request(
             LLAMA_URL,
@@ -22,14 +27,20 @@ def ping_llama():
 
         with urllib.request.urlopen(req, timeout=30) as resp:
             data = json.load(resp)
-            text = data.get("content", data.get("response", str(data)))
 
-        log_entry = f"[{datetime.now(timezone.utc).isoformat()}] {text.strip()}\n"
-        print(log_entry.strip(), flush=True)
+            # Extract assistant message
+            choices = data.get("choices", [])
+            if choices:
+                assistant_msg = choices[0].get("message", {}).get("content", "").strip()
+            else:
+                assistant_msg = "No response"
+
+        log_entry = f"[{datetime.now(timezone.utc).isoformat()}] {assistant_msg}"
+        print(log_entry, flush=True)
 
     except Exception as e:
-        error_msg = f"[{datetime.now(timezone.utc).isoformat()}] ERROR: {e}\n"
-        print(error_msg.strip(), flush=True)
+        error_msg = f"[{datetime.now(timezone.utc).isoformat()}] ERROR: {e}"
+        print(error_msg, flush=True)
 
 
 def main():
