@@ -1,8 +1,8 @@
 resources:
-  - namespace.yaml
-  - pvc.yaml
-  - registry.yaml
-  - service.yaml
+  - namespace.yml
+  - pvc.yml
+  - registry.yml
+  - service.yml
 
 secretGenerator:
   - name: registry-auth-secret
