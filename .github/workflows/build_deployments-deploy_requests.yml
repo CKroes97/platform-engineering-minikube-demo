@@ -1,4 +1,4 @@
-name: Generate Dockerfiles
+name: Deploy requests
 
 permissions:
   contents: read
@@ -7,7 +7,7 @@ on:
   workflow_call:
 
 jobs:
-  generate-dockerfiles:
+  deploy-requests:
     runs-on: self-hosted
     steps:
       - name: Checkout repository
