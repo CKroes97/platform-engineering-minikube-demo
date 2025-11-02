@@ -115,8 +115,37 @@ resource "kubernetes_deployment" "registry" {
   }
 }
 
+resource "kubernetes_secret" "registry_pull_secret" {
+  metadata {
+    name      = "registry-pull-secret"
+    namespace = kubernetes_namespace.registry_namespace.metadata[0].name
+  }
 
+  type = "kubernetes.io/dockerconfigjson"
 
+  data = {
+    ".dockerconfigjson" = base64encode(jsonencode({
+      auths = {
+        "registry.registry.svc.cluster.local:5000" = {
+          username = var.registry_username
+          password = var.registry_password
+          auth     = base64encode("${var.registry_username}:${var.registry_password}")
+        }
+      }
+    }))
+  }
+}
+
+resource "kubernetes_service_account" "default_sa" {
+  metadata {
+    name      = "default"
+    namespace = "default"
+  }
+
+  image_pull_secret {
+    name = "registry_pull_secret"
+  }
+}
 
 resource "kubernetes_service" "registry" {
   metadata {
