@@ -22,7 +22,10 @@ def ping_llama():
         # Prepare OpenAI-style chat request
         payload = json.dumps({
             "model": "bartowski/openai_gpt-oss-20b-GGUF",
-            "messages": [{"role": "user", "content": PROMPT}],
+            "messages": [
+                {"role": "system", "content": "You are friendly and very concise."},
+                {"role": "user", "content": PROMPT}
+                ],
             "max_tokens": 400
         }).encode("utf-8")
 
