@@ -8,5 +8,5 @@ secretGenerator:
   - name: registry-pull-secret
     envs:
       - dockerconfig
-    namespace: docker-registry
+    namespace: default
     type: kubernetes.io/dockerconfigjson
