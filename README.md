@@ -57,3 +57,8 @@ V2 Architecture to be added
 # Features
 - Add python webserver files to `webservices` directory and see them wrapped in docker container and deployed to Kubernetes using Github actions
 - LLM server configured for interaction with webservices
+
+To do:
+Add LLM firewall
+Add RAG and MCPs
+Add firewalls between LLM and RAG
