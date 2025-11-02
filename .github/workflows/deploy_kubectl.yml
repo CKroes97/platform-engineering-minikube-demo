@@ -1,4 +1,4 @@
-name: Deploy Kratix
+name: Deploy Kubernetes
 
 permissions:
   contents: read
@@ -7,11 +7,12 @@ on:
   workflow_dispatch:
   push:
     paths:
-      - ".github/workflows/deploy_kratix.yml"
+      - ".github/workflows/deploy_kubernetes.yml"
+      - "kubernetes/**"
   pull_request:
 
 jobs:
-  deploy-kratix:
+  deploy-kubernetes:
     runs-on: self-hosted
 
     steps:
