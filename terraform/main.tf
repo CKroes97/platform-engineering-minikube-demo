@@ -1,3 +1,15 @@
+variable "registry_user" {
+  description = "Username for authenticating to the private Docker registry"
+  type        = string
+  sensitive   = true
+}
+
+variable "registry_password" {
+  description = "Password or access token for authenticating to the private Docker registry"
+  type        = string
+  sensitive   = true
+}
+
 resource "kubernetes_namespace" "registry_namespace" {
   metadata {
     name = "docker-registry"
@@ -118,7 +130,7 @@ resource "kubernetes_deployment" "registry" {
 resource "kubernetes_secret" "registry_pull_secret" {
   metadata {
     name      = "registry-pull-secret"
-    namespace = kubernetes_namespace.registry_namespace.metadata[0].name
+    namespace = "default"
   }
 
   type = "kubernetes.io/dockerconfigjson"
@@ -127,9 +139,9 @@ resource "kubernetes_secret" "registry_pull_secret" {
     ".dockerconfigjson" = base64encode(jsonencode({
       auths = {
         "registry.registry.svc.cluster.local:5000" = {
-          username = var.registry_username
+          username = var.registry_user
           password = var.registry_password
-          auth     = base64encode("${var.registry_username}:${var.registry_password}")
+          auth     = base64encode("${var.registry_user}:${var.registry_password}")
         }
       }
     }))
@@ -143,7 +155,7 @@ resource "kubernetes_service_account" "default_sa" {
   }
 
   image_pull_secret {
-    name = "registry_pull_secret"
+    name = kubernetes_secret.registry_pull_secret.metadata[0].name
   }
 }
 
