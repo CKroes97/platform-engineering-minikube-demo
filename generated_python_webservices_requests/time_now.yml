@@ -5,7 +5,7 @@ metadata:
   namespace: default
 spec:
   lifecycle: dev
-  image: docker-registry.registry.svc.cluster.local:5000/time_now:39f1684def414d95e4205955c60f2ba36abee6a7a50609c3a3b8e01804f78276
+  image: registry.docker-registry.svc.cluster.local:5000/time_now:39f1684def414d95e4205955c60f2ba36abee6a7a50609c3a3b8e01804f78276
   servicePort: 80
   replicas: 1
   applicationEnv:
