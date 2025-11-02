@@ -27,7 +27,7 @@ jobs:
       - name: deploy kubernetes folder
         run: |
           kubectl apply -k kubernetes/registry
-          kubectl apply -f kubernetes/default
+          kubectl apply -k kubernetes/default
       
       - name: Deploy cert manager
         run: |
