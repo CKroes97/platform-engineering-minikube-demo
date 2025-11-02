@@ -23,7 +23,7 @@ def ping_llama():
         payload = json.dumps({
             "model": "bartowski/openai_gpt-oss-20b-GGUF",
             "messages": [{"role": "user", "content": PROMPT}],
-            "max_tokens": 50
+            "max_tokens": 150
         }).encode("utf-8")
 
         req = urllib.request.Request(
