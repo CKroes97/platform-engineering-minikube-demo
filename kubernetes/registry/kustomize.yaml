@@ -1,0 +1,12 @@
+resources:
+  - namespace.yaml
+  - pvc.yaml
+  - registry.yaml
+  - service.yaml
+
+secretGenerator:
+  - name: registry-auth-secret
+    files:
+      - htpasswd=/etc/platform-registry/htpasswd
+    namespace: docker-registry
+    type: Opaque

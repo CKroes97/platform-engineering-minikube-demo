@@ -15,6 +15,11 @@ jobs:
     runs-on: self-hosted
 
     steps:
+      - name: deploy kubernetes folder
+        run: |
+          kubectl apply -k kubernetes/registry
+          kubectl apply -f kubernetes/default
+
       - name: Deploy cert manager
         run: |
           kubectl apply \
