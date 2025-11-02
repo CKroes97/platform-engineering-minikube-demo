@@ -32,6 +32,7 @@
         --n-gpu-layers {{ gpu_layers }} \
         --threads {{ threads }} \
         --ctx-size {{ ctx_size }} \
+        --http
         --embedding
       Restart=on-failure
       RestartSec=5
