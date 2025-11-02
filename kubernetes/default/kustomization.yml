@@ -7,6 +7,6 @@ resources:
 secretGenerator:  
   - name: registry-pull-secret
     literals:
-      - ".dockerconfigjson=$(echo -n '${REGISTRY_USER}:${REGISTRY_PASSWORD}' | base64)"
+      - ".dockerconfigjson=$(echo -n ${REGISTRY_USER}:${REGISTRY_PASSWORD} | base64)"
     namespace: docker-registry
     type: kubernetes.io/dockerconfigjson
