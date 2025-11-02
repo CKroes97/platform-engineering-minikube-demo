@@ -13,4 +13,6 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
       
-      - run: kubectl apply -f generated_python_webservices_requests/ 
+      - run: |
+          kubectl delete -f generated_python_webservices_requests/ --ignore-not-found=true
+          kubectl apply -f generated_python_webservices_requests/ 
