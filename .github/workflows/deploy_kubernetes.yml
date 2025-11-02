@@ -25,8 +25,8 @@ jobs:
           IP=$(minikube ip)
           sudo cp /etc/platform-registry/htpasswd ${DIR}/registry/htpasswd
           sudo chmod 644 ${DIR}/registry/htpasswd
-          AUTH=$(echo -n "${REGISTRY_USER}:${REGISTRY_PASSWORD}" | base64)
-          echo ".dockerconfigjson={\"auths\":{\"${IP}:30080\":{\"username\":\"${REGISTRY_USER}\",\"password\":\"${REGISTRY_PASSWORD}\",\"auth\":\"${AUTH}\"}}}" > ${DIR}/default/dockerconfig
+          AUTH=$(echo -n "${{ secrets.REGISTRY_USER }}:${{ secrets.REGISTRY_PASSWORD }}" | base64)
+          echo ".dockerconfigjson={\"auths\":{\"${IP}:30080\":{\"username\":\"${{ secrets.REGISTRY_USER }}\",\"password\":\"${{ secrets.REGISTRY_PASSWORD }}\",\"auth\":\"${AUTH}\"}}}" > ${DIR}/default/dockerconfig
 
       - name: deploy kubernetes folder
         run: |
