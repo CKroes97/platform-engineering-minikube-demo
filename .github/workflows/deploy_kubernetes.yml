@@ -21,7 +21,7 @@ jobs:
 
       - name: Copy htpasswd file to runner
         run: |
-          sudo cp /etc/platform-registry/htpasswd htpasswd
+          sudo cp /etc/platform-registry/htpasswd /home/runner/actions-runner/_work/platform-engineering-minikube-demo/platform-engineering-minikube-demo/kubernetes/registry/htpasswd
 
       - name: deploy kubernetes folder
         run: |
@@ -39,7 +39,7 @@ jobs:
 
       - name: Remove htpasswd from runner
         run: |
-          sudo rm htpasswd
+          sudo rm /home/runner/actions-runner/_work/platform-engineering-minikube-demo/platform-engineering-minikube-demo/kubernetes/registry/htpasswd
 
       - name: Install Kratix
         run: |

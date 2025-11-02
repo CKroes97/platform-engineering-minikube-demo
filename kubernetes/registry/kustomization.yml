@@ -7,6 +7,6 @@ resources:
 secretGenerator:
   - name: registry-auth-secret
     files:
-      - htpasswd=../../htpasswd
+      - htpasswd=htpasswd
     namespace: docker-registry
     type: Opaque
