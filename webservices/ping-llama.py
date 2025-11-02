@@ -25,15 +25,15 @@ def ping_llama():
             text = data.get("content", data.get("response", str(data)))
 
         log_entry = f"[{datetime.now(timezone.utc).isoformat()}] {text.strip()}\n"
-        print(log_entry.strip())
+        print(log_entry.strip(), flush=True)
 
     except Exception as e:
         error_msg = f"[{datetime.now(timezone.utc).isoformat()}] ERROR: {e}\n"
-        print(error_msg.strip())
+        print(error_msg.strip(), flush=True)
 
 
 def main():
-    print("Starting LLaMA ping service...")
+    print("Starting LLaMA ping service...", flush=True)
     while True:
         ping_llama()
         time.sleep(INTERVAL)
