@@ -32,7 +32,7 @@ jobs:
 
       - name: Apply Terraform
         run: >-
-          sudo terraform -chdir=terraform apply -auto-approve
+          sudo -E terraform -chdir=terraform apply -auto-approve
         env:
           TF_VAR_registry_user: "${{ secrets.REGISTRY_USER }}"
           TF_VAR_registry_password: "${{ secrets.REGISTRY_PASSWORD }}"
