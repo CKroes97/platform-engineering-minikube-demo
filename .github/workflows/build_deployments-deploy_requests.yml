@@ -16,3 +16,4 @@ jobs:
       - run: |
           kubectl delete -f generated_python_webservices_requests/ --ignore-not-found=true
           kubectl apply -f generated_python_webservices_requests/ 
+        name: Re-deploy requests
