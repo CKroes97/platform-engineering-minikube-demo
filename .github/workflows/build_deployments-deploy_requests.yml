@@ -10,6 +10,8 @@ jobs:
   deploy-requests:
     runs-on: self-hosted
     steps:
+      - run: sleep 5
+
       - name: Checkout repository
         uses: actions/checkout@v4
       
