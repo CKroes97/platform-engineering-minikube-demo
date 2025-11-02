@@ -37,6 +37,10 @@ jobs:
            --all \
            --timeout=300s
 
+      - name: Remove htpasswd from runner
+        run: |
+          sudo rm htpasswd
+
       - name: Install Kratix
         run: |
           kubectl apply \
