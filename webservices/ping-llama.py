@@ -11,16 +11,13 @@ INTERVAL = int(os.getenv("INTERVAL", "150"))  # seconds
 
 def ping_llama():
     try:
-        payload = json.dumps({
-            "prompt": PROMPT,
-            "n_predict": 32
-        }).encode("utf-8")
+        payload = json.dumps({"prompt": PROMPT, "n_predict": 32}).encode("utf-8")
 
         req = urllib.request.Request(
             LLAMA_URL,
             data=payload,
             headers={"Content-Type": "application/json"},
-            method="POST"
+            method="POST",
         )
 
         with urllib.request.urlopen(req, timeout=30) as resp:
@@ -29,7 +26,6 @@ def ping_llama():
 
         log_entry = f"[{datetime.datetime.now(datetime.UTC)}] {text.strip()}\n"
         print(log_entry.strip())
-
 
     except Exception as e:
         error_msg = f"[{datetime.datetime.now(datetime.UTC)}] ERROR: {e}\n"

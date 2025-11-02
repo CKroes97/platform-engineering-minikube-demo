@@ -17,9 +17,9 @@ class TimeHandler(BaseHTTPRequestHandler):
 
 
 def main():
-    server_address = ('', 8000)
+    server_address = ("", 8000)
     httpd = HTTPServer(server_address, TimeHandler)
-    print('Serving on port 8000...')
+    print("Serving on port 8000...")
     httpd.serve_forever()
 
 
