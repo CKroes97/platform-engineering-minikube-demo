@@ -4,7 +4,7 @@ import json
 import urllib.request
 from datetime import datetime, timezone
 
-LLAMA_URL = os.getenv("LLAMA_URL", "http://host.minikube.internal:39443/v1/completions")
+LLAMA_URL = os.getenv("LLAMA_URL", "http://host.minikube.internal:39443/v1/chat/completions")
 PROMPT = os.getenv("PROMPT", "Hello, how are you?")
 INTERVAL = int(os.getenv("INTERVAL", "150"))  # seconds
 
