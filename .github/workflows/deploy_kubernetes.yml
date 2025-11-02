@@ -26,7 +26,7 @@ jobs:
           sudo cp /etc/platform-registry/htpasswd ${DIR}/registry/htpasswd
           sudo chmod 644 ${DIR}/registry/htpasswd
           AUTH=$(echo -n "${REGISTRY_USER}:${REGISTRY_PASSWORD}" | base64)
-          echo ".dockerconfigjson={\"auths\":{\"${IP}:30080\":{\"auth\":\"${AUTH}\"}}}" > ${DIR}/default/dockerconfig
+          echo ".dockerconfigjson={\"auths\":{\"${IP}:30080\":{\"username\":\"${REGISTRY_USER}\",\"password\":\"${REGISTRY_PASSWORD}\",\"auth\":\"${AUTH}\"}}}" > ${DIR}/default/dockerconfig
 
       - name: deploy kubernetes folder
         run: |
