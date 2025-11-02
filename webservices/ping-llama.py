@@ -8,6 +8,14 @@ LLAMA_URL = os.getenv("LLAMA_URL", "http://host.minikube.internal:39443/v1/chat/
 PROMPT = os.getenv("PROMPT", "Hello, how are you?")
 INTERVAL = int(os.getenv("INTERVAL", "15"))  # seconds
 
+def extract_final_message(raw_text: str) -> str:
+    """
+    Extracts the final assistant message from LLaMA chat output.
+    """
+    marker = "<|start|>assistant<|channel|>final<|message|>"
+    if marker in raw_text:
+        return raw_text.split(marker, 1)[1].strip()
+    return raw_text.strip()  # fallback to full text if marker missing
 
 def ping_llama():
     try:
@@ -35,6 +43,7 @@ def ping_llama():
             else:
                 assistant_msg = "No response"
 
+        assistant_msg = extract_final_message(assistant_msg)
         log_entry = f"[{datetime.now(timezone.utc).isoformat()}] {assistant_msg}"
         print(log_entry, flush=True)
 
