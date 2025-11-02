@@ -4,10 +4,9 @@ import json
 import urllib.request
 from datetime import datetime
 
-LLAMA_URL = os.getenv("LLAMA_URL", "http://localhost:8080/v1/completions")
+LLAMA_URL = os.getenv("LLAMA_URL", "http://192.168.49.2:39443/v1/completions")
 PROMPT = os.getenv("PROMPT", "Hello, how are you?")
 INTERVAL = int(os.getenv("INTERVAL", "150"))  # seconds
-OUTPUT_FILE = os.getenv("OUTPUT_FILE", "/data/llama_responses.log")
 
 
 def ping_llama():
@@ -31,15 +30,10 @@ def ping_llama():
         log_entry = f"[{datetime.utcnow().isoformat()}] {text.strip()}\n"
         print(log_entry.strip())
 
-        os.makedirs(os.path.dirname(OUTPUT_FILE), exist_ok=True)
-        with open(OUTPUT_FILE, "a", encoding="utf-8") as f:
-            f.write(log_entry)
 
     except Exception as e:
         error_msg = f"[{datetime.utcnow().isoformat()}] ERROR: {e}\n"
         print(error_msg.strip())
-        with open(OUTPUT_FILE, "a", encoding="utf-8") as f:
-            f.write(error_msg)
 
 
 def main():
