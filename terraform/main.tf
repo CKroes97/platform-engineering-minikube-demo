@@ -139,8 +139,6 @@ resource "kubernetes_secret" "registry_pull_secret" {
     ".dockerconfigjson" = base64encode(jsonencode({
       auths = {
         "registry.registry.svc.cluster.local:5000" = {
-          username = var.registry_user
-          password = var.registry_password
           auth     = base64encode("${var.registry_user}:${var.registry_password}")
         }
       }
