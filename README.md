@@ -62,3 +62,5 @@ To do:
 Add LLM firewall
 Add RAG and MCPs
 Add firewalls between LLM and RAG
+Some form of tenancy
+YAML linting
