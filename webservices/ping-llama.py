@@ -5,7 +5,7 @@ import urllib.request
 from datetime import datetime, timezone
 
 LLAMA_URL = os.getenv(
-    "LLAMA_URL", "http://host.minikube.internal:39443/v1/chat/completions"
+    "LLAMA_URL", "http://llama-proxy.default.svc.cluster.local:80/v1/chat/completions"
 )
 PROMPT = os.getenv("PROMPT", "Hello, how are you?")
 INTERVAL = int(os.getenv("INTERVAL", "15"))  # seconds
