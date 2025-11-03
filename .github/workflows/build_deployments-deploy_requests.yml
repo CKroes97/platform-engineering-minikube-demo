@@ -18,6 +18,7 @@ jobs:
           fetch-depth: 0
 
       - name: Pull latest changes
+        if: github.event_name != 'pull_request'
         run: |
           git fetch origin ${{ github.ref }}
           git reset --hard origin/${{ github.ref_name }}
