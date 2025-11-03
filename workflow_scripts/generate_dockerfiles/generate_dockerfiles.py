@@ -12,7 +12,6 @@ def generate_dockerfile(service_name, requirements_exists=False):
 
     os.makedirs(service_dir, exist_ok=True)
 
-    
     dockerfile_lines = [
         f"# Auto-generated Dockerfile for {service_name}",
         "FROM python:3.14.0a7-slim",
@@ -22,8 +21,12 @@ def generate_dockerfile(service_name, requirements_exists=False):
 
     if requirements_exists:
         # Use forward slashes in the Dockerfile COPY path
-        dockerfile_lines.append(f"COPY {REQUIREMENTS_DIR}/{service_name}.txt /app/requirements.txt")
-        dockerfile_lines.append("RUN pip install --no-cache-dir -r /app/requirements.txt")
+        dockerfile_lines.append(
+            f"COPY {REQUIREMENTS_DIR}/{service_name}.txt /app/requirements.txt"
+        )
+        dockerfile_lines.append(
+            "RUN pip install --no-cache-dir -r /app/requirements.txt"
+        )
 
     dockerfile_lines.append(f'CMD ["python", "/app/{service_name}.py"]')
     dockerfile_content = "\n".join(dockerfile_lines) + "\n"

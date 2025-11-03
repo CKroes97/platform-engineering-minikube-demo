@@ -1,5 +1,4 @@
 import os
-import json
 import httpx
 from fastapi import FastAPI, Request, Response
 from fastapi.responses import JSONResponse
@@ -7,7 +6,10 @@ from fastapi.responses import JSONResponse
 app = FastAPI()
 
 # Configuration
-LLAMA_BACKEND = os.getenv("LLAMA_BACKEND", "http://host.minikube.internal:39443/v1/chat/completions")
+LLAMA_BACKEND = os.getenv(
+    "LLAMA_BACKEND", "http://host.minikube.internal:39443/v1/chat/completions"
+)
+
 
 # Example simple policy function
 def enforce_policy(payload: dict) -> tuple[bool, str]:
@@ -20,10 +22,14 @@ def enforce_policy(payload: dict) -> tuple[bool, str]:
         content = msg.get("content", "").lower()
         # Example policies
         if "password" in content:
-            return False, "Policy violation: request contains sensitive keyword 'password'."
+            return (
+                False,
+                "Policy violation: request contains sensitive keyword 'password'.",
+            )
         if len(content) > 2000:
             return False, "Policy violation: input too long."
     return True, "Allowed"
+
 
 @app.post("/v1/chat/completions")
 async def proxy_chat_completions(request: Request):
@@ -37,19 +43,18 @@ async def proxy_chat_completions(request: Request):
         # Forward to actual LLaMA backend
         async with httpx.AsyncClient(timeout=60.0) as client:
             llama_response = await client.post(
-                LLAMA_BACKEND,
-                json=body,
-                headers={"Content-Type": "application/json"}
+                LLAMA_BACKEND, json=body, headers={"Content-Type": "application/json"}
             )
 
         return Response(
             content=llama_response.content,
             status_code=llama_response.status_code,
-            media_type="application/json"
+            media_type="application/json",
         )
 
     except Exception as e:
         return JSONResponse(status_code=500, content={"error": str(e)})
+
 
 @app.get("/health")
 async def health():
