@@ -5,7 +5,7 @@ metadata:
   namespace: default
 spec:
   lifecycle: dev
-  image: 192.168.49.2:30080/multiply:148166812f0f391baef62dff1d0ed1287c8fb35ebd2c76850dce36803942687d
+  image: 192.168.49.2:30080/multiply:19b023db398a17561b4277aad3c750afdf3f12563f66a2d5e57f1f814733516c
   servicePort: 80
   replicas: 1
   applicationEnv:
