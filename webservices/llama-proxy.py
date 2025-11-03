@@ -2,6 +2,7 @@ import os
 import httpx
 from fastapi import FastAPI, Request, Response
 from fastapi.responses import JSONResponse
+import uvicorn
 
 app = FastAPI()
 
@@ -59,3 +60,7 @@ async def proxy_chat_completions(request: Request):
 @app.get("/health")
 async def health():
     return {"status": "ok"}
+
+
+if __name__ == "__main__":
+    uvicorn.run("llama-proxy:app", host="0.0.0.0", port=80)
