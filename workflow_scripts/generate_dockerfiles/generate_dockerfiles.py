@@ -14,7 +14,7 @@ def generate_dockerfile(service_name, requirements_exists=False):
 
     dockerfile_lines = [
         f"# Auto-generated Dockerfile for {service_name}",
-        "FROM python:3.14.0a7-slim",
+        "FROM python:3.13.9-slim",
         "WORKDIR /app",
         f"COPY {WEBSERVICES_DIR}/{service_name}.py /app/{service_name}.py",
     ]
