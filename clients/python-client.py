@@ -1,6 +1,7 @@
 import json
 import requests
 
+
 def extract_final_message(raw_text: str) -> str:
     """
     Extracts the final assistant message from LLaMA chat output.
@@ -10,16 +11,17 @@ def extract_final_message(raw_text: str) -> str:
         return raw_text.split(marker)[-1].strip()
     return raw_text.strip()  # fallback to full text if marker missing
 
+
 def main():
     print("=== LLaMA Proxy Python Client ===")
-    
+
     # Get server IP and port
     host = input("Enter Minikube IP (e.g., 192.168.49.2): ").strip()
     port = input("Enter proxy port (e.g., 32307): ").strip()
     url = f"http://{host}:{port}/v1/chat/completions"
-    
+
     print("\nType your queries below. Type 'exit' to quit.\n")
-    
+
     while True:
         user_input = input("You: ").strip()
         if user_input.lower() == "exit":
@@ -29,9 +31,7 @@ def main():
         # Build request payload
         payload = {
             "model": "llama-2-7b-chat",
-            "messages": [
-                {"role": "user", "content": user_input}
-            ]
+            "messages": [{"role": "user", "content": user_input}],
         }
 
         try:
@@ -51,6 +51,7 @@ def main():
                 print(f"Error {response.status_code}: {response.text}\n")
         except Exception as e:
             print(f"Request failed: {e}\n")
+
 
 if __name__ == "__main__":
     main()

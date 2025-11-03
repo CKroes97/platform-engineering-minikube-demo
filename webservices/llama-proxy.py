@@ -53,7 +53,7 @@ async def proxy_chat_completions(request: Request):
             media_type="application/json",
         )
 
-    except Exception as e:
+    except Exception:
         return JSONResponse(status_code=500, content="An error occurred")
 
 
