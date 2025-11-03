@@ -1,5 +1,5 @@
 # Auto-generated Dockerfile for llama-proxy
-FROM python:3.14.0a7-slim
+FROM python:3.13.9-slim
 WORKDIR /app
 COPY webservices/llama-proxy.py /app/llama-proxy.py
 COPY webservices-requirements/llama-proxy.txt /app/requirements.txt
