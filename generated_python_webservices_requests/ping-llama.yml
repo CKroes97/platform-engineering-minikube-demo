@@ -5,7 +5,7 @@ metadata:
   namespace: default
 spec:
   lifecycle: dev
-  image: 192.168.49.2:30080/ping-llama:e4f39ea6e6d421ff98e2d6c5bfe411a84ad7da6100b7b471fec768eca64af2ce
+  image: 192.168.49.2:30080/ping-llama:735f4f76cc5db0f8e3a6ed2ce271d8e7bba4b5dbf8dfc004dd1276140c255ad3
   servicePort: 80
   replicas: 1
   applicationEnv:
