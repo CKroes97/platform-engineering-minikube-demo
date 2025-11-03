@@ -4,9 +4,12 @@ import json
 import urllib.request
 from datetime import datetime, timezone
 
-LLAMA_URL = os.getenv("LLAMA_URL", "http://host.minikube.internal:39443/v1/chat/completions")
+LLAMA_URL = os.getenv(
+    "LLAMA_URL", "http://llama-proxy.default.svc.cluster.local:80/v1/chat/completions"
+)
 PROMPT = os.getenv("PROMPT", "Hello, how are you?")
 INTERVAL = int(os.getenv("INTERVAL", "15"))  # seconds
+
 
 def extract_final_message(raw_text: str) -> str:
     """
@@ -17,17 +20,20 @@ def extract_final_message(raw_text: str) -> str:
         return raw_text.split(marker)[-1].strip()
     return raw_text.strip()  # fallback to full text if marker missing
 
+
 def ping_llama():
     try:
         # Prepare OpenAI-style chat request
-        payload = json.dumps({
-            "model": "bartowski/openai_gpt-oss-20b-GGUF",
-            "messages": [
-                {"role": "system", "content": "You are friendly and very concise."},
-                {"role": "user", "content": PROMPT}
+        payload = json.dumps(
+            {
+                "model": "bartowski/openai_gpt-oss-20b-GGUF",
+                "messages": [
+                    {"role": "system", "content": "You are friendly and very concise."},
+                    {"role": "user", "content": PROMPT},
                 ],
-            "max_tokens": 400
-        }).encode("utf-8")
+                "max_tokens": 400,
+            }
+        ).encode("utf-8")
 
         req = urllib.request.Request(
             LLAMA_URL,
