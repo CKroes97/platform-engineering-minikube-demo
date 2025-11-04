@@ -17,7 +17,7 @@
   vars:
     repo_dir: "/opt/llama.cpp"
     model_dir: "/opt/llama_models"
-    model_spec: "ggml-org/gpt-oss-120b-GGUF"
+    model_spec: "ggml-org/gpt-oss-20b-GGUF"
     service_user: "llama"
     service_name: "llama-server"
     service_port: 39443
