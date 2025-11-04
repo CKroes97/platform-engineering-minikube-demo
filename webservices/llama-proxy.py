@@ -15,10 +15,9 @@ tools = [
             {
             "name": "time_now",
             "description": "Returns current time in ISO format",
-            "parameters": {
+            "inputSchema": {
                 "type": "object",
                 "properties": {},
-                "required": [],
                 }
             }
         ]
