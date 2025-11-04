@@ -11,22 +11,17 @@ LLAMA_BACKEND = os.getenv(
     "LLAMA_BACKEND", "http://host.minikube.internal:39443/v1/chat/completions"
 )
 
-tools = [{
-        "name": "mcp-server",
-        "version": "0.1.0",
-        "tools": [
-                {
-                "name": "time_now",
-                "description": "Returns current time in ISO format",
-                "parameters": {
-                    "type": "object",
-                    "properties": {},
-                    "required": [],
-                    }
+tools = [
+            {
+            "name": "time_now",
+            "description": "Returns current time in ISO format",
+            "parameters": {
+                "type": "object",
+                "properties": {},
+                "required": [],
                 }
-        ],
-    }]
-
+            }
+        ]
 # Example simple policy function
 def enforce_policy(payload: dict) -> tuple[bool, str]:
     """
