@@ -17,7 +17,7 @@ def main():
 
     # Get server IP and port
     host = "192.168.49.2"
-    port = input("Enter proxy port (e.g., 32307): ").strip()
+    port = input("Enter proxy port (e.g., 32307, run `minikube service llama-proxy --url` when in doubt): ").strip()
     url = f"http://{host}:{port}/v1/chat/completions"
 
     print("\nType your queries below. Type 'exit' to quit.\n")
