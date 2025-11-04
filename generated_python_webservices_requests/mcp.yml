@@ -1,11 +1,11 @@
 apiVersion: marketplace.kratix.io/v1alpha1
 kind: Runtime
 metadata:
-  name: llama-proxy
+  name: mcp
   namespace: default
 spec:
   lifecycle: dev
-  image: 192.168.49.2:30080/llama-proxy:a87d8477dfb36c4b59f96769c7f6fb2d3a59ac522ee8da7232d003479ce5fe0c
+  image: 192.168.49.2:30080/mcp:5d00421f875475a7d981619c9192098aa9985a5c36fa835d5318351989b90eb1
   servicePort: 80
   replicas: 1
   applicationEnv:
