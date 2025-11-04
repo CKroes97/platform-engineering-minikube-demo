@@ -16,7 +16,7 @@ def main():
     print("=== LLaMA Proxy Python Client ===")
 
     # Get server IP and port
-    host = input("Enter Minikube IP (e.g., 192.168.49.2): ").strip()
+    host = "192.168.49.2"
     port = input("Enter proxy port (e.g., 32307): ").strip()
     url = f"http://{host}:{port}/v1/chat/completions"
 
