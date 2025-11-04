@@ -18,6 +18,7 @@ tools = [{
             {
                 "name": "time_now",
                 "description": "Returns current time in ISO format",
+                "type": "function",
             }
         ],
     }]
