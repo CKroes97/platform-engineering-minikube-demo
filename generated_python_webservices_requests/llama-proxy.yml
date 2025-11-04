@@ -5,7 +5,7 @@ metadata:
   namespace: default
 spec:
   lifecycle: dev
-  image: 192.168.49.2:30080/llama-proxy:f14176608b548071576ce61f79935336625756222078032fa87bed94f9178a13
+  image: 192.168.49.2:30080/llama-proxy:9983c9c3519b849141822eb3ee633de8d64dddf89ce96533b85569bab09e95bc
   servicePort: 80
   replicas: 1
   applicationEnv:
