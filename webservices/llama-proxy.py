@@ -15,11 +15,15 @@ tools = [{
         "name": "mcp-server",
         "version": "0.1.0",
         "tools": [
-            {
+                {
                 "name": "time_now",
                 "description": "Returns current time in ISO format",
-                "type": "function",
-            }
+                "parameters": {
+                    "type": "function",
+                    "properties": {},
+                    "required": [],
+                    }
+                }
         ],
     }]
 
