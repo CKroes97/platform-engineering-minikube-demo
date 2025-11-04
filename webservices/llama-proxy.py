@@ -11,6 +11,16 @@ LLAMA_BACKEND = os.getenv(
     "LLAMA_BACKEND", "http://host.minikube.internal:39443/v1/chat/completions"
 )
 
+tools = [{
+        "name": "mcp-server",
+        "version": "0.1.0",
+        "tools": [
+            {
+                "name": "time_now",
+                "description": "Returns current time in ISO format",
+            }
+        ],
+    }]
 
 # Example simple policy function
 def enforce_policy(payload: dict) -> tuple[bool, str]:
@@ -40,6 +50,8 @@ async def proxy_chat_completions(request: Request):
         allowed, reason = enforce_policy(body)
         if not allowed:
             return JSONResponse(status_code=403, content={"error": reason})
+        
+        body["tools"] = tools
 
         # Forward to actual LLaMA backend
         async with httpx.AsyncClient(timeout=60.0) as client:
