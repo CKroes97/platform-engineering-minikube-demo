@@ -23,17 +23,19 @@ tools = [
             }
         ]
 
-def add_system_message(messages, new_content, prepend=False):
+def add_system_message(messages: list[dict], new_content: str):
     msg = {"role": "system", "content": new_content}
-    if prepend:
+    updated = False
+    for message in messages:
+        if message["role"] == "system":
+            message["content"] += " \n" + new_content
+            updated=True
+
+    if not updated:
         messages.insert(0, msg)
-    else:
-        # Append to first system message if exists
-        for m in messages:
-            if m["role"] == "system":
-                m["content"] += " " + new_content
-                return
-        messages.insert(0, msg)
+
+    return messages
+
 
 # Example simple policy function
 def enforce_policy(payload: dict) -> tuple[bool, str]:
@@ -64,7 +66,7 @@ async def proxy_chat_completions(request: Request):
         if not allowed:
             return JSONResponse(status_code=403, content={"error": reason})
         
-        body["messages"] = add_system_message(body.get("messages", []), f"You can acces the tools: {str(tools)}", prepend=True)
+        body["messages"] = add_system_message(body.get("messages", []), f"You can acces the tools: {str(tools)}")
 
         # Forward to actual LLaMA backend
         async with httpx.AsyncClient(timeout=60.0) as client:
