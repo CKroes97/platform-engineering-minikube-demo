@@ -8,7 +8,9 @@ def extract_final_message(raw_text: str) -> str:
     """
     marker = "<|channel|>final<|message|>"
     if marker in raw_text:
-        return raw_text.split(marker)[-1].strip()
+        output = raw_text.split(marker)[-1].strip()
+        if output:
+            return output
     return raw_text.strip()  # fallback to full text if marker missing
 
 
