@@ -1,0 +1,7 @@
+- name: Ensure llama service user exists
+  ansible.builtin.user:
+    name: "{{ service_user }}"
+    shell: /sbin/nologin
+    system: true
+    create_home: true
+    state: absent

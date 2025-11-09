@@ -4,7 +4,7 @@
       - "@c-development"
       - "@development-tools"
       - cmake
-    state: absent
+    state: present
 
 - name: Add Nvidia repository using dnf config-manager
   ansible.builtin.command:
@@ -29,7 +29,7 @@
       - nvidia-driver-libs
       - nvidia-driver-cuda-libs
       - nvidia-persistenced
-    state: absent
+    state: present
   when: not libcuda.stat.exists
 
 - name: Create temporary directory for RPMs (if host supplies CUDA)
@@ -67,7 +67,7 @@
 - name: Install CUDA meta-package
   ansible.builtin.dnf:
     name: cuda
-    state: absent
+    state: present
 
 - name: Configure CUDA environment in /etc/profile.d
   ansible.builtin.copy:
