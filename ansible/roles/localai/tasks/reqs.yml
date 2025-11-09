@@ -23,7 +23,7 @@
 
 - name: Create Python virtual environment (if not exists)
   ansible.builtin.command:
-    cmd: "python{3 -m venv .venv"
+    cmd: "python3 -m venv .venv"
     creates: ".venv/bin/activate"
 
 - name: Ensure pip is up to date inside venv
