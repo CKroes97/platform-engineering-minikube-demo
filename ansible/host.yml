@@ -4,4 +4,4 @@
   roles:
     - minikube
     - docker-registry
-    - llama-cpp
+    - localai
