@@ -35,7 +35,7 @@ class SimpleAddHandler(BaseHTTPRequestHandler):
 
 
 if __name__ == "__main__":
-    server_address = ("", 8000)
+    server_address = ("", 80)
     httpd = HTTPServer(server_address, SimpleAddHandler)
-    print("Serving on port 8000...")
+    print("Serving on port 80...")
     httpd.serve_forever()

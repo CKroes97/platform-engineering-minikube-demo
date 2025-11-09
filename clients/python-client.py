@@ -8,7 +8,9 @@ def extract_final_message(raw_text: str) -> str:
     """
     marker = "<|channel|>final<|message|>"
     if marker in raw_text:
-        return raw_text.split(marker)[-1].strip()
+        output = raw_text.split(marker)[-1].strip()
+        if output:
+            return output
     return raw_text.strip()  # fallback to full text if marker missing
 
 
@@ -16,8 +18,8 @@ def main():
     print("=== LLaMA Proxy Python Client ===")
 
     # Get server IP and port
-    host = input("Enter Minikube IP (e.g., 192.168.49.2): ").strip()
-    port = input("Enter proxy port (e.g., 32307): ").strip()
+    host = "192.168.49.2"
+    port = input("Enter proxy port (e.g., 32307, run `minikube service llama-proxy --url` when in doubt): ").strip()
     url = f"http://{host}:{port}/v1/chat/completions"
 
     print("\nType your queries below. Type 'exit' to quit.\n")
