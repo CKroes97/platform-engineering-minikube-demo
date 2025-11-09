@@ -6,3 +6,5 @@
 
 - name: Run llama-server
   ansible.builtin.include_tasks: localai.yml
+  vars:
+    service_user: localai
