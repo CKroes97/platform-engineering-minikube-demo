@@ -26,12 +26,6 @@
     cmd: "python3 -m venv .venv"
     creates: ".venv/bin/activate"
 
-- name: Ensure pip is up to date inside venv
-  ansible.builtin.pip:
-    name: pip
-    state: latest
-    virtualenv: ".venv"
-
 - name: Install AI Python dependencies
   ansible.builtin.pip:
     name:
@@ -41,5 +35,3 @@
       - transformers
       - accelerate
     virtualenv: ".venv"
-    state: latest
-
