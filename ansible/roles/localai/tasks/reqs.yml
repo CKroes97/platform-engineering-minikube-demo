@@ -8,5 +8,38 @@
       - g++-13
       - make
       - libcurl-devel
+      - python3-devel
+      - openssl-devel
+      - zlib-devel
+      - nodejs
+      - npm
     state: present
+
+- name: Create virtual environment directory
+  ansible.builtin.file:
+    path: ".venv"
+    state: directory
+    mode: '0755'
+
+- name: Create Python virtual environment (if not exists)
+  ansible.builtin.command:
+    cmd: "python{3 -m venv .venv"
+    creates: ".venv/bin/activate"
+
+- name: Ensure pip is up to date inside venv
+  ansible.builtin.pip:
+    name: pip
+    state: latest
+    virtualenv: ".venv"
+
+- name: Install AI Python dependencies
+  ansible.builtin.pip:
+    name:
+      - torch
+      - torchvision
+      - torchaudio
+      - transformers
+      - accelerate
+    virtualenv: ".venv"
+    state: latest
 
