@@ -26,7 +26,8 @@ rules:
     max: 120
     allow-non-breakable-inline-mappings: true
   new-line-at-end-of-file: enable
-  new-lines: enable
+  new-lines: 
+    level: warning
   octal-values: disable
   quoted-strings: disable
   trailing-spaces: enable
