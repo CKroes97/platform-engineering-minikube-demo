@@ -1,11 +1,4 @@
 ---
-- name: Ensure LocalAI service user exists
-  ansible.builtin.user:
-    name: "{{ localai_user }}"
-    shell: /bin/sh
-    system: true
-    create_home: true
-
 - name: Create directories for LocalAI data and models
   ansible.builtin.file:
     path: "{{ item }}"
