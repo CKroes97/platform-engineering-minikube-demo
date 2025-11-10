@@ -7,6 +7,7 @@
   loop:
     - "{{ localai_models_dir }}"
     - "{{ localai_data_dir }}"
+    - "/usr/share/localai/backends"
 
 - name: Check if LocalAI binary exists
   ansible.builtin.stat:
