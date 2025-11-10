@@ -30,8 +30,7 @@ jobs:
 
       - name: Install dependencies
         run: >
-          pip install -r
-           workflow_scripts/generate_dockerfiles/requirements.txt
+          pip install -r workflow_scripts/generate_dockerfiles/requirements.txt
 
       - name: Run Dockerfile generation script
         run: >
