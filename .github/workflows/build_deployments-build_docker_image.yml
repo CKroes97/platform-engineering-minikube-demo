@@ -100,7 +100,7 @@ jobs:
         continue-on-error: true
 
       - name: Create PR
-        run: | 
+        run: |
           gh pr create --base ${{ github.ref_name }} --head ${{ env.branch_name }} \
             --title "Generate Dockerfiles" --body "Automated update"
           sleep 3
