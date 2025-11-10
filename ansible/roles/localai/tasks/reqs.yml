@@ -23,7 +23,7 @@
 
 - name: Create Python virtual environment (if not exists)
   ansible.builtin.command:
-    cmd: "python3 -m venv .venv"
+    cmd: "python -m venv .venv"
     creates: ".venv/bin/activate"
 
 - name: Install AI Python dependencies
