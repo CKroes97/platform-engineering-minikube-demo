@@ -26,7 +26,7 @@
   register: install_backend
   changed_when: "'Backend installed successfully' in install_backend.stdout"
   failed_when: "'Error' in install_backend.stderr"
-  environment: 
+  environment:
     LOCALAI_BACKENDS_DIR: "{{ localai_backends_dir }}"
 
 - name: Ensure LocalAI systemd service file exists
