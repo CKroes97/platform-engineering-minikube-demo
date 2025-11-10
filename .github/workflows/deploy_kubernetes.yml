@@ -31,7 +31,7 @@ jobs:
           sudo chmod 644 ${DIR}/registry/htpasswd
           CREDENTIALS="${{ secrets.REGISTRY_USER }}:${{ secrets.REGISTRY_PASSWORD }}"
           AUTH=$(printf '%s' "$CREDENTIALS" | base64)
-          CONFIG_USER="\"username\":\${{ secrets.REGISTRY_USER }}\""
+          CONFIG_USER="\"username\":\"${{ secrets.REGISTRY_USER }}\""
           CONFIG_PASSWORD="\"password\":\"${{ secrets.REGISTRY_PASSWORD }}\""
           CONFIG_AUTH="\"auth\":\"${AUTH}\""
           CONFIG_CREDS="${CONFIG_USER},${CONFIG_PASSWORD},${CONFIG_AUTH}"
