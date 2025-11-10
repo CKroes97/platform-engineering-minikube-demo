@@ -55,21 +55,21 @@ jobs:
         continue-on-error: true
 
       - name: Create PR
-        run: | 
+        run: |
           gh pr create --base ${{ github.ref_name }} \
             --head ${{ env.branch_name }} \
             --title "Generate Dockerfiles" --body "Automated update"
           sleep 3
         env:
-         GH_TOKEN: ${{ github.token }}
+          GH_TOKEN: ${{ github.token }}
         if: ${{ steps.commit_build.outcome == 'success' }}
 
       - name: Merge PR if not redundant
         run: |
-         python workflow_scripts/shared/check_if_pr_redundant.py \
-         --current-branch "${{ env.branch_name}}" \
-         --base-branch "${{ github.ref_name }}" \
-         --repository "${{ github.repository }}"
+          python workflow_scripts/shared/check_if_pr_redundant.py \
+            --current-branch "${{ env.branch_name}}" \
+            --base-branch "${{ github.ref_name }}" \
+            --repository "${{ github.repository }}"
         env:
          GITHUB_TOKEN: ${{ github.token }}
         if: ${{ steps.commit_build.outcome == 'success' }}
