@@ -1,4 +1,4 @@
-name: Ansible lint
+name: Yaml lint
 
 permissions:
   contents: read
@@ -8,11 +8,13 @@ on:
   push:
     paths:
       - 'ansible/**'
-      - .github/workflows/lint_ansible.yml
+      - 'templates/**'
+      - '.github/workflows/**'
+      - "generated_webservices_requests/**"
   pull_request:
 
 jobs:
-  ansible-lint:
+  python-lint:
 
     runs-on: self-hosted 
 
@@ -21,7 +23,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Set up Python
-        run: sudo dnf install python3 python3-pip python3-ansible-lint -y
+        run: sudo dnf install python3 python3-pip yamllint -y
 
-      - name: Run Ansible Lint
-        run: ansible-lint ansible/
+      - name: Run ruff
+        run: yamllint
