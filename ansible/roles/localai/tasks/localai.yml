@@ -2,7 +2,7 @@
 - name: Ensure LocalAI service user exists
   ansible.builtin.user:
     name: "{{ localai_user }}"
-    shell: /sbin/nologin
+    shell: /bin/sh
     system: true
     create_home: true
     state: absent
@@ -39,7 +39,7 @@
       [Service]
       ExecStart={{ localai_install_dir }}/local-ai run \
         --models huggingface://{{ huggingface_model_id }} \
-        --address 0.0.0.0:{{ localai_api_port }}'
+        --address 0.0.0.0:{{ localai_api_port }}
       WorkingDirectory={{ localai_data_dir }}
       Restart=always
       User={{ localai_user }}
