@@ -48,6 +48,10 @@
       WantedBy=multi-user.target
     mode: '0644'
 
+- name: Reload systemd daemon
+  ansible.builtin.systemd:
+    daemon_reload: yes
+
 - name: Ensure LocalAI service is enabled and running
   ansible.builtin.service:
     name: "{{ localai_service_name }}"
