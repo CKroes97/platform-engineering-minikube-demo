@@ -38,7 +38,8 @@
 
       [Service]
       ExecStart=/bin/sh -c '{{ localai_install_dir }}/local-ai run \
-        --model hf://{{ huggingface_model_id }} \
+        --model huggingface://{{ huggingface_model_id }} \
+        --gpus all \
         --address 0.0.0.0:{{ localai_api_port }}'
       WorkingDirectory={{ localai_data_dir }}
       Restart=always
