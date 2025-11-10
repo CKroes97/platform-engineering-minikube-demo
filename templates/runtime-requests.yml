@@ -5,10 +5,10 @@ metadata:
   name: {{runtimeRequestName}}
   namespace: {{namespace}}
 spec:
-  lifecycle: {{ env }}
+  lifecycle: {{environment}}
   image: {{image}}
   servicePort: 80
   replicas: 1
   applicationEnv:
-  - name: hello
-    value: from-env
+    - name: hello
+      value: from-env
