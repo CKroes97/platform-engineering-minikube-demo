@@ -6,11 +6,13 @@ yaml-files:
 
 rules:
   anchors: enable
-  braces: enable
+  braces:
+    max-spaces-inside: 1
   brackets: enable
   colons: enable
   commas: enable
-  comments: enable
+  comments:
+    min-spaces-from-content: 1
   comments-indentation: disable
   document-end: disable
   document-start:
