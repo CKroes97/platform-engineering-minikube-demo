@@ -1,11 +1,4 @@
 ---
-- name: Ensure LocalAI service user exists
-  ansible.builtin.user:
-    name: "{{ localai_user }}"
-    shell: /sbin/nologin
-    system: true
-    create_home: true
-
 - name: Install required build tools
   ansible.builtin.dnf:
     name:
@@ -25,14 +18,14 @@
 
 - name: Create virtual environment directory
   ansible.builtin.file:
-    path: "/home/localai/.venv"
+    path: "{{ venv_dir }}"
     state: directory
     mode: '0755'
 
 - name: Create Python virtual environment (if not exists)
   ansible.builtin.command:
-    cmd: "python -m venv /home/localai/.venv"
-    creates: "/home/localai/.venv/bin/activate"
+    cmd: "python -m venv {{ venv_dir }}"
+    creates: "{{ venv_dir }}/bin/activate"
 
 - name: Install AI Python dependencies
   ansible.builtin.pip:
@@ -42,4 +35,4 @@
       - torchaudio
       - transformers
       - accelerate
-    virtualenv: "/home/localai/.venv"
+    virtualenv: "{{ venv_dir }}"

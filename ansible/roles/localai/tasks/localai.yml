@@ -41,7 +41,7 @@
         --address 0.0.0.0:{{ localai_api_port }}
       WorkingDirectory={{ localai_data_dir }}
       Restart=always
-      User={{ localai_user }}
+      User=root
 
       [Install]
       WantedBy=multi-user.target

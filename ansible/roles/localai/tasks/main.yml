@@ -2,7 +2,9 @@
 - name: Set up requirements
   ansible.builtin.include_tasks: reqs.yml
   vars:
-    localai_user: localai
+    venv_dir: "/opt/localai/.venv"
+
+
 
 - name: Set up cuda
   ansible.builtin.include_tasks: cuda.yml
@@ -10,13 +12,12 @@
 - name: Run localai service
   ansible.builtin.include_tasks: localai.yml
   vars:
-    localai_user: localai
     python_version: "3.11"
-    venv_dir: "/home/localai/.venv"
+    venv_dir: "/opt/localai/.venv"
     localai_version: "3.7.0"
     localai_install_dir: "/usr/local/bin"
     localai_service_name: "localai"
     localai_api_port: 39443
-    localai_data_dir: "/home/localai"
-    localai_models_dir: "/home/localai/models"
+    localai_data_dir: "/var/lib/localai"
+    localai_models_dir: "/var/lib/localai/models"
     huggingface_model_id: "ggml-org/gpt-oss-20b-GGUF/gpt-oss-20b-mxfp4.gguf"
