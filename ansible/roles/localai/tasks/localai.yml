@@ -37,9 +37,8 @@
       After=network.target docker.service
 
       [Service]
-      ExecStart=/bin/sh -c '{{ localai_install_dir }}/local-ai \
+      ExecStart=/bin/sh -c '{{ localai_install_dir }}/local-ai run \
         --model hf://{{ huggingface_model_id }} \
-        --models-path {{ localai_models_dir }} \
         --address 0.0.0.0:{{ localai_api_port }}'
       WorkingDirectory={{ localai_data_dir }}
       Restart=always
