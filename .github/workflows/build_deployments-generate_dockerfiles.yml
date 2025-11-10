@@ -71,5 +71,5 @@ jobs:
             --base-branch "${{ github.ref_name }}" \
             --repository "${{ github.repository }}"
         env:
-         GITHUB_TOKEN: ${{ github.token }}
+          GITHUB_TOKEN: ${{ github.token }}
         if: ${{ steps.commit_build.outcome == 'success' }}

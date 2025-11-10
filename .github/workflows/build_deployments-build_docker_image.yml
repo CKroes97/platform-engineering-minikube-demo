@@ -105,7 +105,7 @@ jobs:
             --title "Generate Dockerfiles" --body "Automated update"
           sleep 3
         env:
-         GH_TOKEN: ${{ github.token }}
+          GH_TOKEN: ${{ github.token }}
         if: ${{ steps.commit_build.outcome == 'success' }}
 
       - name: Merge PR if not redundant
@@ -116,5 +116,5 @@ jobs:
             --repository "${{ github.repository }}" \
             --folder "generated_python_webservices_requests, generated_dockerfiles"
         env:
-         GITHUB_TOKEN: ${{ github.token }}
+          GITHUB_TOKEN: ${{ github.token }}
         if: ${{ steps.commit_build.outcome == 'success' }}
