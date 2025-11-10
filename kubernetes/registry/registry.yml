@@ -43,4 +43,3 @@ spec:
         - name: auth-volume
           secret:
             secretName: registry-auth-secret
-            
