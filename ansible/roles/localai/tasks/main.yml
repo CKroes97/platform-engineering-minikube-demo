@@ -3,8 +3,18 @@
 
 - name: Set up cuda
   ansible.builtin.include_tasks: cuda.yml
+  vars: 
+    localai_user: localai
 
 - name: Run llama-server
   ansible.builtin.include_tasks: localai.yml
   vars:
-    service_user: localai
+    localai_user: localai
+    python_version: "3.11"
+    venv_dir: "/home/localai/.venv"
+    localai_version: "3.7.0"
+    localai_install_dir: "/usr/local/bin"
+    localai_service_name: "localai"
+    localai_api_port: 39080
+    localai_data_dir: "/home/localai"
+    localai_models_dir: "/home/localai/models"

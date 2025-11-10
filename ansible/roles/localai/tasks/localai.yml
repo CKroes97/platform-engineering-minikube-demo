@@ -1,7 +1,49 @@
-- name: Ensure llama service user exists
+- name: Ensure LocalAI service user exists
   ansible.builtin.user:
-    name: "{{ service_user }}"
+    name: "{{ localai_user }}"
     shell: /sbin/nologin
     system: true
     create_home: true
     state: absent
+
+- name: Create directories for LocalAI data and models
+  ansible.builtin.file:
+    path: "{{ item }}"
+    state: directory
+    owner: "{{ localai_user }}"
+    group: "{{ localai_user }}"
+    mode: "0755"
+  loop:
+    - "{{ localai_models_dir }}"
+    - "{{ localai_data_dir }}"
+
+- name: Download LocalAI binary
+  ansible.builtin.get_url:
+    url: "https://github.com/mudler/LocalAI/releases/download/v{{ localai_version }}/local-ai-linux-amd64"
+    dest: "{{ localai_install_dir }}/local-ai"
+    mode: "0755"
+  creates: "{{ localai_install_dir }}/local-ai"
+
+- name: Ensure LocalAI systemd service file exists
+  ansible.builtin.copy:
+    dest: "/etc/systemd/system/{{ localai_service_name }}.service"
+    content: |
+      [Unit]
+      Description=LocalAI self-hosted API (Hugging Face Model)
+      After=network.target docker.service
+
+      [Service]
+      ExecStart={{ localai_install_dir }}/local-ai --model hf://{{ huggingface_model_id }} --models-path {{ localai_models_dir }} --address 0.0.0.0:{{ localai_api_port }}
+      WorkingDirectory={{ localai_data_dir }}
+      Restart=always
+      User={{ localai_user }}
+
+      [Install]
+      WantedBy=multi-user.target
+    mode: '0644'
+
+- name: Ensure LocalAI service is enabled and running
+  ansible.builtin.service:
+    name: "{{ localai_service_name }}"
+    state: started
+    enabled: true
