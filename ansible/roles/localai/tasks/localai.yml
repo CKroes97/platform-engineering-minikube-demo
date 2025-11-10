@@ -11,7 +11,7 @@
   ansible.builtin.file:
     path: "{{ item }}"
     state: directory
-    permissions: '0755'
+    mode: '0755'
   loop:
     - "{{ localai_models_dir }}"
     - "{{ localai_data_dir }}"
