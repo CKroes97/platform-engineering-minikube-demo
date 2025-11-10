@@ -19,3 +19,4 @@
     localai_api_port: 39080
     localai_data_dir: "/home/localai"
     localai_models_dir: "/home/localai/models"
+    huggingface_model_id: "ggml-org/gpt-oss-20b-GGUF"
