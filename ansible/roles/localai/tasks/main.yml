@@ -1,6 +1,6 @@
 - name: Set up requirements
   ansible.builtin.include_tasks: reqs.yml
-  vars: 
+  vars:
     localai_user: localai
 
 - name: Set up cuda
