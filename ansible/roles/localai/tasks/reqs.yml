@@ -35,3 +35,4 @@
       - transformers
       - accelerate
     virtualenv: "$HOME/.venv"
+    
