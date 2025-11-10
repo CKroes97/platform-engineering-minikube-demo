@@ -34,7 +34,7 @@ jobs:
           CONFIG_USER="\"username\":\${{ secrets.REGISTRY_USER }}\""
           CONFIG_PASSWORD="\"password\":\"${{ secrets.REGISTRY_PASSWORD }}\""
           CONFIG_AUTH="\"auth\":\"${AUTH}\""
-          CONFIG_CREDS="${CONFIG_USER},${CONFIG_PASSWORD},${CONFIG_AUTH}""
+          CONFIG_CREDS="${CONFIG_USER},${CONFIG_PASSWORD},${CONFIG_AUTH}"
           CONFIG_PATH="${DIR}/default/dockerconfig"
           CONFIG_JSON="{\"auths\":{\"${IP}:30080\":{${CONFIG_CREDS}}}"
           echo -n ".dockerconfigjson=${CONFIG_JSON}" > ${CONFIG_PATH}
