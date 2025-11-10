@@ -34,7 +34,7 @@ def main():
 
         # Build request payload
         payload = {
-            "model": "llama-2-7b-chat",
+            "model": "gpt-oss-20b-GGUF",
             "messages": [{"role": "user", "content": user_input}],
         }
 

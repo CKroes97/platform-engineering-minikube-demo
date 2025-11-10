@@ -33,6 +33,7 @@
         --models huggingface://{{ huggingface_model_id }} \
         --address 0.0.0.0:{{ localai_api_port }}
       WorkingDirectory={{ localai_data_dir }}
+      Environment="LOCALAI_FORCE_META_BACKEND_CAPABILITY=gpu"
       Restart=always
       User=root
 
