@@ -19,3 +19,4 @@
     localai_data_dir: "/var/lib/localai"
     localai_models_dir: "/var/lib/localai/models"
     huggingface_model_id: "ggml-org/gpt-oss-20b-GGUF/gpt-oss-20b-mxfp4.gguf"
+    backend: "localai@cuda12-llama-cpp"

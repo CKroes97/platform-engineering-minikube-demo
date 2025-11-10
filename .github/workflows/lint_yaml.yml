@@ -26,5 +26,5 @@ jobs:
       - name: Set up Python
         run: sudo dnf install yamllint -y
 
-      - name: Run ruff
+      - name: Run yamllint
         run: yamllint .

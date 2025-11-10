@@ -22,7 +22,7 @@
   when: not localai_bin.stat.exists
 
 - name: Install llama.cpp CUDA backend via LocalAI CLI
-  ansible.builtin.command: local-ai backend install llama-cpp-cuda
+  ansible.builtin.command: local-ai backends install {{ backend }}
   register: install_backend
   changed_when: "'Backend installed successfully' in install_backend.stdout"
   failed_when: "'Error' in install_backend.stderr"
