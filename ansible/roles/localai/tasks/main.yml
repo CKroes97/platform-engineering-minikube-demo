@@ -1,10 +1,10 @@
 - name: Set up requirements
   ansible.builtin.include_tasks: reqs.yml
+  vars: 
+    localai_user: localai
 
 - name: Set up cuda
   ansible.builtin.include_tasks: cuda.yml
-  vars: 
-    localai_user: localai
 
 - name: Run llama-server
   ansible.builtin.include_tasks: localai.yml
