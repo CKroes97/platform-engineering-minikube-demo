@@ -4,8 +4,6 @@
   vars:
     venv_dir: "/opt/localai/.venv"
 
-
-
 - name: Set up cuda
   ansible.builtin.include_tasks: cuda.yml
 
