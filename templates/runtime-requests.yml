@@ -5,7 +5,7 @@ metadata:
   name: {{runtimeRequestName}}
   namespace: {{namespace}}
 spec:
-  lifecycle: {{environment}}
+  lifecycle: dev
   image: {{image}}
   servicePort: 80
   replicas: 1
