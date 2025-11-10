@@ -16,6 +16,7 @@ on:
       - 'webservices/**.py'
       - 'generated_dockerfiles/**'
       - 'generated_python_webservices_requests/**'
+      - 'templates\runtime-requests.yml'
   pull_request:
 
 jobs:
