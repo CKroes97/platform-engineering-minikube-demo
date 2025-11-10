@@ -22,7 +22,7 @@
 
 - name: Download LocalAI binary
   ansible.builtin.get_url:
-    url: "https://github.com/mudler/LocalAI/releases/download/v{{ localai_version }}/local-ai-linux-amd64"
+    url: "https://github.com/mudler/LocalAI/releases/download/v{{ localai_version }}/local-ai-v3.7.0-linux-amd64"
     dest: "{{ localai_install_dir }}/local-ai"
     mode: "0755"
   when: not localai_bin.stat.exists
