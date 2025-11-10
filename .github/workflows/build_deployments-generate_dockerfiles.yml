@@ -29,17 +29,22 @@ jobs:
           python-version: "3.11"
 
       - name: Install dependencies
-        run: pip install -r workflow_scripts/generate_dockerfiles/requirements.txt
+        run: >
+          pip install -r
+           workflow_scripts/generate_dockerfiles/requirements.txt
 
       - name: Run Dockerfile generation script
-        run: python workflow_scripts/generate_dockerfiles/generate_dockerfiles.py
+        run: >
+          python workflow_scripts/generate_dockerfiles/generate_dockerfiles.py
 
       # Step will fail on an empty commit. In that case just skip all next steps
       - name: Commit and Push Changes
         id: commit_build
         run: |
-          git config --global user.name "github-actions[bot]"
-          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git config --global \
+           user.name "github-actions[bot]"
+          git config --global \
+           user.email "github-actions[bot]@users.noreply.github.com"
           BRANCH_NAME="generate-dockerfiles-${{ github.sha }}"
           git checkout -b $BRANCH_NAME
           git add generated_dockerfiles/
@@ -52,8 +57,9 @@ jobs:
 
       - name: Create PR
         run: | 
-          gh pr create --base ${{ github.ref_name }} --head ${{ env.branch_name }} \
-           --title "Generate Dockerfiles" --body "Automated update"
+          gh pr create --base ${{ github.ref_name }} \
+            --head ${{ env.branch_name }} \
+            --title "Generate Dockerfiles" --body "Automated update"
           sleep 3
         env:
          GH_TOKEN: ${{ github.token }}
