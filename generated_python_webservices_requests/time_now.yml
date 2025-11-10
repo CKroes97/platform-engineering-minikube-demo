@@ -10,5 +10,5 @@ spec:
   servicePort: 80
   replicas: 1
   applicationEnv:
-  - name: hello
-    value: from-env
+    - name: hello
+      value: from-env
