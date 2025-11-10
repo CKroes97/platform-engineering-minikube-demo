@@ -15,7 +15,7 @@ on:
   pull_request:
 
 jobs:
-  python-lint:
+  yaml-lint:
 
     runs-on: self-hosted
 
