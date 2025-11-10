@@ -10,10 +10,8 @@ rules:
   brackets: enable
   colons: enable
   commas: enable
-  comments:
-    level: warning
-  comments-indentation:
-    level: warning
+  comments: enable
+  comments-indentation: enable
   document-end: disable
   document-start:
     level: warning
