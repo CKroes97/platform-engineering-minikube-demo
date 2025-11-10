@@ -5,7 +5,7 @@ kind: Kustomization
 resources:
   - service-account.yml
 
-secretGenerator:  
+secretGenerator:
   - name: registry-pull-secret
     envs:
       - dockerconfig
