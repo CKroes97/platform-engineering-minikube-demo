@@ -18,12 +18,17 @@
     - "{{ localai_models_dir }}"
     - "{{ localai_data_dir }}"
 
+- name: Check if LocalAI binary exists
+  ansible.builtin.stat:
+    path: "{{ localai_install_dir }}/local-ai"
+  register: localai_bin
+
 - name: Download LocalAI binary
   ansible.builtin.get_url:
     url: "https://github.com/mudler/LocalAI/releases/download/v{{ localai_version }}/local-ai-linux-amd64"
     dest: "{{ localai_install_dir }}/local-ai"
     mode: "0755"
-  creates: "{{ localai_install_dir }}/local-ai"
+  when: not localai_bin.stat.exists
 
 - name: Ensure LocalAI systemd service file exists
   ansible.builtin.copy:

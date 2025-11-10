@@ -7,7 +7,7 @@
 - name: Set up cuda
   ansible.builtin.include_tasks: cuda.yml
 
-- name: Run llama-server
+- name: Run localai service
   ansible.builtin.include_tasks: localai.yml
   vars:
     localai_user: localai
