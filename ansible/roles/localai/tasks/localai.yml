@@ -11,9 +11,6 @@
   ansible.builtin.file:
     path: "{{ item }}"
     state: directory
-    owner: "{{ localai_user }}"
-    group: "{{ localai_user }}"
-    mode: "0755"
   loop:
     - "{{ localai_models_dir }}"
     - "{{ localai_data_dir }}"
