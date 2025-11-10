@@ -5,7 +5,6 @@
     shell: /sbin/nologin
     system: true
     create_home: true
-    state: absent
 
 - name: Install required build tools
   ansible.builtin.dnf:

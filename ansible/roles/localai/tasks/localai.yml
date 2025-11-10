@@ -5,7 +5,6 @@
     shell: /bin/sh
     system: true
     create_home: true
-    state: absent
 
 - name: Create directories for LocalAI data and models
   ansible.builtin.file:
