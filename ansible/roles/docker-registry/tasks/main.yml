@@ -1,3 +1,4 @@
+---
 - name: Generate credentials
   ansible.builtin.include_tasks: credentials.yml
 

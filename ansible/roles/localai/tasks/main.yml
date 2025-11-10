@@ -1,3 +1,4 @@
+---
 - name: Set up requirements
   ansible.builtin.include_tasks: reqs.yml
   vars:

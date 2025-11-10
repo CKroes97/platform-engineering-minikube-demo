@@ -1,3 +1,4 @@
+---
 - name: Install GitHub CLI
   ansible.builtin.dnf:
     name: gh
