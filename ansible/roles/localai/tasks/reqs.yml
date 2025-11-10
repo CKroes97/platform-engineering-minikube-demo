@@ -17,13 +17,13 @@
 
 - name: Create virtual environment directory
   ansible.builtin.file:
-    path: "~/.venv"
+    path: "$HOME/.venv"
     state: directory
     mode: '0755'
 
 - name: Create Python virtual environment (if not exists)
   ansible.builtin.command:
-    cmd: "python -m venv ~/.venv"
+    cmd: "python -m venv $HOME/.venv"
     creates: ".venv/bin/activate"
 
 - name: Install AI Python dependencies
@@ -34,4 +34,4 @@
       - torchaudio
       - transformers
       - accelerate
-    virtualenv: "~/.venv"
+    virtualenv: "$HOME/.venv"
