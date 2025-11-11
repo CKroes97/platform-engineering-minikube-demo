@@ -7,6 +7,17 @@
 - name: Set up cuda
   ansible.builtin.include_tasks: cuda.yml
 
+- name: Build llama.cpp with CUDA support
+  ansible.builtin.include_tasks: llama-cpp.yml
+  vars:
+    repo_url: "https://github.com/ggml-org/llama.cpp.git"
+    repo_dest: "/opt/llama.cpp"
+    build_dir: "/var/lib/localai/backends"
+    cmake_generator: "Ninja"          # or "Unix Makefiles"
+    cmake_build_type: "Release"
+    enable_cuda: "ON"
+    cuda_architectures: "89"
+
 - name: Run localai service
   ansible.builtin.include_tasks: localai.yml
   vars:
