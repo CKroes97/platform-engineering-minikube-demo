@@ -16,9 +16,6 @@ jobs:
     runs-on: self-hosted
 
     steps:
-      - name: force clean Repository
-        run: sudo rm -rf ${{ github.workspace }}/terraform
-
       - name: Checkout repository
         uses: actions/checkout@v4
 
@@ -32,6 +29,3 @@ jobs:
           sudo ansible-playbook -i ansible/inventory ansible/host.yml \
           --extra-vars "registry_user=${{ secrets.REGISTRY_USER }} \
           registry_password=${{ secrets.REGISTRY_PASSWORD }}"
-
-      - name: force clean Repository
-        run: sudo rm -rf ${{ github.workspace }}/terraform
