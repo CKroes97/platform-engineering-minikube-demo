@@ -1,4 +1,16 @@
 ---
+- name: Install required build tools
+  ansible.builtin.dnf:
+    name:
+      - git
+      - cmake
+      - ninja-build
+      - gcc-13
+      - g++-13
+      - make
+      - libcurl-devel
+    state: present
+
 - name: Clone llama.cpp repository
   ansible.builtin.git:
     repo: "{{ repo_url }}"
@@ -36,10 +48,3 @@
   args:
     creates: "{{ build_dir }}/bin/llama-server"
     chdir: "{{ build_dir }}"
-
-- name: Create symlink for llama-cli for LocalAI CUDA backend
-  ansible.builtin.file:
-    src: "{{ build_dir }}/bin/llama-cli"
-    dest: "{{ localai_backends_dir }}/llama-cpp"
-    state: link
-    force: true
