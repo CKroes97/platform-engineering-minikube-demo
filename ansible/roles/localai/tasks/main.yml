@@ -12,7 +12,7 @@
   vars:
     repo_url: "https://github.com/ggml-org/llama.cpp.git"
     repo_dest: "/opt/llama.cpp"
-    build_dir: "/var/lib/localai/backends"
+    build_dir: "{{ repo_dest }}/build"
     cmake_generator: "Ninja"          # or "Unix Makefiles"
     cmake_build_type: "Release"
     enable_cuda: "ON"
