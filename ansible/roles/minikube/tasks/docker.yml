@@ -1,3 +1,4 @@
+---
 - name: Ensure dnf-plugins-core is installed (provides config-manager)
   ansible.builtin.dnf:
     name: dnf-plugins-core

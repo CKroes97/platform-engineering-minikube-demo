@@ -1,3 +1,4 @@
+---
 name: Build and deploy webservice to cluster
 
 permissions:
@@ -15,9 +16,10 @@ on:
       - 'webservices/**.py'
       - 'generated_dockerfiles/**'
       - 'generated_python_webservices_requests/**'
+      - 'templates\runtime-requests.yml'
   pull_request:
 
-jobs: 
+jobs:
   call-generate-dockerfiles:
     uses: ./.github/workflows/build_deployments-generate_dockerfiles.yml
     secrets: inherit
@@ -30,6 +32,6 @@ jobs:
   call-deploy-requests:
     uses: ./.github/workflows/build_deployments-deploy_requests.yml
     secrets: inherit
-    needs: 
+    needs:
       - call-generate-dockerfiles
       - call-build-image

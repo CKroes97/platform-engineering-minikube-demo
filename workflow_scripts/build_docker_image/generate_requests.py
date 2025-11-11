@@ -47,6 +47,8 @@ def render_template(template_path, output_dir, image_name, values):
     try:
         template = env.get_template(template_file)
         rendered = template.render(values)
+        if not rendered.endswith("\n"):
+            rendered += "\n"
     except UndefinedError as e:
         print(f"❌ Error rendering {image_name}: {e}")
         return

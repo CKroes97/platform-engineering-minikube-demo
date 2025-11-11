@@ -1,3 +1,4 @@
+---
 name: Build docker image
 
 permissions:
@@ -7,7 +8,7 @@ permissions:
 on:
   workflow_call:
 
-jobs: 
+jobs:
   build-image:
     runs-on: self-hosted
     steps:
@@ -62,7 +63,7 @@ jobs:
           DOCKER_REGISTRY_PASSWORD: ${{ secrets.REGISTRY_PASSWORD }}
 
       - name: Run Dockerfile build script
-        run: | 
+        run: |
           python workflow_scripts/build_docker_image/build_docker_images.py \
            --dockerfiles-dir "generated_dockerfiles" \
            --docker-registry "${{ env.MINIKUBE_IP }}:30080"
@@ -81,8 +82,10 @@ jobs:
       - name: Commit and Push Changes
         id: commit_build
         run: |
-          git config --global user.name "github-actions[bot]"
-          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git config --global \
+           user.name "github-actions[bot]"
+          git config --global \
+           user.email "github-actions[bot]@users.noreply.github.com"
           git pull
           BRANCH_NAME="generate-requests-${{ github.sha }}"
           git checkout -b $BRANCH_NAME
@@ -97,21 +100,21 @@ jobs:
         continue-on-error: true
 
       - name: Create PR
-        run: | 
+        run: |
           gh pr create --base ${{ github.ref_name }} --head ${{ env.branch_name }} \
-           --title "Generate Dockerfiles" --body "Automated update"
+            --title "Generate Dockerfiles" --body "Automated update"
           sleep 3
         env:
-         GH_TOKEN: ${{ github.token }}
+          GH_TOKEN: ${{ github.token }}
         if: ${{ steps.commit_build.outcome == 'success' }}
 
       - name: Merge PR if not redundant
         run: |
-         python workflow_scripts/shared/check_if_pr_redundant.py \
-         --current-branch "${{ env.branch_name}}" \
-         --base-branch "${{ github.ref_name }}" \
-         --repository "${{ github.repository }}" \
-         --folder "generated_python_webservices_requests, generated_dockerfiles"
+          python workflow_scripts/shared/check_if_pr_redundant.py \
+            --current-branch "${{ env.branch_name}}" \
+            --base-branch "${{ github.ref_name }}" \
+            --repository "${{ github.repository }}" \
+            --folder "generated_python_webservices_requests, generated_dockerfiles"
         env:
-         GITHUB_TOKEN: ${{ github.token }}
+          GITHUB_TOKEN: ${{ github.token }}
         if: ${{ steps.commit_build.outcome == 'success' }}

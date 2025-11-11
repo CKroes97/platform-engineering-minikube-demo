@@ -1,3 +1,4 @@
+---
 name: Python lint
 
 permissions:
@@ -15,12 +16,9 @@ on:
 jobs:
   python-lint:
 
-    runs-on: self-hosted 
+    runs-on: self-hosted
 
     steps:
-      - name: force clean Repository
-        run: sudo rm -rf ${{ github.workspace }}/terraform
-
       - name: Checkout Repository
         uses: actions/checkout@v4
 
@@ -28,4 +26,7 @@ jobs:
         run: sudo dnf install python3 python3-pip ruff -y
 
       - name: Run ruff
-        run: ruff check webservices workflow_scripts
+        run: ruff check .
+
+      - name: Ruff format
+        run: ruff format --check .

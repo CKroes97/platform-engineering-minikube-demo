@@ -1,3 +1,4 @@
+---
 - name: Ensure llama service user exists
   ansible.builtin.user:
     name: "{{ service_user }}"

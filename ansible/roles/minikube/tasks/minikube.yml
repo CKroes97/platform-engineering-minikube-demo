@@ -1,3 +1,4 @@
+---
 - name: Ensure 'which' utility is installed
   ansible.builtin.dnf:
     name: which

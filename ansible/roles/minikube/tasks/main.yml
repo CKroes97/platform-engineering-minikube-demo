@@ -13,6 +13,3 @@
 
 - name: Configure nodejs
   ansible.builtin.include_tasks: nodejs.yml
-
-- name: Configure terraform
-  ansible.builtin.include_tasks: terraform.yml

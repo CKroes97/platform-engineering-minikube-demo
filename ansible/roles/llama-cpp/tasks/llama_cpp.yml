@@ -1,3 +1,4 @@
+---
 - name: Install required build tools
   ansible.builtin.dnf:
     name:

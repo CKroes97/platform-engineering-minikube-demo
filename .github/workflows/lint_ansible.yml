@@ -1,3 +1,4 @@
+---
 name: Ansible lint
 
 permissions:
@@ -14,12 +15,9 @@ on:
 jobs:
   ansible-lint:
 
-    runs-on: self-hosted 
+    runs-on: self-hosted
 
     steps:
-      - name: force clean Repository
-        run: sudo rm -rf ${{ github.workspace }}/terraform
-
       - name: Checkout Repository
         uses: actions/checkout@v4
 
@@ -28,7 +26,3 @@ jobs:
 
       - name: Run Ansible Lint
         run: ansible-lint ansible/
-
-      - name: force clean Repository
-        run: sudo rm -rf ${{ github.workspace }}/terraform
- 

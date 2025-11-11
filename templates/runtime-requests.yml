@@ -1,13 +1,14 @@
+---
 apiVersion: marketplace.kratix.io/v1alpha1
 kind: Runtime
 metadata:
   name: {{runtimeRequestName}}
   namespace: {{namespace}}
 spec:
-  lifecycle: {{ env }}
+  lifecycle: dev
   image: {{image}}
   servicePort: 80
   replicas: 1
   applicationEnv:
-  - name: hello
-    value: from-env
+    - name: hello
+      value: from-env
