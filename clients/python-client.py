@@ -19,7 +19,9 @@ def main():
 
     # Get server IP and port
     host = "192.168.49.2"
-    port = input("Enter proxy port (e.g., 32307, run `minikube service llama-proxy --url` when in doubt): ").strip()
+    port = input(
+        "Enter proxy port (e.g., 32307, run `minikube service llama-proxy --url` when in doubt): "
+    ).strip()
     url = f"http://{host}:{port}/v1/chat/completions"
 
     print("\nType your queries below. Type 'exit' to quit.\n")
@@ -32,7 +34,7 @@ def main():
 
         # Build request payload
         payload = {
-            "model": "llama-2-7b-chat",
+            "model": "gpt-oss-20b-GGUF",
             "messages": [{"role": "user", "content": user_input}],
         }
 

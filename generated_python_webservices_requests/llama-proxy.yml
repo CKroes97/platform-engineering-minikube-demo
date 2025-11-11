@@ -1,3 +1,4 @@
+---
 apiVersion: marketplace.kratix.io/v1alpha1
 kind: Runtime
 metadata:
@@ -5,9 +6,9 @@ metadata:
   namespace: default
 spec:
   lifecycle: dev
-  image: 192.168.49.2:30080/llama-proxy:ca62e1b92f1e1fd993bc67b6f6c18847889b1b7a36de1a768f50b130b7675585
+  image: 192.168.49.2:30080/llama-proxy:c82ae86de2211dbf298da4d701db172f80e4cf0837520bc40cb0d5a7315a49ba
   servicePort: 80
   replicas: 1
   applicationEnv:
-  - name: hello
-    value: from-env
+    - name: hello
+      value: from-env

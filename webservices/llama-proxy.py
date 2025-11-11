@@ -13,16 +13,17 @@ LLAMA_BACKEND = os.getenv(
 )
 
 tools = [
-            {
-            "name": "time_now",
-            "description": "Returns current time in ISO format",
-            "type": "function",
-            "parameters": {
-                "type": "object",
-                "properties": {},
-                }
-            }
-        ]
+    {
+        "name": "time_now",
+        "description": "Returns current time in ISO format",
+        "type": "function",
+        "parameters": {
+            "type": "object",
+            "properties": {},
+        },
+    }
+]
+
 
 def time_now():
     return datetime.now(datetime.UTC).isoformat()
@@ -33,7 +34,7 @@ def add_system_message(messages: list[dict], new_content: str):
     for message in messages:
         if message["role"] == "system":
             message["content"] += " \n" + new_content
-            updated=True
+            updated = True
 
     if not updated:
         messages.insert(0, msg)
@@ -69,8 +70,10 @@ async def proxy_chat_completions(request: Request):
         allowed, reason = enforce_policy(body)
         if not allowed:
             return JSONResponse(status_code=403, content={"error": reason})
-        
-        body["messages"] = add_system_message(body.get("messages", []), f"You can acces the tools: {str(tools)}")
+
+        body["messages"] = add_system_message(
+            body.get("messages", []), f"You can acces the tools: {str(tools)}"
+        )
 
         # Forward to actual LLaMA backend
         async with httpx.AsyncClient(timeout=60.0) as client:
