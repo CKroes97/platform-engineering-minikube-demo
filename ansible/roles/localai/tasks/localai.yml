@@ -21,13 +21,11 @@
     mode: "0755"
   when: not localai_bin.stat.exists
 
-- name: Install llama.cpp CUDA backend via LocalAI CLI
-  ansible.builtin.command: local-ai backends install {{ backend }}
-  register: install_backend
-  changed_when: "'Backend installed successfully' in install_backend.stdout"
-  failed_when: "'Error' in install_backend.stderr"
-  environment:
-    LOCALAI_BACKENDS_DIR: "{{ localai_backends_dir }}"
+- name: Configure backend
+  ansible.builtin.copy:
+    dest: "{{ localai_models_dir }}/backend.yaml"
+    src: "backend.yml"
+    mode: '0644'
 
 - name: Ensure LocalAI systemd service file exists
   ansible.builtin.copy:
