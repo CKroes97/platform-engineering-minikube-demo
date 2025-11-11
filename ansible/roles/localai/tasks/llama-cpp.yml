@@ -36,3 +36,10 @@
   args:
     creates: "{{ build_dir }}/bin/llama-server"
     chdir: "{{ build_dir }}"
+
+- name: Create symlink for llama-cli for LocalAI CUDA backend
+  ansible.builtin.file:
+    src: "{{ build_dir }}/bin/llama-cli"
+    dest: "{{ localai_backends_dir }}/llama-cpp"
+    state: link
+    force: true
