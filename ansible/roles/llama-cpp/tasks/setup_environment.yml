@@ -9,7 +9,9 @@
 
 - name: Add Nvidia repository using dnf config-manager
   ansible.builtin.command:
-    cmd: dnf-3 config-manager --add-repo https://developer.download.nvidia.com/compute/cuda/repos/fedora41/x86_64/cuda-fedora41.repo
+    cmd: >
+      dnf-3 config-manager 
+        --add-repo https://developer.download.nvidia.com/compute/cuda/repos/fedora41/x86_64/cuda-fedora41.repo
     creates: /etc/yum.repos.d/cuda-fedora41.repo
   become: true
 
