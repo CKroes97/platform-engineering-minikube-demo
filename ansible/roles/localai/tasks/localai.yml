@@ -24,7 +24,7 @@
 - name: Configure backend
   ansible.builtin.copy:
     dest: "{{ localai_backends_dir }}/backend.yaml"
-    src: "backend.yml"
+    src: "pipeline_resources/backend.yml"
     mode: '0644'
 
 - name: Ensure LocalAI systemd service file exists
