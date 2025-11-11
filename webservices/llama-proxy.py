@@ -2,6 +2,7 @@ import os
 import httpx
 from fastapi import FastAPI, Request, Response
 from fastapi.responses import JSONResponse
+from datetime import datetime
 import uvicorn
 
 app = FastAPI()
@@ -22,6 +23,9 @@ tools = [
                 }
             }
         ]
+
+def time_now():
+    return datetime.now(datetime.UTC).isoformat()
 
 def add_system_message(messages: list[dict], new_content: str):
     msg = {"role": "system", "content": new_content}
@@ -73,6 +77,26 @@ async def proxy_chat_completions(request: Request):
             llama_response = await client.post(
                 LLAMA_BACKEND, json=body, headers={"Content-Type": "application/json"}
             )
+
+        tool_names = [tool["name"] for tool in tools]
+
+        for tool in tool_names:
+            if tool in llama_response.text:
+                if tool == "time_now":
+                    current_time = time_now()
+                    tool_response = {
+                        "role": "function",
+                        "name": "time_now",
+                        "content": current_time
+                    }
+                    # Append tool response to messages
+                    body["messages"].append(tool_response)
+                    # Re-query the LLaMA backend with the updated messages
+                    async with httpx.AsyncClient(timeout=60.0) as client:
+                        llama_response = await client.post(
+                            LLAMA_BACKEND, json=body, headers={"Content-Type": "application/json"}
+                        )
+
 
         return Response(
             content=llama_response.content,
