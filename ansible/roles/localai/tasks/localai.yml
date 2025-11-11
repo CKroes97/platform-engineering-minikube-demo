@@ -33,7 +33,7 @@
       ExecStart={{ localai_install_dir }}/local-ai run \
         --models huggingface://{{ huggingface_model_id }} \
         --address 0.0.0.0:{{ localai_api_port }} \
-        --external-grpc-backend:{{ localai_backends_dir }}/{{backend}}
+        --external-grpc-backends {{ localai_backends_dir }}/{{backend}}
       WorkingDirectory={{ localai_data_dir }}
       Environment="LOCALAI_FORCE_META_BACKEND_CAPABILITY=gpu"
       Environment="LOCALAI_BACKENDS_DIR={{ localai_backends_dir }}"
