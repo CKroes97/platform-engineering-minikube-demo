@@ -22,6 +22,7 @@ def main():
     port = input(
         "Enter proxy port (e.g., 32307, run `minikube service llama-proxy --url` when in doubt): "
     ).strip()
+    truncate = input("Truncate long responses? (y/n, default n): ").strip().lower() == "y"
     url = f"http://{host}:{port}/v1/chat/completions"
 
     print("\nType your queries below. Type 'exit' to quit.\n")
@@ -47,7 +48,8 @@ def main():
                 choices = data.get("choices", [])
                 if choices:
                     content = choices[0].get("message", {}).get("content", "")
-                    content = extract_final_message(content)
+                    if truncate:
+                        content = extract_final_message(content)
                     print(f"LLaMA: {content}\n")
                 else:
                     print(f"LLaMA: {json.dumps(data)}\n")

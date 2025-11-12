@@ -109,8 +109,8 @@ async def proxy_chat_completions(request: Request):
             media_type="application/json",
         )
 
-    except Exception:
-        return JSONResponse(status_code=500, content="An error occurred")
+    except Exception as e:
+        return JSONResponse(status_code=500, content=e)
 
 
 @app.get("/health")
