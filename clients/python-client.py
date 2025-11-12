@@ -47,9 +47,11 @@ def main():
                 # Assuming OpenAI-style responses: data["choices"][0]["message"]["content"]
                 choices = data.get("choices", [])
                 if choices:
-                    content = choices[0].get("message", {}).get("content", "")
                     if truncate:
+                        content = choices[0].get("message", {}).get("content", "")
                         content = extract_final_message(content)
+                    else: 
+                        content = choices[0]
                     print(f"LLaMA: {content}\n")
                 else:
                     print(f"LLaMA: {json.dumps(data)}\n")
