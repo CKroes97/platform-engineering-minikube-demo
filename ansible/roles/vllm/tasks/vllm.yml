@@ -2,7 +2,7 @@
 - name: Ensure vllm service user exists
   ansible.builtin.user:
     name: "{{ service_user }}"
-    shell: /sbin/nologin
+    shell: /bin/sh
     system: true
     create_home: true
 
