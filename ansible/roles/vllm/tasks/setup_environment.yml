@@ -80,13 +80,6 @@
       #!/bin/sh
       export PATH=$PATH:/usr/local/cuda/bin
 
-- name: Create log directory
-  ansible.builtin.file:
-    path: "{{ vllm_log_dir }}"
-    state: directory
-    owner: "{{ ansible_user | default('ubuntu') }}"
-    mode: '0755'
-
 - name: Create Python virtual environment
   ansible.builtin.command: python3 -m venv {{ vllm_venv_path }}
   args:

@@ -21,12 +21,12 @@
       WorkingDirectory={{ vllm_venv_path }}
       ExecStart=vllm serve openai/gpt-oss-20b \
         --host 0.0.0.0 \
-        --port 39443 \
+        --port {{ service_port }} \
         --enable-tool-calling \
         --tool-choice-mode auto \
         --tensor-parallel-size 1 \
         --gpu-memory-utilization 0.9 \
-        --max-model-len 8192 \
+        --max-model-len {{ ctx_size }} \
         --max-num-batched-tokens 2048
       Restart=on-failure
       RestartSec=5

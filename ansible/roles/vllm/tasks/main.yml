@@ -15,5 +15,4 @@
     service_name: "vllm"
     service_port: 39443
     threads: 8
-    gpu_layers: 20
-    ctx_size: 4096
+    ctx_size: 8192
