@@ -25,7 +25,7 @@
         --port {{ service_port }} \
         --tool-call-parser openai \
         --tensor-parallel-size {{ threads }} \
-        --gpu-memory-utilization 0.8 \
+        --gpu-memory-utilization 0.6 \
         --max-model-len {{ ctx_size }} \
         --max-num-batched-tokens 2048
       Restart=on-failure
