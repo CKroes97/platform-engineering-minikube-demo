@@ -19,7 +19,7 @@
       Type=simple
       User={{ service_user }}
       WorkingDirectory={{ vllm_venv_path }}
-      ExecStart=ExecStart={{ vllm_venv_path }}/bin/python -m vllm.entrypoints.api_server \
+      ExecStart={{ vllm_venv_path }}/bin/python -m vllm.entrypoints.api_server \
        openai/gpt-oss-20b \
         --host 0.0.0.0 \
         --port {{ service_port }} \
