@@ -26,7 +26,8 @@
         --tool-call-parser mistral \
         --tensor-parallel-size {{ threads }} \
         --gpu-memory-utilization 0.9 \
-        --tokenizer-mode mistral
+        --tokenizer-mode mistral \ 
+        --max-model-len {{ ctx_size }}
       Restart=on-failure
       RestartSec=5
       Environment=vllm_LOG_LEVEL=info
