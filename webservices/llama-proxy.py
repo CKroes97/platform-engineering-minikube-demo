@@ -80,8 +80,14 @@ async def proxy_chat_completions(request: Request):
         if not allowed:
             return JSONResponse(status_code=403, content={"error": reason})
 
+        usage_prompt = """
+               You can use the set of tools provided in the json structure below.
+               To use a tool, respond with a JSON object that specifies the tool
+               and any parameters required. Tools:
+            """
         body["messages"] = add_system_message(
-            body.get("messages", []), f"You can acces the tools: {str(tools)}"
+
+            body.get("messages", []), f'{usage_prompt}{str(tools)}'
         )
 
         # Forward to actual LLaMA backend
