@@ -87,11 +87,11 @@ async def proxy_chat_completions(request: Request):
         # Forward to actual LLaMA backend
         llama_response = await llama_request(LLAMA_BACKEND, body)
 
-        print(llama_response)
+        print(llama_response.json())
         tool_names = [tool["name"] for tool in tools]
 
         for tool in tool_names:
-            if tool in llama_response.message.reasoning_content:
+            if tool in llama_response.json():
                 if tool == "time_now":
                     current_time = time_now()
                     tool_response = {
