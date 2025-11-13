@@ -96,6 +96,6 @@
 - name: Install vLLM in virtual environment
   ansible.builtin.pip:
     name:
-     - vllm
-     - flashInfer-python
+      - vllm
+      - flashInfer-python
     virtualenv: "{{ vllm_venv_path }}"
