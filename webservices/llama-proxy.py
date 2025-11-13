@@ -87,6 +87,7 @@ async def proxy_chat_completions(request: Request):
         # Forward to actual LLaMA backend
         llama_response = await llama_request(LLAMA_BACKEND, body)
 
+        print(llama_response.json())
         tool_names = [tool["name"] for tool in tools]
 
         for tool in tool_names:
@@ -100,8 +101,8 @@ async def proxy_chat_completions(request: Request):
                     }
                     # Append tool response to messages
                     body["messages"].append(tool_response)
-                    # Re-query the LLaMA backend with the updated messages
-                    llama_response = await llama_request(LLAMA_BACKEND, body)
+                    # # Re-query the LLaMA backend with the updated messages
+                    # llama_response = await llama_request(LLAMA_BACKEND, body)
 
         return Response(
             content=llama_response.content,
