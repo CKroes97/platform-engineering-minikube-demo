@@ -57,8 +57,8 @@ def main():
                     print(f"LLaMA: {json.dumps(data)}\n")
             else:
                 print(f"Error {response.status_code}: {response.text}\n")
-        except Exception as e:
-            print(f"Request failed: {e}\n")
+        except Exception:
+            print(f"Request failed\n")
 
 
 if __name__ == "__main__":
