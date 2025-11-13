@@ -82,8 +82,8 @@ async def proxy_chat_completions(request: Request):
 
         usage_prompt = """
                You can use the set of tools provided in the json structure below.
-               To use a tool, respond with a JSON object that specifies the tool
-               and any parameters required. Tools:
+               To use a tool, respond with between <tool> </tool> tags
+                that specifies the tool and any parameters required. Tools:
             """
         body["messages"] = add_system_message(
 
