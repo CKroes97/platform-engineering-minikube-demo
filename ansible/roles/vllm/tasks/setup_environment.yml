@@ -80,6 +80,14 @@
       #!/bin/sh
       export PATH=$PATH:/usr/local/cuda/bin
 
+- name: Create vLLM cache directory
+  ansible.builtin.file:
+    path: /home/vllm/.cache
+    state: directory
+    mode: '0755'
+    owner: "{{ service_user }}"
+    group: "{{ service_user }}"
+
 - name: Create Python virtual environment
   ansible.builtin.command: python3 -m venv {{ vllm_venv_path }}
   args:
