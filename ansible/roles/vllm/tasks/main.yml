@@ -5,22 +5,17 @@
 - name: Install llama-cpp
   ansible.builtin.include_tasks: llama_cpp.yml
   vars:
-    repo_url: "https://github.com/ggml-org/llama.cpp.git"
-    repo_dest: "/opt/llama.cpp"
-    build_dir: "{{ repo_dest }}/build"
-    cmake_generator: "Ninja"          # or "Unix Makefiles"
-    cmake_build_type: "Release"
-    enable_cuda: "ON"
-    cuda_architectures: "89"
+    service_user: "vllm"
+    vllm_venv_path: "/home/{{ service_user }}/vllm_venv"
 
-- name: Run llama-server
+- name: Run vllm server
   ansible.builtin.include_tasks: llama-server.yml
   vars:
-    repo_dir: "/opt/llama.cpp"
+    vllm_venv_path: "/home/{{ service_user }}/vllm_venv"
     model_dir: "/opt/llama_models"
     model_spec: "ggml-org/gpt-oss-20b-GGUF"
-    service_user: "llama"
-    service_name: "llama-server"
+    service_user: "vllm"
+    service_name: "vllm"
     service_port: 39443
     threads: 8
     gpu_layers: 20
