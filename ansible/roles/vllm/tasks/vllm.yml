@@ -23,7 +23,7 @@
        mistralai/Mistral-7B-Instruct-v0.3 \
         --host 0.0.0.0 \
         --port {{ service_port }} \
-        --tool-call-parser openai \
+        --tool-call-parser mistral \
         --tensor-parallel-size {{ threads }} \
         --gpu-memory-utilization 0.9 \
         --tokenizer-mode mistral
