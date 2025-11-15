@@ -10,8 +10,8 @@
   vars:
     vllm_venv_path: "/home/{{ service_user }}/vllm_venv"
     model_dir: "/opt/llama_models"
-    model_spec: "mistralai/Mistral-Nemo-Instruct-2407-12B-MLA"
-    model_make: "mistral"
+    model_spec: "NousResearch/Hermes-3-Llama-3.2-3B"
+    model_make: "hermes"
     model_tool_parser: "hermes"
     service_user: "vllm"
     service_name: "vllm"

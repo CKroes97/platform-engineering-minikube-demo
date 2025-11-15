@@ -37,7 +37,7 @@ def main():
 
         # Build request payload
         payload = {
-            "model": " mistralai/Mistral-Nemo-Instruct-2407-12B-MLA",
+            "model": "NousResearch/Hermes-3-Llama-3.2-3B",
             "messages": [{"role": "user", "content": user_input}],
             "max_output_tokens": 400,
         }
