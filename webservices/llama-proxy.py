@@ -14,12 +14,11 @@ LLAMA_BACKEND = os.getenv(
 
 tools = [
     {
-        "name": "time_now",
-        "description": "Returns current time in ISO format",
         "type": "function",
-        "parameters": {
-            "type": "object",
-            "properties": {},
+        "function": {
+            "name": "time_now",
+            "description": "Returns current time in ISO format",
+            "parameters": {"type": "object", "properties": {}},
         },
     }
 ]
