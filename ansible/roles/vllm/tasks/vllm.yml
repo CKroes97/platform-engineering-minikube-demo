@@ -23,10 +23,9 @@
        {{ model_spec }} \
         --host 0.0.0.0 \
         --port {{ service_port }} \
-        --tool-call-parser {{ model_make }} \
+        --tool-call-parser {{ llama_tool_parser }} \
         --tensor-parallel-size {{ threads }} \
         --gpu-memory-utilization 0.9 \
-        --tokenizer-mode {{ model_make }} \
         --max-model-len {{ ctx_size }}
       Restart=on-failure
       RestartSec=5

@@ -26,7 +26,7 @@ def ping_llama():
         # Prepare OpenAI-style chat request
         payload = json.dumps(
             {
-                "model": "mistralai/Mistral-Nemo-Instruct-2407",
+                "model": "meta-llama/Llama-3.1-8B-Instruct",
                 "messages": [
                     {"role": "system", "content": "You are friendly and very concise."},
                     {"role": "user", "content": PROMPT},

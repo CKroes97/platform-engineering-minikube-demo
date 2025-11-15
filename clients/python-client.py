@@ -37,7 +37,7 @@ def main():
 
         # Build request payload
         payload = {
-            "model": "mistralai/Mistral-Nemo-Instruct-2407",
+            "model": "meta-llama/Llama-3.1-8B-Instruct",
             "messages": [{"role": "user", "content": user_input}],
             "max_output_tokens": 400,
         }
