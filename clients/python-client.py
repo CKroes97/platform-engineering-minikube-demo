@@ -35,7 +35,7 @@ def main():
 
         # Build request payload
         payload = {
-            "model": "gpt-oss-20b-GGUF",
+            "model": "Mistral-7B-Instruct-v0.3",
             "messages": [{"role": "user", "content": user_input}],
         }
 

@@ -12,7 +12,7 @@
     mode: '0644'
     content: |
       [Unit]
-      Description=vllm server serving mistralai/Mistral-7B-Instruct-v0.3
+      Description=vllm server serving {{ model_spec }}
       After=network.target
 
       [Service]
@@ -20,13 +20,13 @@
       User={{ service_user }}
       WorkingDirectory={{ vllm_venv_path }}
       ExecStart={{ vllm_venv_path }}/bin/vllm serve \
-       mistralai/Mistral-7B-Instruct-v0.3 \
+       {{ model_spec }} \
         --host 0.0.0.0 \
         --port {{ service_port }} \
-        --tool-call-parser mistral \
+        --tool-call-parser {{ model_make }} \
         --tensor-parallel-size {{ threads }} \
         --gpu-memory-utilization 0.9 \
-        --tokenizer-mode mistral \
+        --tokenizer-mode {{ model_make }} \
         --max-model-len {{ ctx_size }}
       Restart=on-failure
       RestartSec=5

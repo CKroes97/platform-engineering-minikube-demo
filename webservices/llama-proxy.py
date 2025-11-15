@@ -85,10 +85,7 @@ async def proxy_chat_completions(request: Request):
                To use a tool, respond with between <tool> </tool> tags
                 that specifies the tool and any parameters required. Tools:
             """
-        body["messages"] = add_system_message(
-
-            body.get("messages", []), f'{usage_prompt}{str(tools)}'
-        )
+        body["tools"] = tools
 
         # Forward to actual LLaMA backend
         llama_response = await llama_request(LLAMA_BACKEND, body)
