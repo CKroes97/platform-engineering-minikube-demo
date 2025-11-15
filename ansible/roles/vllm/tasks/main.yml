@@ -10,7 +10,7 @@
   vars:
     vllm_venv_path: "/home/{{ service_user }}/vllm_venv"
     model_dir: "/opt/llama_models"
-    model_spec: "mistralai/Mistral-7B-Instruct-v0.3"
+    model_spec: "mistralai/Mistral-Nemo-Instruct-2407"
     model_make: "mistral"
     service_user: "vllm"
     service_name: "vllm"
