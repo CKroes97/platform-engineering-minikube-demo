@@ -1,0 +1,20 @@
+---
+- name: Set up envirionment for llama-cpp
+  ansible.builtin.include_tasks: setup_environment.yml
+  vars:
+    service_user: "vllm"
+    vllm_venv_path: "/home/{{ service_user }}/vllm_venv"
+
+- name: Run vllm server
+  ansible.builtin.include_tasks: vllm.yml
+  vars:
+    vllm_venv_path: "/home/{{ service_user }}/vllm_venv"
+    model_dir: "/opt/llama_models"
+    model_spec: "Qwen/Qwen2.5-14B-Instruct-AWQ"
+    model_make: "qwen"
+    model_tool_parser: "hermes"
+    service_user: "vllm"
+    service_name: "vllm"
+    service_port: 39443
+    threads: 1
+    ctx_size: 4096

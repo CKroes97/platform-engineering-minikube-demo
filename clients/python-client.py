@@ -22,6 +22,9 @@ def main():
     port = input(
         "Enter proxy port (e.g., 32307, run `minikube service llama-proxy --url` when in doubt): "
     ).strip()
+    truncate = (
+        input("Truncate long responses? (y/n, default n): ").strip().lower() == "y"
+    )
     url = f"http://{host}:{port}/v1/chat/completions"
 
     print("\nType your queries below. Type 'exit' to quit.\n")
@@ -34,7 +37,7 @@ def main():
 
         # Build request payload
         payload = {
-            "model": "gpt-oss-20b-GGUF",
+            "model": "Qwen/Qwen2.5-14B-Instruct-AWQ",
             "messages": [{"role": "user", "content": user_input}],
         }
 
@@ -46,15 +49,18 @@ def main():
                 # Assuming OpenAI-style responses: data["choices"][0]["message"]["content"]
                 choices = data.get("choices", [])
                 if choices:
-                    content = choices[0].get("message", {}).get("content", "")
-                    content = extract_final_message(content)
+                    if truncate:
+                        content = choices[0].get("message", {}).get("content", "")
+                        content = extract_final_message(content)
+                    else:
+                        content = choices[0]
                     print(f"LLaMA: {content}\n")
                 else:
                     print(f"LLaMA: {json.dumps(data)}\n")
             else:
                 print(f"Error {response.status_code}: {response.text}\n")
-        except Exception as e:
-            print(f"Request failed: {e}\n")
+        except Exception:
+            print("Request failed\n")
 
 
 if __name__ == "__main__":

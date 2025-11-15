@@ -5,4 +5,4 @@
   roles:
     - minikube
     - docker-registry
-    - llama-cpp
+    - vllm

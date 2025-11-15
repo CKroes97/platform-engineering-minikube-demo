@@ -2,6 +2,7 @@ import os
 import httpx
 from fastapi import FastAPI, Request, Response
 from fastapi.responses import JSONResponse
+from datetime import datetime
 import uvicorn
 
 app = FastAPI()
@@ -13,15 +14,18 @@ LLAMA_BACKEND = os.getenv(
 
 tools = [
     {
-        "name": "time_now",
-        "description": "Returns current time in ISO format",
         "type": "function",
-        "parameters": {
-            "type": "object",
-            "properties": {},
+        "function": {
+            "name": "time_now",
+            "description": "Returns current time in ISO format",
+            "parameters": {"type": "object", "properties": {}},
         },
     }
 ]
+
+
+def time_now():
+    return datetime.now(datetime.UTC).isoformat()
 
 
 def add_system_message(messages: list[dict], new_content: str):
@@ -36,6 +40,16 @@ def add_system_message(messages: list[dict], new_content: str):
         messages.insert(0, msg)
 
     return messages
+
+
+async def llama_request(backend, body):
+    async with httpx.AsyncClient(timeout=60.0) as client:
+        llama_response = await client.post(
+            backend,
+            json=body,
+            headers={"Content-Type": "application/json"},
+        )
+    return llama_response
 
 
 # Example simple policy function
@@ -67,15 +81,12 @@ async def proxy_chat_completions(request: Request):
         if not allowed:
             return JSONResponse(status_code=403, content={"error": reason})
 
-        body["messages"] = add_system_message(
-            body.get("messages", []), f"You can acces the tools: {str(tools)}"
-        )
+        body["tools"] = tools
 
         # Forward to actual LLaMA backend
-        async with httpx.AsyncClient(timeout=60.0) as client:
-            llama_response = await client.post(
-                LLAMA_BACKEND, json=body, headers={"Content-Type": "application/json"}
-            )
+        llama_response = await llama_request(LLAMA_BACKEND, body)
+
+        print(llama_response.json())
 
         return Response(
             content=llama_response.content,
@@ -84,7 +95,7 @@ async def proxy_chat_completions(request: Request):
         )
 
     except Exception:
-        return JSONResponse(status_code=500, content="An error occurred")
+        return JSONResponse(status_code=500, content="Sever error")
 
 
 @app.get("/health")
