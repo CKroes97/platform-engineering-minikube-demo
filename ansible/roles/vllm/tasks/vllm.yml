@@ -25,7 +25,6 @@
         --port {{ service_port }} \
         --tool-call-parser {{ model_tool_parser }} \
         --enable-auto-tool-choice \
-        --chat-template examples/tool_chat_template_mistral_parallel.jinja \
         --tensor-parallel-size {{ threads }} \
         --gpu-memory-utilization 0.9 \
         --max-model-len {{ ctx_size }}
