@@ -80,7 +80,7 @@ async def proxy_chat_completions(request: Request):
         allowed, reason = enforce_policy(body)
         if not allowed:
             return JSONResponse(status_code=403, content={"error": reason})
-        
+
         body["tools"] = tools
 
         # Forward to actual LLaMA backend
