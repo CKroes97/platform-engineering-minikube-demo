@@ -37,7 +37,7 @@ def main():
 
         # Build request payload
         payload = {
-            "model": "unsloth/Qwen2.5-7B-unsloth-bnb-4bit",
+            "model": " mistralai/Mistral-Nemo-Instruct-2407-12B-MLA",
             "messages": [{"role": "user", "content": user_input}],
             "max_output_tokens": 400,
         }
