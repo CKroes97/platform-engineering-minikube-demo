@@ -97,5 +97,6 @@
   ansible.builtin.pip:
     name:
       - vllm
+      - bitsandbytes
       - flashInfer-python
     virtualenv: "{{ vllm_venv_path }}"
