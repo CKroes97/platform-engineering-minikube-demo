@@ -39,7 +39,6 @@ def main():
         payload = {
             "model": "Qwen/Qwen2.5-14B-Instruct-AWQ",
             "messages": [{"role": "user", "content": user_input}],
-            "max_output_tokens": 400,
         }
 
         try:
