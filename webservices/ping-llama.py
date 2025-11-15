@@ -31,7 +31,7 @@ def ping_llama():
                     {"role": "system", "content": "You are friendly and very concise."},
                     {"role": "user", "content": PROMPT},
                 ],
-                "max_tokens": 400,
+                "max_output_tokens": 400
             }
         ).encode("utf-8")
 
