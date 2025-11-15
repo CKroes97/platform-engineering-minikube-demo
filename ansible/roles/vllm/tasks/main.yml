@@ -12,7 +12,7 @@
     model_dir: "/opt/llama_models"
     model_spec: "unsloth/Qwen2.5-7B-unsloth-bnb-4bit"
     model_make: "qwen"
-    model_tool_parser: "qwen3_xml"
+    model_tool_parser: "hermes"
     service_user: "vllm"
     service_name: "vllm"
     service_port: 39443
