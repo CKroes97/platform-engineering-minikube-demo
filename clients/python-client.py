@@ -37,7 +37,7 @@ def main():
 
         # Build request payload
         payload = {
-            "model": "Mistral-7B-Instruct-v0.3",
+            "model": "mistralai/Mistral-7B-Instruct-v0.3",
             "messages": [{"role": "user", "content": user_input}],
             "max_output_tokens": 400,
         }
