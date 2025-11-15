@@ -42,6 +42,7 @@ def time_now():
 
 #     return messages
 
+
 async def llama_request(backend, body):
     async with httpx.AsyncClient(timeout=60.0) as client:
         llama_response = await client.post(
@@ -50,6 +51,7 @@ async def llama_request(backend, body):
             headers={"Content-Type": "application/json"},
         )
     return llama_response
+
 
 # Example simple policy function
 def enforce_policy(payload: dict) -> tuple[bool, str]:
