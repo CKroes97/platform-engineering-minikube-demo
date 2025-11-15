@@ -10,11 +10,11 @@
   vars:
     vllm_venv_path: "/home/{{ service_user }}/vllm_venv"
     model_dir: "/opt/llama_models"
-    model_spec: "Qwen/Qwen2.5-3B"
+    model_spec: "unsloth/Qwen2.5-7B-unsloth-bnb-4bit"
     model_make: "qwen"
     model_tool_parser: "qwen3_xml"
     service_user: "vllm"
     service_name: "vllm"
     service_port: 39443
     threads: 1
-    ctx_size: 2048
+    ctx_size: 16384

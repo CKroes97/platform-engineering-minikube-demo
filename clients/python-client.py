@@ -37,7 +37,7 @@ def main():
 
         # Build request payload
         payload = {
-            "model": "Qwen/Qwen2.5-3B",
+            "model": "unsloth/Qwen2.5-7B-unsloth-bnb-4bit",
             "messages": [{"role": "user", "content": user_input}],
             "max_output_tokens": 400,
         }
