@@ -95,7 +95,7 @@ async def proxy_chat_completions(request: Request):
         )
 
     except Exception:
-        return JSONResponse(status_code=500, content="Sever error")
+        return JSONResponse(status_code=500, content="Server error")
 
 
 @app.get("/health")
