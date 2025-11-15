@@ -58,7 +58,7 @@ def main():
             else:
                 print(f"Error {response.status_code}: {response.text}\n")
         except Exception:
-            print(f"Request failed\n")
+            print("Request failed\n")
 
 
 if __name__ == "__main__":

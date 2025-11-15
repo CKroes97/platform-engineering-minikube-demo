@@ -29,18 +29,18 @@ def time_now():
     return datetime.now(datetime.UTC).isoformat()
 
 
-def add_system_message(messages: list[dict], new_content: str):
-    msg = {"role": "system", "content": new_content}
-    updated = False
-    for message in messages:
-        if message["role"] == "system":
-            message["content"] += " \n" + new_content
-            updated = True
+# def add_system_message(messages: list[dict], new_content: str):
+#     msg = {"role": "system", "content": new_content}
+#     updated = False
+#     for message in messages:
+#         if message["role"] == "system":
+#             message["content"] += " \n" + new_content
+#             updated = True
 
-    if not updated:
-        messages.insert(0, msg)
+#     if not updated:
+#         messages.insert(0, msg)
 
-    return messages
+#     return messages
 
 async def llama_request(backend, body):
     async with httpx.AsyncClient(timeout=60.0) as client:
@@ -80,32 +80,12 @@ async def proxy_chat_completions(request: Request):
         if not allowed:
             return JSONResponse(status_code=403, content={"error": reason})
 
-        usage_prompt = """
-               You can use the set of tools provided in the json structure below.
-               To use a tool, respond with between <tool> </tool> tags
-                that specifies the tool and any parameters required. Tools:
-            """
         body["tools"] = tools
 
         # Forward to actual LLaMA backend
         llama_response = await llama_request(LLAMA_BACKEND, body)
 
         print(llama_response.json())
-        tool_names = [tool["name"] for tool in tools]
-
-        for tool in tool_names:
-            if tool in llama_response.json():
-                if tool == "time_now":
-                    current_time = time_now()
-                    tool_response = {
-                        "role": "function",
-                        "name": "time_now",
-                        "content": current_time,
-                    }
-                    # Append tool response to messages
-                    body["messages"].append(tool_response)
-                    # # Re-query the LLaMA backend with the updated messages
-                    # llama_response = await llama_request(LLAMA_BACKEND, body)
 
         return Response(
             content=llama_response.content,
