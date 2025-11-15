@@ -17,4 +17,4 @@
     service_name: "vllm"
     service_port: 39443
     threads: 1
-    ctx_size: 16384
+    ctx_size: 4096
