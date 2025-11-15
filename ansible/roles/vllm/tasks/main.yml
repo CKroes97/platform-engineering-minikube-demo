@@ -10,7 +10,7 @@
   vars:
     vllm_venv_path: "/home/{{ service_user }}/vllm_venv"
     model_dir: "/opt/llama_models"
-    model_spec: "Qwen/Qwen2.5-7B"
+    model_spec: "Qwen/Qwen2.5-3B"
     model_make: "qwen"
     model_tool_parser: "qwen3_xml"
     service_user: "vllm"
