@@ -37,7 +37,7 @@ def main():
 
         # Build request payload
         payload = {
-            "model": "NousResearch/Hermes-3-Llama-3.2-3B",
+            "model": "Qwen/Qwen2.5-32B-Instruct-AWQ",
             "messages": [{"role": "user", "content": user_input}],
             "max_output_tokens": 400,
         }

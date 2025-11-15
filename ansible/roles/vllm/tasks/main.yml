@@ -10,8 +10,8 @@
   vars:
     vllm_venv_path: "/home/{{ service_user }}/vllm_venv"
     model_dir: "/opt/llama_models"
-    model_spec: "NousResearch/Hermes-3-Llama-3.2-3B"
-    model_make: "hermes"
+    model_spec: "Qwen/Qwen2.5-32B-Instruct-AWQ"
+    model_make: "qwen"
     model_tool_parser: "hermes"
     service_user: "vllm"
     service_name: "vllm"

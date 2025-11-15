@@ -26,7 +26,7 @@ def ping_llama():
         # Prepare OpenAI-style chat request
         payload = json.dumps(
             {
-                "model": "NousResearch/Hermes-3-Llama-3.2-3B",
+                "model": "Qwen/Qwen2.5-32B-Instruct-AWQ",
                 "messages": [
                     {"role": "system", "content": "You are friendly and very concise."},
                     {"role": "user", "content": PROMPT},
