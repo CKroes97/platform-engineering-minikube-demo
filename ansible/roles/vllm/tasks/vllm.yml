@@ -23,7 +23,7 @@
        {{ model_spec }} \
         --host 0.0.0.0 \
         --port {{ service_port }} \
-        --tool-call-parser {{ llama_tool_parser }} \
+        --tool-call-parser {{ model_tool_parser }} \
         --tensor-parallel-size {{ threads }} \
         --gpu-memory-utilization 0.9 \
         --max-model-len {{ ctx_size }}
