@@ -37,7 +37,7 @@ def main():
 
         # Build request payload
         payload = {
-            "model": "Qwen/Qwen3-8B",
+            "model": "Qwen/Qwen3-4B",
             "messages": [{"role": "user", "content": user_input}],
             "max_output_tokens": 400,
         }
