@@ -28,18 +28,18 @@ def time_now():
     return datetime.now(datetime.UTC).isoformat()
 
 
-# def add_system_message(messages: list[dict], new_content: str):
-#     msg = {"role": "system", "content": new_content}
-#     updated = False
-#     for message in messages:
-#         if message["role"] == "system":
-#             message["content"] += " \n" + new_content
-#             updated = True
+def add_system_message(messages: list[dict], new_content: str):
+    msg = {"role": "system", "content": new_content}
+    updated = False
+    for message in messages:
+        if message["role"] == "system":
+            message["content"] += " \n" + new_content
+            updated = True
 
-#     if not updated:
-#         messages.insert(0, msg)
+    if not updated:
+        messages.insert(0, msg)
 
-#     return messages
+    return messages
 
 
 async def llama_request(backend, body):
@@ -80,7 +80,7 @@ async def proxy_chat_completions(request: Request):
         allowed, reason = enforce_policy(body)
         if not allowed:
             return JSONResponse(status_code=403, content={"error": reason})
-
+        
         body["tools"] = tools
 
         # Forward to actual LLaMA backend

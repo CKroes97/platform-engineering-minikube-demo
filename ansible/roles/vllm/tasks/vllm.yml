@@ -42,5 +42,5 @@
 - name: Enable and start vllm-server
   ansible.builtin.systemd:
     name: "{{ service_name }}"
-    state: started
+    state: restarted
     enabled: true
