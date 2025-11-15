@@ -10,9 +10,9 @@
   vars:
     vllm_venv_path: "/home/{{ service_user }}/vllm_venv"
     model_dir: "/opt/llama_models"
-    model_spec: "meta-llama/Llama-3.1-8B-Instruct"
-    model_make: "llama"
-    model_tool_parser: "llama3_json"
+    model_spec: "Qwen/Qwen3-8B"
+    model_make: "qwen"
+    model_tool_parser: "qwen3_xml"
     service_user: "vllm"
     service_name: "vllm"
     service_port: 39443

@@ -37,7 +37,7 @@ def main():
 
         # Build request payload
         payload = {
-            "model": "meta-llama/Llama-3.1-8B-Instruct",
+            "model": "Qwen/Qwen3-8B",
             "messages": [{"role": "user", "content": user_input}],
             "max_output_tokens": 400,
         }
