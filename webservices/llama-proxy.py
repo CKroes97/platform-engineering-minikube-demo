@@ -24,6 +24,15 @@ tools = [
 ]
 
 
+def tools_matched(tools: list[dict], response_json: dict) -> set[str]:
+    tool_names = {tool["function"]["name"] for tool in tools}
+    called_tools = {
+        tool for tool in llama_response_json["choices"][0].get("tool_calls", [])
+    }
+    matched = called_tools & tool_names
+    return matched
+
+
 def time_now() -> str:
     return datetime.now(datetime.UTC).isoformat()
 
@@ -89,13 +98,8 @@ async def proxy_chat_completions(request: Request):
         llama_response_json = llama_response.json()
 
         try:
-            while {
-                tool for tool in llama_response_json["choices"].get("tool_calls", [])
-            } & {tool["function"]["name"] for tool in tools}:
-                tools_called = {
-                    tool
-                    for tool in llama_response_json["choices"].get("tool_calls", [])
-                } & {tool["function"]["name"] for tool in tools}
+            while tools_matched(tools, llama_response_json):
+                tools_called = tools_matched(tools, llama_response_json)
                 print("Tools called:", tools_called)
                 for tool_name in tools_called:
                     if tool_name == "time_now":
@@ -109,6 +113,7 @@ async def proxy_chat_completions(request: Request):
                         )
                 print("Updated body with tool results:", body)
                 llama_response = await llama_request(LLAMA_BACKEND, body)
+                llama_response_json = llama_response.json()
         except Exception as e:
             print("Error during tool execution:", e)
             pass
