@@ -72,13 +72,8 @@ def tools_matched(
     full_matched_calls = [
         call["function"] for call in tool_calls if call["function"]["name"] in matched
     ]
-    print("Full matched tool calls:", full_matched_calls)
-    tool_calls = [
-        {"name": call["name"], "arguments": call["arguments"]}
-        for call in full_matched_calls
-    ]
     print("Extracted tool calls:", tool_calls)
-    return tool_calls
+    return full_matched_calls
 
 
 def time_now() -> str:
@@ -89,7 +84,8 @@ def list_directory() -> list[str]:
     return os.listdir("test_data")
 
 
-def file_content(file_name: str) -> str:
+def file_content(arguments: dict) -> str:
+    file_name = arguments["file_name"]
     file_path = os.path.join("test_data", file_name)
     if os.path.isfile(file_path):
         with open(file_path, "r") as f:
@@ -163,16 +159,18 @@ async def proxy_chat_completions(request: Request):
                 tools_called = tools_matched(tools, llama_response_json)
                 print("Tools called:", tools_called)
                 for tool_call in tools_called:
-                    if tool_call["arguments"]:
+                    print("Executing tool:", tool_call["name"])
+                    print("With arguments:", tool_call["arguments"])
+                    if tool_call["arguments"] != "{}":
                         result = tool_registry[tool_call["name"]](
-                            tool_call["arguments"]
+                            dict(tool_call["arguments"])
                         )
                     else:
                         result = tool_registry[tool_call["name"]]()
                     body["messages"].append(
                         {
                             "role": "tool",
-                            "name": [tool_call["name"]],
+                            "name": tool_call["name"],
                             "content": result,
                         }
                     )
