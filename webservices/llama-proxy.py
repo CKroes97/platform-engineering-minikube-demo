@@ -82,12 +82,12 @@ def time_now() -> str:
 
 
 def list_directory() -> list[str]:
-    return os.listdir("test_data")
+    return os.listdir("/app/test_data")
 
 
 def file_content(arguments: dict) -> str:
     file_name = arguments["file_name"]
-    file_path = os.path.join("test_data", file_name)
+    file_path = os.path.join("/app/test_data", file_name)
     if os.path.isfile(file_path):
         with open(file_path, "r") as f:
             return f.read()
