@@ -32,26 +32,22 @@ def main():
 
         headers = {"Content-Type": "application/json", "authorization": "client"}
 
-        try:
-            response = urllib.request(url, data=payload, headers=headers, method="POST")
-            if response.status_code == 200:
-                data = response.json()
-                # Print the response content
-                # Assuming OpenAI-style responses: data["choices"][0]["message"]["content"]
-                choices = data.get("choices", [])
-                if choices:
-                    if truncate:
-                        content = choices[0].get("message", {}).get("content", "")
-                    else:
-                        content = choices[0]
-                    print(f"LLaMA: {content}\n")
+        response = urllib.request(url, data=payload, headers=headers, method="POST")
+        if response.status_code == 200:
+            data = response.json()
+            # Print the response content
+            # Assuming OpenAI-style responses: data["choices"][0]["message"]["content"]
+            choices = data.get("choices", [])
+            if choices:
+                if truncate:
+                    content = choices[0].get("message", {}).get("content", "")
                 else:
-                    print(f"LLaMA: {json.dumps(data)}\n")
+                    content = choices[0]
+                print(f"LLaMA: {content}\n")
             else:
-                print(f"Error {response.status_code}: {response.text}\n")
-        except Exception:
-            print("Request failed\n")
-
+                print(f"LLaMA: {json.dumps(data)}\n")
+        else:
+            print(f"Error {response.status_code}: {response.text}\n")
 
 if __name__ == "__main__":
     main()
