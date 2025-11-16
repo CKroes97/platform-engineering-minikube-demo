@@ -70,7 +70,7 @@ def tools_matched(
     print("Called tools in response:", called_tools)
     matched = called_tools & tool_names
     full_matched_calls = [
-        call["function"] for call in tool_calls if call["name"] in matched
+        call["function"] for call in tool_calls if call["function"]["name"] in matched
     ]
     print("Full matched tool calls:", full_matched_calls)
     tool_calls = [
