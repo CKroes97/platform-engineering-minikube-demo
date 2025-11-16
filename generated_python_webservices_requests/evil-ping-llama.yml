@@ -2,11 +2,11 @@
 apiVersion: marketplace.kratix.io/v1alpha1
 kind: Runtime
 metadata:
-  name: ping-llama
+  name: evil-ping-llama
   namespace: default
 spec:
   lifecycle: dev
-  image: 192.168.49.2:30080/ping-llama:ad87aab9e63a40620be1a21488e10ba278b67589f0381cc0433e3e36feeecef7
+  image: 192.168.49.2:30080/evil-ping-llama:69f87c9d02d50ce153f17ce5ac2ecb65ff365c833ab15e0e10e5cd5463207540
   servicePort: 80
   replicas: 1
   applicationEnv:
