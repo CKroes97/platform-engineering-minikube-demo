@@ -1,4 +1,4 @@
 ---
 tools:
-  - time_now:
-      allowed: true
+  time_now:
+    allowed: true

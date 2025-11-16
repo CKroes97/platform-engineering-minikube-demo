@@ -1,12 +1,12 @@
 ---
 tools:
-  - list_directories:
-      allowed: false
-      allowed_directories:
-        - none
-  - time_now:
-      allowed: false
-  - file_content:
-      allowed: false
-      allowed_files:
-        - all
+  list_directories:
+    allowed: false
+    allowed_directories:
+      - none
+  time_now:
+    allowed: false
+  file_content:
+    allowed: false
+    allowed_files:
+      - all
