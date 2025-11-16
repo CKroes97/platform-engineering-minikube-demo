@@ -1,17 +1,5 @@
 import json
-import requests
-
-
-def extract_final_message(raw_text: str) -> str:
-    """
-    Extracts the final assistant message from LLaMA chat output.
-    """
-    marker = "<|channel|>final<|message|>"
-    if marker in raw_text:
-        output = raw_text.split(marker)[-1].strip()
-        if output:
-            return output
-    return raw_text.strip()  # fallback to full text if marker missing
+import urllib.request
 
 
 def main():
@@ -36,31 +24,30 @@ def main():
             break
 
         # Build request payload
-        payload = {
-            "model": "Qwen/Qwen2.5-14B-Instruct-AWQ",
-            "messages": [{"role": "user", "content": user_input}],
-        }
+        payload = json.dumps(
+            {
+                "model": "Qwen/Qwen2.5-14B-Instruct-AWQ",
+                "messages": [{"role": "user", "content": user_input}],
+            }
+        ).encode("utf-8")
 
-        try:
-            response = requests.post(url, json=payload, timeout=60)
-            if response.status_code == 200:
-                data = response.json()
-                # Print the response content
-                # Assuming OpenAI-style responses: data["choices"][0]["message"]["content"]
-                choices = data.get("choices", [])
-                if choices:
-                    if truncate:
-                        content = choices[0].get("message", {}).get("content", "")
-                        content = extract_final_message(content)
-                    else:
-                        content = choices[0]
-                    print(f"LLaMA: {content}\n")
+        headers = {"Content-Type": "application/json", "authorization": "client"}
+
+        response = urllib.request.Request(
+            url, data=payload, headers=headers, method="POST"
+        )
+
+        with urllib.request.urlopen(response) as http_response:
+            data = json.loads(http_response.read().decode("utf-8"))
+            choices = data.get("choices", [])
+            if choices:
+                if truncate:
+                    content = choices[0].get("message", {}).get("content", "")
                 else:
-                    print(f"LLaMA: {json.dumps(data)}\n")
+                    content = choices[0]
+                print(f"LLaMA: {content}\n")
             else:
-                print(f"Error {response.status_code}: {response.text}\n")
-        except Exception:
-            print("Request failed\n")
+                print(f"LLaMA: {json.dumps(data)}\n")
 
 
 if __name__ == "__main__":

@@ -13,10 +13,11 @@ on:
       - 'workflow_scripts/build_docker_image/**'
       - "workflow_scripts/generate_dockerfiles/**"
       - 'workflow_scripts/shared/**'
-      - 'webservices/**.py'
+      - 'webservices*/**'
+      - "policies/**"
       - 'generated_dockerfiles/**'
       - 'generated_python_webservices_requests/**'
-      - 'templates\runtime-requests.yml'
+      - 'templates/runtime-requests.yml'
   pull_request:
 
 jobs:

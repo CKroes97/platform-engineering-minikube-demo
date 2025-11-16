@@ -1,8 +1,8 @@
 import os
 
 WEBSERVICES_DIR = "webservices"
-REQUIREMENTS_DIR = "webservices-requirements"
-MOUNT_DIR = "webservices-mountpaths"
+REQUIREMENTS_DIR = "webservices_requirements"
+MOUNT_DIR = "webservices_mountpaths"
 OUTPUT_DIR = "generated_dockerfiles"
 
 

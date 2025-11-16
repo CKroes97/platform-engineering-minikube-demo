@@ -1,0 +1,12 @@
+---
+tools:
+  list_directory:
+    allowed: true
+    allowed_directories:
+      - test_data
+  time_now:
+    allowed: true
+  file_content:
+    allowed: true
+    allowed_files:
+      - "*"

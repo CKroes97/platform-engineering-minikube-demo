@@ -1,9 +1,10 @@
 import argparse
-from pathlib import Path
 import json
-import docker
 import os
 import sys
+from pathlib import Path
+
+import docker
 
 
 def parse_arguments():
