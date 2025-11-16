@@ -94,6 +94,7 @@ async def proxy_chat_completions(request: Request):
             tools_called = {tool for tool in body.get("tool_calls", [])} & {
                 tool["function"]["name"] for tool in tools
             }
+            print("Tools called:", tools_called)
             for tool_name in tools_called:
                 if tool_name == "time_now":
                     result = time_now()
@@ -104,6 +105,7 @@ async def proxy_chat_completions(request: Request):
                             "content": result,
                         }
                     )
+            print("Updated body with tool results:", body)
             llama_response = await llama_request(LLAMA_BACKEND, body)
 
         return Response(
