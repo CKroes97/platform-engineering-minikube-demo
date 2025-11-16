@@ -69,10 +69,12 @@ def tools_matched(tools: list[dict], response_json: dict) -> dict[str, dict[str,
     full_matched_calls = [
         call for call in message["tool_calls"] if call["name"] in matched
     ]
+    print("Full matched tool calls:", full_matched_calls)
     tool_calls = [
         {"name": call["name"], "arguments": call["arguments"]}
         for call in full_matched_calls
     ]
+    print("Extracted tool calls:", tool_calls)
     return tool_calls
 
 
