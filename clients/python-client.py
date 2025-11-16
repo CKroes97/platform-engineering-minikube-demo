@@ -34,10 +34,9 @@ def main():
         response = urllib.request.Request(
             url, data=payload, headers=headers, method="POST"
         )
-        if response.status_code == 200:
-            data = response.json()
-            # Print the response content
-            # Assuming OpenAI-style responses: data["choices"][0]["message"]["content"]
+
+        with urllib.request.urlopen(response) as http_response:
+            data = json.loads(http_response.read().decode("utf-8"))
             choices = data.get("choices", [])
             if choices:
                 if truncate:
@@ -47,8 +46,6 @@ def main():
                 print(f"LLaMA: {content}\n")
             else:
                 print(f"LLaMA: {json.dumps(data)}\n")
-        else:
-            print(f"Error {response.status_code}: {response.text}\n")
 
 
 if __name__ == "__main__":
