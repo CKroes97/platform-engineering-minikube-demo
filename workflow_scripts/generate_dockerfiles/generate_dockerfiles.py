@@ -2,10 +2,11 @@ import os
 
 WEBSERVICES_DIR = "webservices"
 REQUIREMENTS_DIR = "webservices-requirements"
+MOUNT_DIR = "webservices-mountpaths"
 OUTPUT_DIR = "generated_dockerfiles"
 
 
-def generate_dockerfile(service_name, requirements_exists=False):
+def generate_dockerfile(service_name, requirements_exists=False, mount_exists=False):
     """Generate a Dockerfile for the given service."""
     service_dir = os.path.join(OUTPUT_DIR, service_name)
     dockerfile_path = os.path.join(service_dir, "Dockerfile")
@@ -28,6 +29,14 @@ def generate_dockerfile(service_name, requirements_exists=False):
             "RUN pip install --no-cache-dir -r /app/requirements.txt"
         )
 
+    if mount_exists:
+        mount_paths_file = os.path.join(MOUNT_DIR, f"{service_name}.txt")
+        with open(mount_paths_file, "r", encoding="utf-8") as f:
+            for line in f:
+                mount_path = line.strip()
+                if mount_path:
+                    dockerfile_lines.append(f"COPY {mount_path} /app/{mount_path}")
+
     dockerfile_lines.append(f'CMD ["python", "/app/{service_name}.py"]')
     dockerfile_content = "\n".join(dockerfile_lines) + "\n"
 
@@ -46,7 +55,13 @@ def main():
             service_name = filename[:-3]  # Remove ".py" extension
             req_path = os.path.join(REQUIREMENTS_DIR, f"{service_name}.txt")
             requirements_exists = os.path.exists(req_path)
-            generate_dockerfile(service_name, requirements_exists=requirements_exists)
+            mount_path = os.path.join(MOUNT_DIR, f"{service_name}.txt")
+            mount_exists = os.path.exists(mount_path)
+            generate_dockerfile(
+                service_name,
+                requirements_exists=requirements_exists,
+                mount_exists=mount_exists,
+            )
 
 
 if __name__ == "__main__":

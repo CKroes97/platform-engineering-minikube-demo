@@ -20,8 +20,43 @@ tools = [
             "description": "Returns current time in ISO format",
             "parameters": {"type": "object", "properties": {}},
         },
-    }
+    },
+    {
+        "type": "function",
+        "function": {
+            "name": "list_directory",
+            "description": """Returns a list of files of which the content can be provided to the LLM
+                                The files concern details about Dutch towns and cities.""",
+            "parameters": {"type": "object", "properties": {}},
+        },
+    },
+    {
+        "type": "function",
+        "function": {
+            "name": "file_content",
+            "description": "Returns the content",
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "file_name": {
+                        "type": "string",
+                        "description": """Name of the file to read content from,
+                          files can be listed using list_directory tool""",
+                    }
+                },
+            },
+        },
+    },
 ]
+
+
+def get_tools() -> list[dict]:
+    tool_registry = {
+        "time-now": time_now,
+        "list_directory": list_directory,
+        "file_content": file_content,
+    }
+    return tool_registry
 
 
 def tools_matched(tools: list[dict], response_json: dict) -> set[str]:
@@ -36,6 +71,18 @@ def tools_matched(tools: list[dict], response_json: dict) -> set[str]:
 
 def time_now() -> str:
     return datetime.now(timezone.utc).isoformat()
+
+
+def list_directory() -> list[str]:
+    return os.listdir("test_data")
+
+
+def file_content(file_name: str) -> str:
+    file_path = os.path.join("test_data", file_name)
+    if os.path.isfile(file_path):
+        with open(file_path, "r") as f:
+            return f.read()
+    return "File not found"
 
 
 def add_system_message(messages: list[dict], new_content: str):
