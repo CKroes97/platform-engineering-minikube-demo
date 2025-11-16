@@ -4,6 +4,7 @@ from fastapi import FastAPI, Request, Response
 from fastapi.responses import JSONResponse
 from datetime import datetime, timezone
 import uvicorn
+import json
 
 app = FastAPI()
 
@@ -20,22 +21,77 @@ tools = [
             "description": "Returns current time in ISO format",
             "parameters": {"type": "object", "properties": {}},
         },
-    }
+    },
+    {
+        "type": "function",
+        "function": {
+            "name": "list_directory",
+            "description": """Returns a list of files of which the content can be provided to the LLM
+                                The files concern details about Dutch towns and cities.""",
+            "parameters": {"type": "object", "properties": {}},
+        },
+    },
+    {
+        "type": "function",
+        "function": {
+            "name": "file_content",
+            "description": "Returns the content",
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "file_name": {
+                        "type": "string",
+                        "description": """Name of the file to read content from,
+                          files can be listed using list_directory tool""",
+                    }
+                },
+            },
+        },
+    },
 ]
 
 
-def tools_matched(tools: list[dict], response_json: dict) -> set[str]:
+def get_tools() -> list[dict]:
+    tool_registry = {
+        "time_now": time_now,
+        "list_directory": list_directory,
+        "file_content": file_content,
+    }
+    return tool_registry
+
+
+def tools_matched(
+    tools: list[dict], response_json: dict
+) -> list[str:str, str : dict[str:str]]:
     tool_names = {tool["function"]["name"] for tool in tools}
     print("Available tool names:", tool_names)
     message = response_json["choices"][0]["message"]
-    called_tools = {tool["function"]["name"] for tool in message["tool_calls"]}
+    tool_calls = message["tool_calls"]
+    called_tools = {tool["function"]["name"] for tool in tool_calls}
     print("Called tools in response:", called_tools)
     matched = called_tools & tool_names
-    return matched
+    full_matched_calls = [
+        call["function"] for call in tool_calls if call["function"]["name"] in matched
+    ]
+    print("Extracted tool calls:", tool_calls)
+    return full_matched_calls
 
 
 def time_now() -> str:
     return datetime.now(timezone.utc).isoformat()
+
+
+def list_directory() -> list[str]:
+    return os.listdir("/app/test_data")
+
+
+def file_content(arguments: dict) -> str:
+    file_name = arguments["file_name"]
+    file_path = os.path.join("/app/test_data/", file_name)
+    if os.path.isfile(file_path):
+        with open(file_path, "r") as f:
+            return f.read()
+    return "File not found"
 
 
 def add_system_message(messages: list[dict], new_content: str):
@@ -77,7 +133,7 @@ def enforce_policy(payload: dict) -> tuple[bool, str]:
                 False,
                 "Policy violation: request contains sensitive keyword 'password'.",
             )
-        if len(content) > 2000:
+        if len(content) > 20000:
             return False, "Policy violation: input too long."
     return True, "Allowed"
 
@@ -98,27 +154,35 @@ async def proxy_chat_completions(request: Request):
 
         llama_response_json = llama_response.json()
 
-        print("Initial LLaMA response:", llama_response_json)
-
         try:
             while tools_matched(tools, llama_response_json):
+                tool_registry = get_tools()
                 tools_called = tools_matched(tools, llama_response_json)
                 print("Tools called:", tools_called)
-                for tool_name in tools_called:
-                    if tool_name == "time_now":
-                        result = time_now()
-                        body["messages"].append(
-                            {
-                                "role": "tool",
-                                "name": "time_now",
-                                "content": result,
-                            }
+                for tool_call in tools_called:
+                    print("Executing tool:", tool_call["name"])
+                    print("With arguments:", tool_call["arguments"])
+                    if tool_call["arguments"] != "{}":
+                        result = tool_registry[tool_call["name"]](
+                            json.loads(tool_call["arguments"])
                         )
+                    else:
+                        result = tool_registry[tool_call["name"]]()
+                    body["messages"].append(
+                        llama_response_json["choices"][0]["message"]
+                    )
+                    body["messages"].append(
+                        {
+                            "role": "tool",
+                            "name": tool_call["name"],
+                            "content": result,
+                        }
+                    )
                 print("Updated body with tool results:", body)
                 llama_response = await llama_request(LLAMA_BACKEND, body)
                 llama_response_json = llama_response.json()
         except Exception as e:
-            print("Error during tool execution:", e)
+            print(f"Error during tool execution: {str(e)}")
             pass
 
         return Response(
