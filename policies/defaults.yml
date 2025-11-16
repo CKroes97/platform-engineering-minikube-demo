@@ -8,7 +8,5 @@ tools:
       allowed: false
   - file_content:
       allowed: false
-      allowed_files: 
+      allowed_files:
         - all
-        
-      
