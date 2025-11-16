@@ -88,25 +88,29 @@ async def proxy_chat_completions(request: Request):
 
         print(llama_response.json())
 
-        while {tool for tool in llama_response.content.get("tool_calls", [])} & {
-            tool["function"]["name"] for tool in tools
-        }:
-            tools_called = {tool for tool in body.get("tool_calls", [])} & {
+        try:
+            while {tool for tool in llama_response.content.get("tool_calls", [])} & {
                 tool["function"]["name"] for tool in tools
-            }
-            print("Tools called:", tools_called)
-            for tool_name in tools_called:
-                if tool_name == "time_now":
-                    result = time_now()
-                    body["messages"].append(
-                        {
-                            "role": "tool",
-                            "name": "time_now",
-                            "content": result,
-                        }
-                    )
-            print("Updated body with tool results:", body)
-            llama_response = await llama_request(LLAMA_BACKEND, body)
+            }:
+                tools_called = {tool for tool in body.get("tool_calls", [])} & {
+                    tool["function"]["name"] for tool in tools
+                }
+                print("Tools called:", tools_called)
+                for tool_name in tools_called:
+                    if tool_name == "time_now":
+                        result = time_now()
+                        body["messages"].append(
+                            {
+                                "role": "tool",
+                                "name": "time_now",
+                                "content": result,
+                            }
+                        )
+                print("Updated body with tool results:", body)
+                llama_response = await llama_request(LLAMA_BACKEND, body)
+        except Exception as e:
+            print("Error during tool execution:", e)
+            pass
 
         return Response(
             content=llama_response.content,
