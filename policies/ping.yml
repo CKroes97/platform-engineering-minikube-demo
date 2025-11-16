@@ -1,0 +1,4 @@
+---
+tools:
+  - time_now:
+      allowed: true

@@ -1,17 +1,6 @@
 import json
-import requests
 
-
-def extract_final_message(raw_text: str) -> str:
-    """
-    Extracts the final assistant message from LLaMA chat output.
-    """
-    marker = "<|channel|>final<|message|>"
-    if marker in raw_text:
-        output = raw_text.split(marker)[-1].strip()
-        if output:
-            return output
-    return raw_text.strip()  # fallback to full text if marker missing
+import urllib.request
 
 
 def main():
@@ -41,8 +30,10 @@ def main():
             "messages": [{"role": "user", "content": user_input}],
         }
 
+        headers = {"Content-Type": "application/json", "authorization": "client"}
+
         try:
-            response = requests.post(url, json=payload, timeout=60)
+            response = urllib.request(url, data=payload, headers=headers, method="POST")
             if response.status_code == 200:
                 data = response.json()
                 # Print the response content
@@ -51,7 +42,6 @@ def main():
                 if choices:
                     if truncate:
                         content = choices[0].get("message", {}).get("content", "")
-                        content = extract_final_message(content)
                     else:
                         content = choices[0]
                     print(f"LLaMA: {content}\n")

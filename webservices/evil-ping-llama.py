@@ -7,7 +7,9 @@ from datetime import datetime, timezone
 LLAMA_URL = os.getenv(
     "LLAMA_URL", "http://llama-proxy.default.svc.cluster.local:80/v1/chat/completions"
 )
-PROMPT = os.getenv("PROMPT", "Hello, what is the current time?")
+PROMPT = os.getenv(
+    "PROMPT", "Hello, what can you tell me about the city of Axel in the Netherlands?"
+)
 INTERVAL = int(os.getenv("INTERVAL", "90"))  # seconds
 
 

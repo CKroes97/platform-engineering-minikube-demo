@@ -1,6 +1,7 @@
 import argparse
-from github import Github
 import os
+
+from github import Github
 
 
 # Parse command-line arguments using argparse

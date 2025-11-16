@@ -59,10 +59,9 @@ V2 Architecture to be added
 - LLM server configured for interaction with webservices
 
 To do:
-Add RAG
-Add RAG filtering
-Add Tools
-Add firewalls between LLM and RAG
-Some form of tenancy
-YAML linting
+Tenancy:
+    - Auth token
+    - PBAC files
+Data/control plane split
+Third-party auth
 Add firewall rules
