@@ -10,6 +10,7 @@ on:
     paths:
       - 'webservices/**'
       - 'workflow_scripts/**'
+      - 'clients/*.py'
       - '.github/workflows/lint_python.yml'
   pull_request:
 
