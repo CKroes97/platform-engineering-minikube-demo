@@ -66,7 +66,7 @@ def tools_matched(
     print("Available tool names:", tool_names)
     message = response_json["choices"][0]["message"]
     tool_calls = message["tool_calls"]
-    called_tools = {tool["function"]["name"] for tool in tool_calls }
+    called_tools = {tool["function"]["name"] for tool in tool_calls}
     print("Called tools in response:", called_tools)
     matched = called_tools & tool_names
     full_matched_calls = [
