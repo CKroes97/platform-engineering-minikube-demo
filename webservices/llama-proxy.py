@@ -225,6 +225,7 @@ def enforce_user_policy(user_id: str, tool_name) -> tuple[bool, str]:
             try:
                 tool_allowed = user_policy["tools"][tool_name].get("allowed", False)
             except KeyError:
+                print(f"Tool {tool_name} not found in user {user_id} policy.")
                 tool_allowed = False
 
     if not tool_allowed:
@@ -291,6 +292,7 @@ async def proxy_chat_completions(request: Request):
                 tools_called = tools_matched(tools, llama_response_json)
                 print("Tools called:", tools_called)
                 for tool_call in tools_called:
+                    print(f"Tool {tool_call['name']} called for user {user_id}")
                     allowed, reason = enforce_user_policy(user_id, tool_call["name"])
                     if not allowed:
                         return JSONResponse(
