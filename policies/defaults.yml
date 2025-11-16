@@ -1,6 +1,6 @@
 ---
 tools:
-  list_directories:
+  list_directory:
     allowed: false
     allowed_directories:
       - none

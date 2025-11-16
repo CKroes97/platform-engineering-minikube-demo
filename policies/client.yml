@@ -1,6 +1,6 @@
 ---
 tools:
-  list_directories:
+  list_directory:
     allowed: true
     allowed_directories:
       - test_data
