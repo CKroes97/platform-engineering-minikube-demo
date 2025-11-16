@@ -69,7 +69,7 @@ def tools_matched(
     print("Called tools in response:", called_tools)
     matched = called_tools & tool_names
     full_matched_calls = [
-        call for call in message["tool_calls"] if call["name"] in matched
+        call for call in message["tool_calls"]["function"] if call["name"] in matched
     ]
     print("Full matched tool calls:", full_matched_calls)
     tool_calls = [
@@ -155,8 +155,6 @@ async def proxy_chat_completions(request: Request):
         llama_response = await llama_request(LLAMA_BACKEND, body)
 
         llama_response_json = llama_response.json()
-
-        print("Initial LLaMA response:", llama_response_json)
 
         try:
             while tools_matched(tools, llama_response_json):
