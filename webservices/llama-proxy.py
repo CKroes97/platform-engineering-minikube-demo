@@ -69,7 +69,10 @@ def tools_matched(tools: list[dict], response_json: dict) -> dict[str, dict[str,
     full_matched_calls = [
         call for call in message["tool_calls"] if call["name"] in matched
     ]
-    tool_calls = [{call["name"]: call["arguments"]} for call in full_matched_calls]
+    tool_calls = [
+        {"name": call["name"], "arguments": call["arguments"]}
+        for call in full_matched_calls
+    ]
     return tool_calls
 
 
@@ -157,11 +160,14 @@ async def proxy_chat_completions(request: Request):
                 tools_called = tools_matched(tools, llama_response_json)
                 print("Tools called:", tools_called)
                 for tool_call in tools_called:
-                    result = tool_registry[tool_call["name"]](tool_call["parameters]"])
+                    if tool_call["arguments"]:
+                        result = tool_registry[tool_call["name"]](tool_call["arguments"])
+                    else:
+                        result = tool_registry[tool_call["name"]]()
                     body["messages"].append(
                         {
                             "role": "tool",
-                            "name": "time_now",
+                            "name": [tool_call["name"]],
                             "content": result,
                         }
                     )
