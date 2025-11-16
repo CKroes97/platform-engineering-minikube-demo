@@ -2,7 +2,7 @@ import os
 import httpx
 from fastapi import FastAPI, Request, Response
 from fastapi.responses import JSONResponse
-from datetime import datetime
+from datetime import datetime, timezone
 import uvicorn
 
 app = FastAPI()
@@ -35,7 +35,7 @@ def tools_matched(tools: list[dict], response_json: dict) -> set[str]:
 
 
 def time_now() -> str:
-    return datetime.now(datetime.UTC).isoformat()
+    return datetime.now(timezone.UTC).isoformat()
 
 
 def add_system_message(messages: list[dict], new_content: str):
