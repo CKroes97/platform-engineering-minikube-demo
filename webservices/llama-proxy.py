@@ -59,7 +59,9 @@ def get_tools() -> list[dict]:
     return tool_registry
 
 
-def tools_matched(tools: list[dict], response_json: dict) -> list[str: str, str: dict[str: str]]:
+def tools_matched(
+    tools: list[dict], response_json: dict
+) -> list[str:str, str : dict[str:str]]:
     tool_names = {tool["function"]["name"] for tool in tools}
     print("Available tool names:", tool_names)
     message = response_json["choices"][0]["message"]
@@ -163,7 +165,9 @@ async def proxy_chat_completions(request: Request):
                 print("Tools called:", tools_called)
                 for tool_call in tools_called:
                     if tool_call["arguments"]:
-                        result = tool_registry[tool_call["name"]](tool_call["arguments"])
+                        result = tool_registry[tool_call["name"]](
+                            tool_call["arguments"]
+                        )
                     else:
                         result = tool_registry[tool_call["name"]]()
                     body["messages"].append(
