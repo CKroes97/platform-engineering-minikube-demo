@@ -59,14 +59,18 @@ def get_tools() -> list[dict]:
     return tool_registry
 
 
-def tools_matched(tools: list[dict], response_json: dict) -> set[str]:
+def tools_matched(tools: list[dict], response_json: dict) -> dict[str, dict[str, str]]:
     tool_names = {tool["function"]["name"] for tool in tools}
     print("Available tool names:", tool_names)
     message = response_json["choices"][0]["message"]
     called_tools = {tool["function"]["name"] for tool in message["tool_calls"]}
     print("Called tools in response:", called_tools)
     matched = called_tools & tool_names
-    return matched
+    full_matched_calls = [
+        call for call in message["tool_calls"] if call["name"] in matched
+    ]
+    tool_calls = [{call["name"]: call["arguments"]} for call in full_matched_calls]
+    return tool_calls
 
 
 def time_now() -> str:
@@ -149,18 +153,18 @@ async def proxy_chat_completions(request: Request):
 
         try:
             while tools_matched(tools, llama_response_json):
+                tool_registry = get_tools()
                 tools_called = tools_matched(tools, llama_response_json)
                 print("Tools called:", tools_called)
-                for tool_name in tools_called:
-                    if tool_name == "time_now":
-                        result = time_now()
-                        body["messages"].append(
-                            {
-                                "role": "tool",
-                                "name": "time_now",
-                                "content": result,
-                            }
-                        )
+                for tool_call in tools_called:
+                    result = tool_registry[tool_call["name"]](tool_call["parameters]"])
+                    body["messages"].append(
+                        {
+                            "role": "tool",
+                            "name": "time_now",
+                            "content": result,
+                        }
+                    )
                 print("Updated body with tool results:", body)
                 llama_response = await llama_request(LLAMA_BACKEND, body)
                 llama_response_json = llama_response.json()
