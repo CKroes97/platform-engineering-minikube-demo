@@ -28,7 +28,7 @@ def tools_matched(tools: list[dict], response_json: dict) -> set[str]:
     tool_names = {tool["function"]["name"] for tool in tools}
     print("Available tool names:", tool_names)
     message = response_json["choices"][0]["message"]
-    called_tools = {tool for tool in message["tool_calls"]}
+    called_tools = {tool["function"]["name"] for tool in message["tool_calls"]}
     print("Called tools in response:", called_tools)
     matched = called_tools & tool_names
     return matched
