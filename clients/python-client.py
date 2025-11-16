@@ -32,7 +32,7 @@ def main():
 
         headers = {"Content-Type": "application/json", "authorization": "client"}
 
-        response = urllib.request(url, data=payload, headers=headers, method="POST")
+        response = urllib.request.Request(url, data=payload, headers=headers, method="POST")
         if response.status_code == 200:
             data = response.json()
             # Print the response content
