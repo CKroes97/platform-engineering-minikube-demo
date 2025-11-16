@@ -32,7 +32,9 @@ def main():
 
         headers = {"Content-Type": "application/json", "authorization": "client"}
 
-        response = urllib.request.Request(url, data=payload, headers=headers, method="POST")
+        response = urllib.request.Request(
+            url, data=payload, headers=headers, method="POST"
+        )
         if response.status_code == 200:
             data = response.json()
             # Print the response content
@@ -48,6 +50,7 @@ def main():
                 print(f"LLaMA: {json.dumps(data)}\n")
         else:
             print(f"Error {response.status_code}: {response.text}\n")
+
 
 if __name__ == "__main__":
     main()
