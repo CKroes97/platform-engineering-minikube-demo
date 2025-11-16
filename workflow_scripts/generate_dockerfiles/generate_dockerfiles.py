@@ -35,7 +35,7 @@ def generate_dockerfile(service_name, requirements_exists=False, mount_exists=Fa
             for line in f:
                 mount_path = line.strip()
                 if mount_path:
-                    dockerfile_lines.append(f"COPY {mount_path} /app/{mount_path}")
+                    dockerfile_lines.append(f"COPY {mount_path}/ /app/{mount_path}/")
 
     dockerfile_lines.append(f'CMD ["python", "/app/{service_name}.py"]')
     dockerfile_content = "\n".join(dockerfile_lines) + "\n"
