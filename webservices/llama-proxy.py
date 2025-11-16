@@ -24,7 +24,7 @@ tools = [
 ]
 
 
-def time_now():
+def time_now() -> str:
     return datetime.now(datetime.UTC).isoformat()
 
 
@@ -42,7 +42,7 @@ def add_system_message(messages: list[dict], new_content: str):
     return messages
 
 
-async def llama_request(backend, body):
+async def llama_request(backend, body) -> httpx.Response:
     async with httpx.AsyncClient(timeout=60.0) as client:
         llama_response = await client.post(
             backend,
@@ -86,15 +86,16 @@ async def proxy_chat_completions(request: Request):
         # Forward to actual LLaMA backend
         llama_response = await llama_request(LLAMA_BACKEND, body)
 
-        print(llama_response.json())
+        llama_response_json = llama_response.json()
 
         try:
-            while {tool for tool in llama_response.content.get("tool_calls", [])} & {
-                tool["function"]["name"] for tool in tools
-            }:
-                tools_called = {tool for tool in body.get("tool_calls", [])} & {
-                    tool["function"]["name"] for tool in tools
-                }
+            while {
+                tool for tool in llama_response_json["choices"].get("tool_calls", [])
+            } & {tool["function"]["name"] for tool in tools}:
+                tools_called = {
+                    tool
+                    for tool in llama_response_json["choices"].get("tool_calls", [])
+                } & {tool["function"]["name"] for tool in tools}
                 print("Tools called:", tools_called)
                 for tool_name in tools_called:
                     if tool_name == "time_now":
