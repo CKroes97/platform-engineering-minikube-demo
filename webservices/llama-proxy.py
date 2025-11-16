@@ -95,6 +95,8 @@ async def proxy_chat_completions(request: Request):
 
         llama_response_json = llama_response.json()
 
+        print("Initial LLaMA response:", llama_response_json)
+
         try:
             while tools_matched(tools, llama_response_json):
                 tools_called = tools_matched(tools, llama_response_json)
