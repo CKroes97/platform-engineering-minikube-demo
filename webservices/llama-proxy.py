@@ -35,7 +35,7 @@ def tools_matched(tools: list[dict], response_json: dict) -> set[str]:
 
 
 def time_now() -> str:
-    return datetime.now(timezone.UTC).isoformat()
+    return datetime.now(timezone.utc).isoformat()
 
 
 def add_system_message(messages: list[dict], new_content: str):
