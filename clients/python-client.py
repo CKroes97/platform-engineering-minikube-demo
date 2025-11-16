@@ -27,7 +27,7 @@ def main():
         payload = {
             "model": "Qwen/Qwen2.5-14B-Instruct-AWQ",
             "messages": [{"role": "user", "content": user_input}],
-        }
+        }.encode("utf-8")
 
         headers = {"Content-Type": "application/json", "authorization": "client"}
 
