@@ -168,7 +168,9 @@ async def proxy_chat_completions(request: Request):
                         )
                     else:
                         result = tool_registry[tool_call["name"]]()
-                    body["messages"].append(llama_response_json["choices"][0]["message"])
+                    body["messages"].append(
+                        llama_response_json["choices"][0]["message"]
+                    )
                     body["messages"].append(
                         {
                             "role": "tool",
