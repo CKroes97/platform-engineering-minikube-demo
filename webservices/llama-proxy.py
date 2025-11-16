@@ -88,6 +88,24 @@ async def proxy_chat_completions(request: Request):
 
         print(llama_response.json())
 
+        while {tool for tool in llama_response.content.get("tool_calls", [])} & {
+            tool["function"]["name"] for tool in tools
+        }:
+            tools_called = {tool for tool in body.get("tool_calls", [])} & {
+                tool["function"]["name"] for tool in tools
+            }
+            for tool_name in tools_called:
+                if tool_name == "time_now":
+                    result = time_now()
+                    body["messages"].append(
+                        {
+                            "role": "tool",
+                            "name": "time_now",
+                            "content": result,
+                        }
+                    )
+            llama_response = await llama_request(LLAMA_BACKEND, body)
+
         return Response(
             content=llama_response.content,
             status_code=llama_response.status_code,
