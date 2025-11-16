@@ -59,7 +59,7 @@ def get_tools() -> list[dict]:
     return tool_registry
 
 
-def tools_matched(tools: list[dict], response_json: dict) -> dict[str, dict[str, str]]:
+def tools_matched(tools: list[dict], response_json: dict) -> list[str: str, str: dict[str: str]]:
     tool_names = {tool["function"]["name"] for tool in tools}
     print("Available tool names:", tool_names)
     message = response_json["choices"][0]["message"]
@@ -177,7 +177,7 @@ async def proxy_chat_completions(request: Request):
                 llama_response = await llama_request(LLAMA_BACKEND, body)
                 llama_response_json = llama_response.json()
         except Exception as e:
-            print("Error during tool execution:", e)
+            print(f"Error during tool execution: {str(e)}")
             pass
 
         return Response(
