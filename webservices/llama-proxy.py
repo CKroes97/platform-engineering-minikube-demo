@@ -4,6 +4,7 @@ from fastapi import FastAPI, Request, Response
 from fastapi.responses import JSONResponse
 from datetime import datetime, timezone
 import uvicorn
+import json
 
 app = FastAPI()
 
@@ -52,7 +53,7 @@ tools = [
 
 def get_tools() -> list[dict]:
     tool_registry = {
-        "time-now": time_now,
+        "time_now": time_now,
         "list_directory": list_directory,
         "file_content": file_content,
     }
@@ -132,7 +133,7 @@ def enforce_policy(payload: dict) -> tuple[bool, str]:
                 False,
                 "Policy violation: request contains sensitive keyword 'password'.",
             )
-        if len(content) > 2000:
+        if len(content) > 20000:
             return False, "Policy violation: input too long."
     return True, "Allowed"
 
@@ -163,10 +164,11 @@ async def proxy_chat_completions(request: Request):
                     print("With arguments:", tool_call["arguments"])
                     if tool_call["arguments"] != "{}":
                         result = tool_registry[tool_call["name"]](
-                            dict(tool_call["arguments"])
+                            json.loads(tool_call["arguments"])
                         )
                     else:
                         result = tool_registry[tool_call["name"]]()
+                    body["messages"].append(llama_response_json["choices"][0]["message"])
                     body["messages"].append(
                         {
                             "role": "tool",
